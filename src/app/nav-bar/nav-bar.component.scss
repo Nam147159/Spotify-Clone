@@ -1,0 +1,100 @@
+.nav-bar {
+  background-color: #121212;
+  padding: 0;
+  width: 100%;
+}
+
+nav {
+  display: flex;
+  align-items: center; // Canh giữa theo chiều dọc
+  justify-content: space-between; // Đẩy logo, phần trung tâm và các nút về các vị trí mong muốn
+  padding: 10px 20px;
+}
+
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 10px; // Khoảng cách giữa các phần t
+  margin-left: auto; // Đẩy phần này vào trung tâm
+  margin-right: auto;
+}
+
+.nav-right {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-btn {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 20px; // Làm tròn các góc
+  background-color: transparent;
+}
+
+#spotify-icon {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+#home-button {
+  width: 25px;
+  height: 25px;
+
+  margin-left: 300px;
+  
+  // Tạo hình tròn
+  display: inline-block;
+  border-radius: 50%;
+  
+  background-image: url('/public/home-icon.ico');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;  
+  background-color: #323232;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+  
+  padding: 10px;
+  
+  // Căn giữa biểu tượng
+  line-height: 50px;
+}
+
+#search-box {
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: none;
+  width: 200px;
+  font-size: 14px;
+}
+
+#sign-up-btn {
+  margin-left: 300px;
+
+  padding: 12px;
+  font-weight: bold;
+  color: #929694;
+}
+
+#sign-up-btn:hover {
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+#login-btn {
+  padding: 12px 35px;
+  font-weight: bold;
+
+  background-color: #ffffff;
+  color: #000000;
+}
+
+#login-btn:hover {
+  background-color: rgb(199, 195, 195);
+  transform: scale(1.05);
+}
