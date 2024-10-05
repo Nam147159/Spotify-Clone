@@ -66,25 +66,28 @@ nav {
 }
 
 .search-container {
-  display: flex; /* Sử dụng Flexbox để đặt các phần tử nằm ngang */
-  align-items: center; /* Căn giữa theo chiều dọc */
+  display: flex;
+  align-items: center;
 }
 
 #search-btn {
   margin: 0;
   background-color: #282828;
   border: none;
-  border-radius: 4px 0 0 4px;
+  border-radius: 20px 0 0 20px;
   padding-top: 9px;
   padding-bottom: 11px;
-  display: flex; /* Sử dụng Flexbox để căn giữa hình ảnh */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  justify-content: center; /* Căn giữa theo chiều ngang */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 #search-btn-icon {
   width: 20px;
   height: 20px;
+
+  padding-left: 3px;
 }
 
 .search-input {
@@ -92,11 +95,18 @@ nav {
   margin: 0;
   border: 1px solid #121212;
   border-left: none;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 20px 20px 0;
   width: 300px;
   background-color: #282828;
   color: #929694;
   font-family: 'Poppins';
+  cursor: pointer;
+}
+
+.search-input:focus {
+  border-color: #121212;
+  outline: none;
+  cursor: text;
 }
 
 #sign-up-btn {
