@@ -1,0 +1,125 @@
+.panel {
+  background-color: #0f0f0f;
+  color: white;
+  border-radius: 8px;
+  width: 100%;
+  padding-top: 10px;
+}
+
+.library-title-bar {
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  border-radius: 8px;
+
+  .library-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #b3b3b3;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  &:hover {
+    background-color: #1f1f1f;
+    cursor: pointer;
+  }
+}
+
+.section {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 20px;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+
+  .section-title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .section-description {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #b3b3b3;
+  }
+
+  button {
+    margin-top: 20px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+.footer {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 60px;
+
+  .option-wrapper {
+    display: flex;
+    margin-bottom: 16px;
+  }
+
+  .option {
+    font-size: 10px;
+    margin-right: 16px;
+    color: #b3b3b3;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .option-special {
+    font-size: 12px;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
+
+.language-button {
+  margin-left: 20px;
+  margin-top: 16px;
+  border: solid 1px white;
+  padding: 6px 14px;
+  border-radius: 40px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: white;
+    color: black;
+  }
+
+  .language {
+    font-size: 14px;
+    font-weight: bold;
+  }
+}

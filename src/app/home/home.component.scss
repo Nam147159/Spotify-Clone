@@ -1,23 +1,22 @@
 .nav-bar {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
-    display: flex;
-    padding: 0;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  
-  .app-library-panel {
-    background-color: #1c1c1c;
-    width: 20%;
-    padding: 10px;
-  }
+  display: flex;
+  padding: 0;
+  justify-content: space-between;
+  gap: 10px;
+}
 
-  .app-main-panel {
-    background-color: #1c1c1c;
-    width: 80%;
-    padding: 10px;
-  }
+.app-library-panel {
+  width: 23%;
+  margin-left: 10px;
+}
+
+.app-main-panel {
+  background-color: #1c1c1c;
+  width: 77%;
+  padding: 10px;
+}
