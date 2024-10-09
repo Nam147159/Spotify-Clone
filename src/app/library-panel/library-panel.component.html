@@ -9,10 +9,22 @@
     </svg>
   </div>
 
+  <div class="tooltip" 
+  *ngIf="showTooltip"
+  (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false"
+  [@openClose]="showTooltip ? 'open' : 'closed'">
+    <div class="title">Create a playlist</div>
+    <div class="description">Log in to create and share playlists.</div>
+    <div class="tooltip-actions">
+      <button class="btn">Not now</button>
+      <button class="btn-primary">Log in</button>
+    </div>
+  </div>
+
   <div class="section">
     <div class="section-title">Create your first playlist</div>
     <div class="section-description">It's easy, we'll help you</div>
-    <button>Create playlist</button>
+    <button (click)="toggleTooltip()">Create playlist</button>
   </div>
 
   <div style="height: 20px;"></div>
