@@ -4,7 +4,6 @@
   border-radius: 8px;
   width: 100%;
   padding-top: 10px;
-  height: 100%;
 }
 
 .library-title-bar {
@@ -123,4 +122,61 @@
     font-size: 14px;
     font-weight: bold;
   }
+}
+
+.tooltip {
+  position: absolute;
+  margin-left: 22.5vw;
+  width: 20vw;
+  background-color: #76b4f1;
+  position: absolute;
+  left: 0;
+  color: black;
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 1;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .description {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 6px;
+  }
+}
+
+.tooltip-actions {
+  display: flex;
+  justify-content: end;
+  margin-top: 24px;
+}
+
+.tooltip-actions .btn {
+  background-color: transparent;
+  color: black;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tooltip-actions .btn-primary {
+  margin-left: 20px;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+}
+
+.tooltip-actions .btn-primary:hover {
+  background-color: #f0f0f0;
 }
