@@ -1,0 +1,9 @@
+<p-card
+    [header]="album.name"
+    [subheader]="album.artistNames"
+    [style]="{ width: '200px', height: '300px', backgroundColor: 'transparent', color: 'white'  }">
+
+    <ng-template pTemplate="header">
+        <img alt="{{ album.name }}" [src]="album.image" style="width: 100%; height: auto; " />
+    </ng-template>
+</p-card>

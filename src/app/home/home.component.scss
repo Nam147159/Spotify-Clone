@@ -26,7 +26,14 @@
   background-color: #1c1c1c;
   width: 77%;
   padding: 10px;
+
+  overflow-y: auto; // overflow for main-panel
+  max-height: calc(100vh - 180px); // set max height for over-flow 
 }
+
+.app-main-panel::-webkit-scrollbar {
+  display: none;
+} // hide scroll bar
 
 .sign-up-bar {
   // padding: 10px;
