@@ -1,6 +1,18 @@
 $input-gap: 0.3rem;
 $spotify-green: #3be477;
 
+@mixin wrapper-border-onclick {
+  width: 100%;
+  border: 3px transparent solid;
+  border-radius: 100px;
+  padding: 3px;
+
+  &:active {
+    border-color: white;
+    transition: border-color 0.2s;
+  }
+}
+
 .google-icon {
   background: url("https://accounts.scdn.co/sso/images/new-google-icon.72fd940a229bc94cf9484a3320b3dccb.svg")
     center center no-repeat;
@@ -68,6 +80,7 @@ a {
   display: flex;
   justify-content: center;
   padding: 2%;
+  overflow: scroll;
   background: #121212;
   background: linear-gradient(rgba(255, 255, 255, 0.15) 0%, rgb(0, 0, 0) 100%);
   background-attachment: fixed !important;
@@ -104,7 +117,11 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 0.05rem;
+}
+
+.auth-method-wrapper {
+  @include wrapper-border-onclick;
 }
 
 .auth-method {
@@ -118,11 +135,11 @@ a {
   padding: 0.8rem 2.3rem 0.8rem 2.3rem;
   font-weight: bold;
   font-size: 1.05rem;
-  margin: auto;
 
   &:hover {
     border-color: white;
     border-width: 1px;
+    cursor: pointer;
   }
 }
 
@@ -133,7 +150,6 @@ a {
 .submit-button {
   display: block;
   background-color: $spotify-green;
-  border: none;
   border-radius: 100px;
   color: black;
   padding: 10px 20px;
@@ -141,18 +157,17 @@ a {
   font-size: 1rem;
   font-weight: bold;
   padding: 0.9rem;
-
-  &:hover {
-    transform: scale(1.05);
-  }
 }
 
 .submit {
   display: flex;
   justify-content: center;
 
-  & > * {
-    margin-bottom: 0.3rem;
+  @include wrapper-border-onclick;
+
+  &:hover {
+    margin: 3px;
+    transform: scale(1.05);
   }
 }
 
