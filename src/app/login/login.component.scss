@@ -6,6 +6,7 @@ $spotify-green: #3be477;
   border: 3px transparent solid;
   border-radius: 100px;
   padding: 3px;
+  transition: border-color 0.2s;
 
   &:active {
     border-color: white;
