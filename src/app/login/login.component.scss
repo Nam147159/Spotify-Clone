@@ -1,5 +1,6 @@
 $input-gap: 0.3rem;
-$spotify-green: #3be477;
+$spotify-green: #1ed760;
+$spotify-green-active: #3be477;
 
 @mixin wrapper-border-onclick {
   width: 100%;
@@ -160,6 +161,10 @@ a {
   font-size: 1rem;
   font-weight: bold;
   padding: 0.9rem;
+
+  &:hover {
+    background-color: $spotify-green-active;
+  }
 }
 
 .submit {
@@ -169,7 +174,6 @@ a {
   @include wrapper-border-onclick;
 
   &:hover {
-    margin: 3px;
     transform: scale(1.05);
   }
 }
