@@ -1,0 +1,238 @@
+// Variables
+$primary-color: #1db954;
+$background-color: #191414;
+$text-color: #ffffff;
+$error-color: #ff4d4d;
+$border-radius: 4px;
+$border-radius-large: 20px;
+
+// Mixin for flex-center
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Sign-up Component Styles
+.sign-up-page {
+  background-color: $background-color;
+  color: $text-color;
+  padding: 2rem;
+  border-radius: $border-radius;
+  max-width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+  .header {
+    @include flex-center;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+
+    h1 {
+      margin-bottom: 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: $border-radius;
+      background-color: $background-color;
+      color: $text-color;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: $primary-color;
+      margin-top: 0.5rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: $border-radius-large;
+      background-color: $primary-color;
+      color: $text-color;
+      cursor: pointer;
+    }
+  }
+
+  .sign-up-by {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+
+    span {
+      margin-bottom: 0.5rem;
+    }
+
+    button {
+      width: 100%;
+      background-color: $background-color;
+      color: $text-color;
+      margin-bottom: 0.5rem;
+      border-radius: $border-radius-large;
+
+      &:hover {
+        border-color: lighten($primary-color, 10%);
+      }
+    }
+
+  }
+  p {
+    color: darken($text-color, 30%);
+    text-align: center;
+
+    a {
+      color: $text-color;
+    }
+  }
+
+  .menu {
+    display: flex;
+    align-items: left;
+    margin-top: 1rem;
+    flex-direction: column;
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: $border-radius-large;
+      background-color: $background-color;
+      color: $text-color;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: darken($text-color, 30%);
+      text-align: left;
+      margin-top: 1rem;
+    }
+  }
+
+  .password {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    margin-top: 1rem;
+
+    .custom-password {
+      display: flex;
+      justify-content: left;
+      align-items: left;
+      margin-top: 1rem;
+      width: 100%;
+    }
+    
+
+    a {
+      color: $text-color;
+      margin: 0 0.5rem;
+    }
+  }
+
+  .error {
+    p {
+      color: $text-color;
+      margin-top: 0.5rem;
+      text-align: left;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    
+      li {
+        margin-bottom: 5px;
+        color: $error-color; 
+    
+        &.valid {
+          color: $primary-color; 
+          
+        }
+    
+        &.invalid {
+          color: $error-color; 
+        }
+      }
+    }
+    
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    margin-top: 1rem;
+
+    p {
+      color: darken($text-color, 30%);
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+
+  }
+
+  .birthDate {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+
+    select, input {
+      width: 100%;
+      padding: 0.75rem;
+      border: $text-color solid 1px;
+      border-radius: $border-radius;
+      background-color: $background-color;
+      color: $text-color;
+      margin: 0.5rem;
+    }
+    
+  }
+
+  .cbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: left;
+    margin-top: 1rem;
+    border-radius: $border-radius;
+    padding: 0.5rem;
+    background-color: $background-color;
+    color: $text-color;
+
+
+    label {
+      margin-left: 0.5rem;
+      color: darken($text-color, 30%);
+    }
+  }
+
+
+
+}
