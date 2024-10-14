@@ -1,3 +1,43 @@
 <div class="container">
-  <button (click)="emitNextStep()">Next</button>
+  <div class="title">
+    <h1>Sign up to start listening</h1>
+  </div>
+
+  <form [formGroup]="form" class="form">
+    <label for="email">Email address</label>
+    <input pInputText placeholder="name@domain.com" formControlName="email" />
+    @if (!form.get("email")!.pristine && form.get("email")!.invalid) {
+      <p
+        class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0"
+      >
+        <i class="pi pi-exclamation-circle"></i>
+        <span>
+          This email is invalid. Make sure it's written like
+          example&#64;email.com</span
+        >
+      </p>
+    }
+    <a href="#">Use phone number instead.</a>
+    <button (click)="emitNextStep()" class="next-btn">Next</button>
+  </form>
+
+  <p-divider align="center">
+    <b> or </b>
+  </p-divider>
+  <div class="flex flex-column gap-2 sign-up-by">
+    <button
+      pButton
+      icon="pi pi-facebook"
+      label="Đăng nhập bằng Facebook"
+    ></button>
+    <button pButton icon="pi pi-google" label="Đăng nhập bằng Google"></button>
+    <button pButton icon="pi pi-apple" label="Đăng nhập bằng Apple"></button>
+  </div>
+  <p-divider align="center" type="solid"></p-divider>
+  <div class="login">
+    <p>
+      <span class="dimmed-text">Already have an account? </span>
+      <a href="#">Log in here.</a>
+    </p>
+  </div>
 </div>
