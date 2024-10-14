@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, model, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
-import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
@@ -31,6 +30,7 @@ import { PasswordModule } from 'primeng/password';
 export class SignUpWelcomeComponent {
   @Output() nextStep: EventEmitter<void> = new EventEmitter<void>();
   @Output() previousStep: EventEmitter<void> = new EventEmitter<void>();
+  public email = model.required<string>();
 
   public form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
