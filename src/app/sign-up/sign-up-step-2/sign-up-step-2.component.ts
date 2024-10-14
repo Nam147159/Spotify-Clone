@@ -1,9 +1,23 @@
 import { Component } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-sign-up-step-2',
   standalone: true,
-  imports: [],
+  imports: [
+    CardModule,
+    ReactiveFormsModule,
+    FormsModule,
+    InputTextModule,
+    InputNumberModule,
+    DropdownModule,
+    RadioButtonModule
+  ],
   templateUrl: './sign-up-step-2.component.html',
   styleUrl: './sign-up-step-2.component.scss'
 })

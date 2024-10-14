@@ -42,12 +42,12 @@
                     10 ký tự
                 </li>
             </ul>
-            <button
+            <p-button
                 pButton
+                pRipple
                 label="Tiếp theo"
-                (click)="emitNextStep()"
                 [disabled]="passwordForm.get('password')?.invalid"
-            ></button>
+            ></p-button>
         </div>
     </form>
 </p-card>
