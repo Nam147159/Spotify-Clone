@@ -1,0 +1,301 @@
+<div class="sign-up-page">
+  <p-card>
+    <div class="header">
+      <img src="/public/spotify-icon.png" alt="Spotify Logo" class="logo" />
+    </div>
+    <div class="signup-container">
+      <p-card>
+        <form [formGroup]="signupForm" (ngSubmit)="submitForm()">
+          <!-- Bước 1: Nhập Email -->
+          <div *ngIf="currentStep === 1">
+            <div class="flex flex-column gap-2 form-group">
+              <h1>Đăng ký để bắt đầu nghe</h1>
+              <label for="email">Địa chỉ email</label>
+              <input
+                pInputText
+                placeholder="name@domain.com"
+                formControlName="email"
+              />
+              <p-message
+                *ngIf="emailField?.invalid && emailField?.dirty"
+                severity="error"
+                text="Email không hợp lệ. Hãy đảm bảo rằng email được nhập dưới dạng example@email.com"
+              ></p-message>
+              <a href="#">Dùng số điện thoại.</a>
+              <button
+                pButton
+                label="Tiếp theo"
+                (click)="nextStep()"
+                [disabled]="emailField?.invalid"
+              ></button>
+            </div>
+            <p-divider align="center" type="solid">
+              <b>hoặc</b>
+            </p-divider>
+            <div class="flex flex-column gap-2 sign-up-by">
+              <button
+                pButton
+                icon="pi pi-facebook"
+                label="Đăng nhập bằng Facebook"
+              ></button>
+              <button
+                pButton
+                icon="pi pi-google"
+                label="Đăng nhập bằng Google"
+              ></button>
+              <button
+                pButton
+                icon="pi pi-apple"
+                label="Đăng nhập bằng Apple"
+              ></button>
+            </div>
+            <p-divider align="center" type="solid"></p-divider>
+            <p>Bạn đã có tài khoản? <a href="#">Đăng nhập tại đây.</a></p>
+          </div>
+
+          <!-- Bước 2: Nhập mật khẩu -->
+          <div *ngIf="currentStep === 2">
+            <div class="menu">
+              <p-progressBar [value]="33" />
+              <button
+                pButton
+                icon="pi pi-angle-left"
+                label="Bước 1/3"
+                (click)="prevStep()"
+              ></button>
+              <p>Tạo mật khẩu</p>
+            </div>
+            <div class="password">
+              <label for="password">Mật khẩu</label>
+              <p-password
+                formControlName="password"
+                [feedback]="false"
+                [toggleMask]="true"
+                class="ng-invalid ng-dirty custom-password"
+              ></p-password>
+            </div>
+            <div class="error">
+              <p>Mật khẩu phải có ít nhất</p>
+              <ul>
+                <li
+                  [ngClass]="
+                    hasLetter()
+                      ? 'valid pi pi-check-circle'
+                      : 'invalid pi pi-circle'
+                  "
+                >
+                  1 chữ cái
+                </li>
+                <li
+                  [ngClass]="
+                    hasNumberOrSpecialChar()
+                      ? 'valid pi pi-check-circle'
+                      : 'invalid pi pi-circle'
+                  "
+                >
+                  1 chữ số hoặc ký tự đặc biệt (ví dụ: # ? ! &)
+                </li>
+                <li
+                  [ngClass]="
+                    isLongEnough()
+                      ? 'valid pi pi-check-circle'
+                      : 'invalid pi pi-circle'
+                  "
+                >
+                  10 ký tự
+                </li>
+              </ul>
+            </div>
+            <button
+              pButton
+              label="Tiếp theo"
+              (click)="nextStep()"
+              [disabled]="signupForm.get('password')?.invalid"
+            ></button>
+          </div>
+
+          <!-- Bước 3: Nhập tên và ngày sinh -->
+          <div *ngIf="currentStep === 3">
+            <div class="menu">
+              <p-progressBar [value]="66" />
+              <button
+                pButton
+                icon="pi pi-angle-left"
+                label="Bước 2/3"
+                (click)="prevStep()"
+              ></button>
+              <p>Giới thiệu thông tin về bản thân bạn</p>
+            </div>
+            <div class="flex flex-column gap-2 info">
+              <label for="username">Tên</label>
+              <p>Tên này sẽ xuất hiện trên hồ sơ của bạn</p>
+              <input pInputText formControlName="username" />
+              <p-message
+                *ngIf="nameField?.invalid && nameField?.dirty"
+                severity="error"
+                text="Nhập tên cho hồ sơ của bạn."
+              ></p-message>
+            </div>
+            <div class="info">
+              <label for="day">Ngày sinh</label>
+              <p>
+                Tại sao chúng tôi cần biết ngày sinh của bạn?
+                <a href="#">Tìm hiểu thêm.</a>
+              </p>
+              <div class="flex gap-2 birthDate">
+                <input
+                  type="number"
+                  id="day"
+                  formControlName="day"
+                  placeholder="DD"
+                  class="p-inputtext input"
+                  min="1"
+                  max="31"
+                />
+                <form [formGroup]="form" style="z-index: 100000000000">
+                  <p-dropdown
+                    formControlName="selectedMonth"
+                    [options]="months"
+                    optionLabel="name"
+                    placeholder="Tháng"
+                  />
+                </form>
+                <input
+                  type="number"
+                  id="year"
+                  formControlName="year"
+                  placeholder="YYYY"
+                  class="p-inputtext input"
+                  min="1900"
+                  max="2100"
+                />
+              </div>
+              <div>
+                <p-message
+                  *ngIf="
+                    signupForm.get('day')?.invalid &&
+                    signupForm.get('day')?.touched
+                  "
+                  severity="error"
+                  text="Vui lòng nhập ngày sinh của bạn bằng cách nhập một số từ 1 đến 31."
+                ></p-message>
+                <p-message
+                  *ngIf="
+                    signupForm.get('month')?.invalid &&
+                    signupForm.get('month')?.touched
+                  "
+                  severity="error"
+                  text="Chọn tháng sinh của bạn."
+                ></p-message>
+                <p-message
+                  *ngIf="
+                    signupForm.get('year')?.invalid &&
+                    signupForm.get('year')?.touched
+                  "
+                  severity="error"
+                  text="Vui lòng nhập năm sinh của bạn bằng 4 chữ số (ví dụ: 1990)."
+                ></p-message>
+              </div>
+            </div>
+            <div class="menu">
+              <label for="gender">Giới tính</label>
+              <p>
+                Giới tính của bạn giúp chúng tôi cung cấp nội dung đề xuất và
+                quảng cáo phù hợp với bạn.
+              </p>
+              <p-radioButton
+                name="gender"
+                value="male"
+                label="Nam"
+                formControlName="gender"
+              ></p-radioButton>
+              <p-radioButton
+                name="gender"
+                value="female"
+                label="Nữ"
+                formControlName="gender"
+              ></p-radioButton>
+              <p-radioButton
+                name="gender"
+                value="No"
+                label="Không phân biệt giới tính"
+                formControlName="gender"
+              ></p-radioButton>
+              <p-radioButton
+                name="gender"
+                value="Diff"
+                label="Giới tính khác"
+                formControlName="gender"
+              ></p-radioButton>
+              <p-radioButton
+                name="gender"
+                value="None"
+                label="Không muốn nêu cụ thể"
+                formControlName="gender"
+              ></p-radioButton>
+            </div>
+            <button
+              pButton
+              label="Tiếp theo"
+              (click)="nextStep()"
+              [disabled]="
+                signupForm.get('name')?.invalid ||
+                signupForm.get('birthDate')?.invalid
+              "
+            ></button>
+          </div>
+
+          <!-- Bước 4: Giới tính và hoàn tất -->
+          <div *ngIf="currentStep === 4">
+            <div class="menu">
+              <p-progressBar [value]="100" />
+              <button
+                pButton
+                icon="pi pi-angle-left"
+                label="Bước 3/3"
+                (click)="prevStep()"
+              ></button>
+              <p>Điều khoản & Điều kiện</p>
+            </div>
+            <div class="flex align-items-center gap-1 cbox">
+              <p-checkbox formControlName="ad" value="true" inputId="ad" />
+              <label for="ad"
+                >Tôi không muốn nhận tin nhắn tiếp thị từ Spotify</label
+              >
+            </div>
+            <div class="flex align-items-center gap-1 cbox">
+              <p-checkbox
+                formControlName="share"
+                value="true"
+                inputId="share"
+              />
+              <label for="share"
+                >Chia sẻ dữ liệu đăng ký của tôi với các nhà cung cấp nội dung
+                của Spotify cho mục đích tiếp thị.</label
+              >
+            </div>
+            <div class="menu">
+              <p>
+                Bằng việc nhấp vào nút Đăng ký, bạn đồng ý với
+                <a href="#">Điều khoản và điều kiện sử dụng</a> của Spotify.
+              </p>
+              <p>
+                Để tìm hiểu thêm về cách thức Spotify thu thập, sử dụng, chia sẻ
+                và bảo vệ dữ liệu cá nhân của bạn, vui lòng xem
+                <a href="#">Chính sách quyền riêng tư của Spotify.</a>
+              </p>
+            </div>
+            <button
+              pButton
+              label="Đăng ký"
+              (click)="submitForm()"
+              [disabled]="
+                !signupForm.get('ad')?.value || !signupForm.get('share')?.value
+              "
+            ></button>
+          </div>
+        </form>
+      </p-card>
+    </div>
+  </p-card>
+</div>

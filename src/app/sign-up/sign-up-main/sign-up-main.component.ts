@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  ReactiveFormsModule,
+  FormsModule,
+  Validators,
+} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
@@ -40,13 +47,12 @@ interface Month {
     DividerModule,
     ProgressBarModule,
     ToastModule,
-    CheckboxModule
+    CheckboxModule,
   ],
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss'],
+  templateUrl: './sign-up-main.component.html',
+  styleUrls: ['./sign-up-main.component.scss'],
 })
-
-export class SignUpComponent implements OnInit {
+export class SignUpMainComponent implements OnInit {
   signupForm: FormGroup;
   currentStep = 1;
   form!: FormGroup;
@@ -76,6 +82,7 @@ export class SignUpComponent implements OnInit {
     }
     return null;
   }
+
   hasLetter(): boolean {
     return /[a-zA-Z]/.test(this.passwordField?.value);
   }
@@ -89,29 +96,29 @@ export class SignUpComponent implements OnInit {
   }
 
   months: Month[] | undefined;
-  
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
-
       email: ['', [Validators.required, Validators.email]],
-  
+
       password: ['', [Validators.required, Validators.minLength(10)]],
-  
+
       username: ['', Validators.required],
-  
+
       day: ['', [Validators.required, Validators.min(1), Validators.max(31)]],
-  
+
       month: ['', Validators.required],
-  
-      year: ['', [Validators.required, Validators.min(1900), Validators.max(2100)]],
-  
+
+      year: [
+        '',
+        [Validators.required, Validators.min(1900), Validators.max(2100)],
+      ],
+
       gender: ['', Validators.required],
-  
+
       ad: [false, Validators.requiredTrue],
-  
-      share: [false, Validators.requiredTrue]
-  
+
+      share: [false, Validators.requiredTrue],
     });
 
     this.months = [
@@ -130,10 +137,10 @@ export class SignUpComponent implements OnInit {
     ];
 
     this.form = new FormGroup({
-      selectedMonth: new FormControl<Month | null>(null)
+      selectedMonth: new FormControl<Month | null>(null),
     });
   }
-  
+
   nextStep() {
     this.currentStep++;
   }
@@ -155,7 +162,7 @@ export class SignUpComponent implements OnInit {
   }
 
   get passwordField() {
-    return this.signupForm.get('password'); 
+    return this.signupForm.get('password');
   }
 
   get nameField() {

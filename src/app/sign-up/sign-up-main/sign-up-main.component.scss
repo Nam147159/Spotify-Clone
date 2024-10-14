@@ -96,7 +96,6 @@ $border-radius-large: 20px;
         border-color: lighten($primary-color, 10%);
       }
     }
-
   }
   p {
     color: darken($text-color, 30%);
@@ -145,7 +144,6 @@ $border-radius-large: 20px;
       margin-top: 1rem;
       width: 100%;
     }
-    
 
     a {
       color: $text-color;
@@ -162,22 +160,20 @@ $border-radius-large: 20px;
     ul {
       list-style: none;
       padding-left: 0;
-    
+
       li {
         margin-bottom: 5px;
-        color: $error-color; 
-    
+        color: $error-color;
+
         &.valid {
-          color: $primary-color; 
-          
+          color: $primary-color;
         }
-    
+
         &.invalid {
-          color: $error-color; 
+          color: $error-color;
         }
       }
     }
-    
   }
 
   .info {
@@ -192,8 +188,6 @@ $border-radius-large: 20px;
       text-align: left;
       margin-top: 1rem;
     }
-
-
   }
 
   .birthDate {
@@ -203,7 +197,8 @@ $border-radius-large: 20px;
     align-items: center;
     margin-top: 1rem;
 
-    select, input {
+    select,
+    input {
       width: 100%;
       padding: 0.75rem;
       border: $text-color solid 1px;
@@ -212,7 +207,6 @@ $border-radius-large: 20px;
       color: $text-color;
       margin: 0.5rem;
     }
-    
   }
 
   .cbox {
@@ -226,13 +220,9 @@ $border-radius-large: 20px;
     background-color: $background-color;
     color: $text-color;
 
-
     label {
       margin-left: 0.5rem;
       color: darken($text-color, 30%);
     }
   }
-
-
-
 }
