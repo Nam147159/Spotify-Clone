@@ -22,6 +22,10 @@ export class SignUpMainComponent {
   public step = 0;
 
   public nextStep(): void {
+    if (this.step === 3) {
+      alert('logging in');
+      return;
+    }
     this.step++;
   }
 
