@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
-
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-sign-up-step-1',
   standalone: true,
   imports: [
     PasswordModule,
+    CardModule,
     ReactiveFormsModule,
     FormsModule,
     CommonModule
@@ -31,21 +32,32 @@ export class SignUpStep1Component {
   passwordForm: FormGroup;
   constructor(private fb: FormBuilder) {
     this.passwordForm = this.fb.group({
-      password: new FormControl('', Validators.required),
+      password: ['', [Validators.required, this.passwordValidator]]
     });
+  }
 
+  passwordValidator(control: any) {
+    const value = control.value || '';
+    const hasLetter = /[a-zA-Z]/.test(value);
+    const hasNumberOrSpecialChar = /[\d!@#$%^&*(),.?":{}|<>]/.test(value);
+    const isLongEnough = value.length >= 1;
+    const passwordValid = hasLetter && hasNumberOrSpecialChar && isLongEnough;
+    if (!passwordValid) {
+      return { passwordStrength: true };
+    }
+    return null;
   }
 
   hasLetter(): boolean {
-    return /[a-zA-Z]/.test(this.passwordForm?.value);
+    return /[a-zA-Z]/.test(this.passwordForm?.get('password')?.value);
   }
 
   hasNumberOrSpecialChar(): boolean {
-    return /[\d!@#$%^&*(),.?":{}|<>]/.test(this.passwordForm?.value);
+    return /[\d!@#$%^&*(),.?":{}|<>]/.test(this.passwordForm?.get('password')?.value);
   }
 
   isLongEnough(): boolean {
-    return this.passwordForm?.value?.length >= 10;
+    return this.passwordForm?.get('password')?.value.length >= 10;
   }
 
 }
