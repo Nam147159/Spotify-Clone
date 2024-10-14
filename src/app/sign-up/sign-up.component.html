@@ -66,11 +66,11 @@
               <p>Giới thiệu thông tin về bản thân bạn</p>
             </div>
             <div class="flex flex-column gap-2 info">
-              <label for="name">Tên</label>
+              <label for="username">Tên</label>
               <p>Tên này sẽ xuất hiện trên hồ sơ của bạn</p>
               <input 
                 pInputText
-                formControlName="name"
+                formControlName="username"
                 />
               <p-message *ngIf="nameField?.invalid && nameField?.dirty" severity="error" text="Nhập tên cho hồ sơ của bạn."></p-message>
             </div>
@@ -79,7 +79,14 @@
               <p>Tại sao chúng tôi cần biết ngày sinh của bạn? <a href="#">Tìm hiểu thêm.</a></p>
               <div class="flex gap-2 birthDate">
                 <input type="number" id="day" formControlName="day" placeholder="DD" class="p-inputtext input" min="1" max="31">
-                <select name="month" id="month" formControlName="month" required>
+                <form [formGroup]="form">
+                  <p-dropdown 
+                    formControlName="selectedMonth"
+                    [options]="months" 
+                    optionLabel="name"
+                    placeholder="Tháng" />
+                </form>
+                <select name="month" id="month" formControlName="month" required hidden>
                   <option disabled selected>Tháng</option>
                   <option value="1">Tháng 1</option>
                   <option value="2">Tháng 2</option>
