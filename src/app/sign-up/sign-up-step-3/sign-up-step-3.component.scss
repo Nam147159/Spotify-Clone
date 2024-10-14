@@ -1,0 +1,48 @@
+$primary-color: #1DB954;
+$bg-color: #000;
+$text-color: #fff;
+
+.form {
+    background: $bg-color;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 25rem;
+
+    .deco {
+        display: flex;
+        width: 100%;
+        background: lighter($bg-color, 20%);
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 10px;
+
+        label {
+            color: $text-color;
+            margin-right: 10px;
+            text-align: left;
+        }
+    }
+
+    p {
+        color: $text-color;
+        margin-bottom: 10px;
+
+        a {
+            color: $primary-color;
+        }
+    }
+
+    .button {
+        display: flex;
+        width: 100%;
+        background: $primary-color;
+        color: $text-color;
+        border: none;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}

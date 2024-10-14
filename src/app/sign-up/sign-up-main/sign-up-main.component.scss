@@ -1,0 +1,22 @@
+@import "primeflex/primeflex.scss";
+
+.page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 23rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
