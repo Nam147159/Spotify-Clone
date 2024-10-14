@@ -1,1 +1,51 @@
 <p>sign-up-step-1 works!</p>
+<form [formGroup]="passwordForm" (ngSubmit)="emitNextStep()">
+    <div class="password">
+        <label for="password">Mật khẩu</label>
+        <p-password
+            formControlName="password"
+            [feedback]="false"
+            [toggleMask]="true"
+            class="ng-invalid ng-dirty"
+        />
+    </div>
+    
+    <div class="error">
+        <p>Mật khẩu phải có ít nhất</p>
+        <ul>
+            <li
+                [ngClass]="
+                    hasLetter()
+                        ? 'valid pi pi-check-circle'
+                        : 'invalid pi pi-circle'
+                "
+            >
+                1 chữ cái
+            </li>
+            <li
+                [ngClass]="
+                    hasNumberOrSpecialChar()
+                        ? 'valid pi pi-check-circle'
+                        : 'invalid pi pi-circle'
+                "
+            >
+                1 chữ số hoặc ký tự đặc biệt (ví dụ: # ? ! &)
+            </li>
+            <li
+                [ngClass]="
+                    isLongEnough()
+                        ? 'valid pi pi-check-circle'
+                        : 'invalid pi pi-circle'
+                "
+            >
+                10 ký tự
+            </li>
+        </ul>
+        <button
+            pButton
+            label="Tiếp theo"
+            (click)="emitNextStep()"
+            [disabled]="passwordForm.get('password')?.invalid"
+        ></button>
+    </div>
+</form>
