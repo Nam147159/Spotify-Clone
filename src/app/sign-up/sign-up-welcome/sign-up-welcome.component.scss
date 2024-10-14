@@ -1,0 +1,65 @@
+@import "primeflex/primeflex.css";
+$spotify-green: #1ed760;
+$spotify-green-active: #3be477;
+
+a {
+  color: $spotify-green;
+
+  &:hover {
+    color: $spotify-green-active;
+  }
+}
+
+.title {
+  h1 {
+    text-align: center;
+    font-weight: 3000;
+    font-size: 3rem;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+}
+
+.next-btn {
+  margin-top: 1rem;
+  width: 100%;
+  background-color: $spotify-green;
+  color: black;
+  padding: 0.8rem;
+  border-radius: 100px;
+  cursor: pointer;
+  border: none;
+
+  font-size: 1rem;
+  font-weight: bold;
+
+  &:hover {
+    background-color: $spotify-green-active;
+  }
+}
+
+.error-message {
+  color: #f3727f;
+}
+
+.transparent-bg {
+  background-color: transparent;
+}
+
+.dimmed-text {
+  color: #b3b3b3;
+}
+
+.login {
+  margin-top: 1rem;
+  text-align: center;
+}
