@@ -21,15 +21,10 @@ import { ButtonModule } from 'primeng/button';
 })
 export class SignUpStep1Component {
   @Output() nextStep: EventEmitter<void> = new EventEmitter<void>();
-  // @Output() previousStep: EventEmitter<void> = new EventEmitter<void>();
 
   public emitNextStep(): void {
     this.nextStep.emit();
   }
-
-  // public emitPreviousStep(): void {
-  //   this.previousStep.emit();
-  // }
 
   passwordForm: FormGroup;
   constructor(private fb: FormBuilder) {

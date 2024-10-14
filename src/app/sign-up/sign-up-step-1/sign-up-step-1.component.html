@@ -46,6 +46,7 @@
                 pButton
                 pRipple
                 label="Tiếp theo"
+                (click)="emitNextStep()"
                 [disabled]="passwordForm.get('password')?.invalid"
             ></p-button>
         </div>

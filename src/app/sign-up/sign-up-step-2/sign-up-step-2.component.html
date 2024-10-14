@@ -1,4 +1,66 @@
 <p>sign-up-step-2 works!</p>
 <p-card>
-    
+    <form [formGroup]="infoForm">
+        <div>
+            <label for="Username">Ten</label>
+            <small id="Username-help">
+                Tên này sẽ xuất hiện trên hồ sơ của bạn
+            </small>
+            <input
+            pInputText
+            type="text"
+            aria-describedby="Username-help"
+            formControlName="username"/>
+        </div>
+
+        <div>
+            <label for="birthDay">Ngày sinh</label>
+            <small id="birthDay-help">
+                Tại sao chúng tôi cần biết ngày sinh của bạn? <a href="#">Tìm hiểu thêm.</a>
+            </small>
+            <input
+            pInputText
+            type="number"
+            maxlength="2"
+            formControlName="date"/>
+
+            <p-dropdown
+                [options]="months" 
+                formControlName="month"
+                optionLabel="label"
+                placeholder="Tháng">
+            </p-dropdown>
+
+            <input
+            pInputText
+            type="number"
+            maxlength="4"
+            formControlName="year"/>
+        </div>
+
+        <div>
+            <label for="gender">Giới tính</label>
+            <small id="gender-help">
+                Giới tính của bạn giúp chúng tôi cung cấp nội dung đề xuất và quảng cáo phù hợp với bạn.
+            </small>
+            @for (gender of genders; track $index) {
+                <label [for]="gender.code" class="ml-2">
+                    {{ gender.label }}
+                </label>
+                <p-radioButton
+                    [inputId]="gender.code"
+                    [value]="gender"
+                    formControlName="gender">
+                </p-radioButton>
+            }
+        </div>
+
+        <p-button
+            pButton
+            pRipple
+            label="Tiếp theo"
+            (click)="emitNextStep()"
+            [disabled]="infoForm.invalid">
+        </p-button>
+    </form>
 </p-card>
