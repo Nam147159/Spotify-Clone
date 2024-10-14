@@ -3,6 +3,7 @@ import { SignUpWelcomeComponent } from '../sign-up-welcome/sign-up-welcome.compo
 import { SignUpStep1Component } from '../sign-up-step-1/sign-up-step-1.component';
 import { SignUpStep2Component } from '../sign-up-step-2/sign-up-step-2.component';
 import { SignUpStep3Component } from '../sign-up-step-3/sign-up-step-3.component';
+import { StepIndicatorComponent } from '../step-indicator/step-indicator.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,6 +13,7 @@ import { SignUpStep3Component } from '../sign-up-step-3/sign-up-step-3.component
     SignUpStep1Component,
     SignUpStep2Component,
     SignUpStep3Component,
+    StepIndicatorComponent,
   ],
   templateUrl: './sign-up-main.component.html',
   styleUrls: ['./sign-up-main.component.scss'],
