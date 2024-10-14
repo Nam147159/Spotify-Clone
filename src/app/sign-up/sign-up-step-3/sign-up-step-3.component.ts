@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
@@ -9,6 +11,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     ReactiveFormsModule,
     FormsModule,
     CheckboxModule,
+    CardModule,
+    ButtonModule
   ],
   templateUrl: './sign-up-step-3.component.html',
   styleUrl: './sign-up-step-3.component.scss'
@@ -19,10 +23,8 @@ export class SignUpStep3Component {
     this.nextStep.emit();
   }
 
-  form!: FormGroup;
-  ngOnInit() {
-    this.form = new FormGroup({
-      agree: new FormControl(false)
-    });
-  }
+  form = new FormGroup({
+    ads: new FormControl(false),
+    share: new FormControl(false)
+  });
 }
