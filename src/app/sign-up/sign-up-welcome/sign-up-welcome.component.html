@@ -5,7 +5,12 @@
 
   <form [formGroup]="form" class="form">
     <label for="email">Email address</label>
-    <input pInputText placeholder="name@domain.com" formControlName="email" />
+    <input
+      pInputText
+      placeholder="name@domain.com"
+      formControlName="email"
+      [(ngModel)]="email"
+    />
     @if (!form.get("email")!.pristine && form.get("email")!.invalid) {
       <p
         class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0"

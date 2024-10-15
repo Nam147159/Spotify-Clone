@@ -20,10 +20,15 @@ import { StepIndicatorComponent } from '../step-indicator/step-indicator.compone
 })
 export class SignUpMainComponent {
   public step = 0;
+  public password = '';
+  public email = '';
 
   public nextStep(): void {
     if (this.step === 3) {
-      alert('logging in');
+      alert(`
+Passsword: ${this.password}
+Email: ${this.email}
+`);
       return;
     }
     this.step++;
