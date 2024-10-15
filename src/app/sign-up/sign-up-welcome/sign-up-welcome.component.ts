@@ -1,4 +1,4 @@
-import { Component, EventEmitter, model, Output } from '@angular/core';
+import { Component, EventEmitter, Input, model, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -30,11 +30,9 @@ import { PasswordModule } from 'primeng/password';
 export class SignUpWelcomeComponent {
   @Output() nextStep: EventEmitter<void> = new EventEmitter<void>();
   @Output() previousStep: EventEmitter<void> = new EventEmitter<void>();
-  public email = model.required<string>();
 
-  public form: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-  });
+  @Input({ required: true }) emailForm: FormGroup = new FormGroup({});
+
 
   public emitNextStep(): void {
     this.nextStep.emit();

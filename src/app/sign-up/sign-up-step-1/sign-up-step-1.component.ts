@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, model, Output } from '@angular/core';
+import { Component, EventEmitter, Input, model, Output } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -30,36 +30,10 @@ import { ButtonModule } from 'primeng/button';
 })
 export class SignUpStep1Component {
   @Output() nextStep: EventEmitter<void> = new EventEmitter<void>();
-  password = model.required<string>();
+
+  @Input({ required: true }) passwordForm: FormGroup = new FormGroup({});
 
   public emitNextStep(): void {
     this.nextStep.emit();
-  }
-
-  passwordForm = new FormGroup({
-    password: new FormControl('', [
-      Validators.required,
-      this.haveLetterValidator,
-      this.haveSpecialCharacterValidator,
-      Validators.minLength(10),
-    ]),
-  });
-
-  private haveLetterValidator(
-    control: AbstractControl,
-  ): ValidationErrors | null {
-    if (!/[a-zA-Z]/.test(control.value)) {
-      return { noLetter: true };
-    }
-    return null;
-  }
-
-  private haveSpecialCharacterValidator(
-    control: AbstractControl,
-  ): ValidationErrors | null {
-    if (!/[\d#?!&]/.test(control.value)) {
-      return { noSpecialCharacter: true };
-    }
-    return null;
   }
 }
