@@ -1,4 +1,4 @@
-<form [formGroup]="infoForm" class="form">
+<form [formGroup]="infoForm" (ngSubmit)="emitNextStep()" class="form">
 
     <div class="container">
         <label for="Username">Name</label>
@@ -44,14 +44,26 @@
             Your gender helps us deliver relevant content and advertising recommendations to you.
         </span>
         <div class="flex flex-wrap gap-3 gender">
-            @for (gender of genders; track $index) {
-                <p-radioButton
-                    [inputId]="gender.code"
-                    [value]="gender"
-                    formControlName="gender"
-                    [label]="gender.label"/>
-
-            }
+            <p-radioButton
+                value="Male"
+                formControlName="gender"
+                label="Male"/>
+            <p-radioButton
+                value="Female"
+                formControlName="gender"
+                label="Female"/>
+            <p-radioButton
+                value="No-gender"
+                formControlName="gender"
+                label="No-gender"/>
+            <p-radioButton
+                value="Other"
+                formControlName="gender"
+                label="Other"/>
+            <p-radioButton
+                value="No-specify"
+                formControlName="gender"
+                label="No-specify"/>
         </div>
         @if (!infoForm.get("gender")!.pristine && infoForm.get("gender")!.invalid) {
             <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
@@ -61,7 +73,7 @@
         }
     </div>
 
-    <button (click)="emitNextStep()">
+    <button type="submit">
         Next
     </button>
 </form>

@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="form">
+<form [formGroup]="registerForm" (ngSubmit)="emitNextStep()" class="form">
     <div class="flex align-items-center ">
         <p-checkbox
             class="font box"
@@ -24,7 +24,7 @@
     </div>
 
     <button
-        (click)="emitNextStep()">
+        type="submit">
         Register
     </button>
 </form>

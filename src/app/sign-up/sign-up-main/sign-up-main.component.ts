@@ -36,9 +36,22 @@ export class SignUpMainComponent {
     ]),
   });
 
+  public infoForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    date: new FormControl('', Validators.required),
+    gender: new FormControl('', Validators.required),
+  });
+
+  public registerForm = new FormGroup({
+    ads: new FormControl(false, Validators.requiredTrue),
+    share: new FormControl(false, Validators.requiredTrue),
+  });
+
   public form = new FormGroup({
     emailForm: this.emailForm,
     passwordForm: this.passwordForm,
+    infoForm: this.infoForm,
+    registerForm: this.registerForm,
   })
 
 
@@ -64,9 +77,19 @@ export class SignUpMainComponent {
     if (this.step === 3) {
       const email = this.form.get("emailForm")!.get("email")!.value;
       const password = this.form.get("passwordForm")!.get("password")!.value;
+      const username = this.form.get("infoForm")!.get("username")!.value;
+      const date = this.form.get("infoForm")!.get("date")!.value;
+      const gender = this.form.get("infoForm")!.get("gender")!.value;
+      const ads = this.form.get("registerForm")!.get("ads")!.value;
+      const share = this.form.get("registerForm")!.get("share")!.value;
       alert(`
 email: ${email}
 password: ${password}
+username: ${username}
+date: ${date}
+gender: ${gender}
+ads: ${ads}
+share: ${share}
         `);
       return;
     }

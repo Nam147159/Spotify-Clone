@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,15 +18,13 @@ import { CheckboxModule } from 'primeng/checkbox';
   styleUrl: './sign-up-step-3.component.scss'
 })
 export class SignUpStep3Component {
+  @Input({ required: true }) registerForm: FormGroup = new FormGroup({});
+
   @Output() nextStep: EventEmitter<void> = new EventEmitter<void>();
+
   public emitNextStep(): void {
     this.nextStep.emit();
   }
-
-  form = new FormGroup({
-    ads: new FormControl(false),
-    share: new FormControl(false)
-  });
 
   changeBorderColor(event: Event, state: string): void {
 
