@@ -7,8 +7,7 @@
             inputId="ads"
             (mouseover)="changeBorderColor($event, 'hover')"
             (mouseout)="changeBorderColor($event, 'default')"
-            label="Tôi không muốn nhận tin nhắn tiếp thị từ Spotify"
-            [style]="{accentColor: 'yellow', backgroundColor: 'yellow'}"/>
+            label="I don't want to receive further messages from Spotify"/>
 
         <p-checkbox
             class="font box"
@@ -17,16 +16,15 @@
             inputId="share"
             (mouseover)="changeBorderColor($event, 'hover')"
             (mouseout)="changeBorderColor($event, 'default')"
-            label="Chia sẻ dữ liệu đăng ký của tôi với các nhà cung cấp nội dung của Spotify cho mục đích tiếp thị."/>
+            label="Share my subscription data with Spotify content providers for marketing purposes."/>
     </div>
     <div class="flex align-items-center font">
-        <p>Bằng việc nhấp vào nút Đăng ký, bạn đồng ý với <a href="#">Điều khoản và điều kiện sử dụng</a> của Spotify.</p>
-        <p>Để tìm hiểu thêm về cách thức Spotify thu thập, sử dụng, chia sẻ và bảo vệ dữ liệu cá nhân của bạn, vui lòng xem <a href="#">Chính sách quyền riêng tư của Spotify</a>.</p>
+        <p>By clicking the Sign Up button, you agree to <a href="#">Spotify's Terms and Conditions of Use.</a></p>
+        <p>To learn more about how Spotify collects, uses, shares and protects your personal data, please see <a href="#">Spotify Privacy Policy</a>.</p>
     </div>
 
     <button
         (click)="emitNextStep()">
-        <!-- [disabled]="!form.valid || !form.get('ads')?.value || !form.get('share')?.value" -->
-        Đăng ký
+        Register
     </button>
 </form>
