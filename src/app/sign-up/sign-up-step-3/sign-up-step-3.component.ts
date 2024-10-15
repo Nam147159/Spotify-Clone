@@ -27,4 +27,20 @@ export class SignUpStep3Component {
     ads: new FormControl(false),
     share: new FormControl(false)
   });
+
+  changeBorderColor(event: Event, state: string): void {
+
+    const target = event.target as HTMLElement;
+
+    if (state === 'hover') {
+
+      target.style.borderColor = '#1DB954';
+
+    } else {
+
+      target.style.borderColor = '#818181';
+
+    }
+
+  }
 }

@@ -1,6 +1,24 @@
 $primary-color: #1DB954;
-$bg-color: #000;
+$bg-color: #121212;
 $text-color: #fff;
+$bg-box: #ffffff1a;
+$checkboxBorder: 2px solid #818181;
+$checkboxIconActiveColor: $primary-color;
+$checkboxActiveHoverBorderColor: $primary-color;
+
+
+.font {
+    font-size: 9.75px;
+    color: $text-color;
+}
+
+.box {
+    width: 100%;
+    background: $bg-box;
+    padding: 16px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
 
 .form {
     background: $bg-color;
@@ -8,27 +26,8 @@ $text-color: #fff;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
-    width: 25rem;
-
-    .deco {
-        display: flex;
-        width: 100%;
-        background: lighter($bg-color, 20%);
-        justify-content: center;
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 10px;
-
-        label {
-            color: $text-color;
-            margin-right: 10px;
-            text-align: left;
-        }
-    }
 
     p {
-        color: $text-color;
         margin-bottom: 10px;
 
         a {
@@ -36,13 +35,19 @@ $text-color: #fff;
         }
     }
 
-    .button {
-        display: flex;
+    button {
         width: 100%;
-        background: $primary-color;
-        color: $text-color;
+        padding: 1rem;
+        background: #1ed760;
+        color: #000;
+        border-radius: 100px;
         border: none;
+        font-size: 12px;
+        font-weight: bold;
         margin-top: 20px;
-        margin-bottom: 20px;
+
+        &:hover {
+            background: #3be477;
+        }
     }
 }
