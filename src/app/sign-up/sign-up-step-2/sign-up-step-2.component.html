@@ -1,69 +1,110 @@
-<p>sign-up-step-2 works!</p>
-<p-card>
-    <form [formGroup]="infoForm">
-        <div>
-            <label for="Username">Ten</label>
-            <small id="Username-help">
-                Tên này sẽ xuất hiện trên hồ sơ của bạn
-            </small>
-            <input
-            pInputText
-            type="text"
-            aria-describedby="Username-help"
-            formControlName="username"/>
+<form [formGroup]="infoForm" class="form">
+
+    <div class="flex flex-column gap-2">
+        <label for="Username">Tên</label>
+        <span class="text" id="Username-help">
+            Tên này sẽ xuất hiện trên hồ sơ của bạn
+        </span>
+        <input
+        pInputText
+        type="text"
+        aria-describedby="Username-help"
+        formControlName="username"/>   
+
+        @if (!infoForm.get("username")!.pristine && infoForm.get("username")?.touched && infoForm.get("username")!.invalid) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Nhập tên cho hồ sơ của bạn.</span>
+            </p>   
+        }
+    </div>
+
+    <div>
+        <label for="birthDay">Ngày sinh</label>
+        <span class="text" id="birthDay-help">
+            Tại sao chúng tôi cần biết ngày sinh của bạn? <a href="#">Tìm hiểu thêm.</a>
+        </span>
+        <div class="card flex flex-row flex-wrap gap-3 p-fluid">
+            <div class="card flex-auto">
+                <p-inputNumber
+                formControlName="date"
+                inputId="withoutgrouping"
+                mode="decimal"
+                [maxlength]="2"
+                placeholder="dd"/>
+            </div>
+            <div class="card flex-auto">
+                <p-dropdown
+                    id="month-dropdown"
+                    editable="true"
+                    [options]="months" 
+                    formControlName="month"
+                    optionLabel="label"
+                    placeholder="Tháng"/>
+            </div>
+            <div class="card flex-auto">
+                <p-inputNumber
+                    formControlName="year"
+                    [useGrouping]="false"
+                    mode="decimal"
+                    [maxlength]="4"
+                    placeholder="yyyy"/>
+            </div>
         </div>
 
-        <div>
-            <label for="birthDay">Ngày sinh</label>
-            <small id="birthDay-help">
-                Tại sao chúng tôi cần biết ngày sinh của bạn? <a href="#">Tìm hiểu thêm.</a>
-            </small>
-            <input
-            pInputText
-            type="number"
-            maxlength="2"
-            formControlName="date"/>
+        @if (!infoForm.get("date")!.pristine && infoForm.get("date")?.touched && infoForm.get("date")!.invalid && infoForm.get("date")!.hasError("day")) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Vui lòng nhập ngày sinh của bạn bằng cách nhập một số từ 1 đến 31.</span>
+            </p>   
+        }
 
-            <p-dropdown
-                id="month-dropdown"
-                editable="true"
-                [options]="months" 
-                formControlName="month"
-                optionLabel="label"
-                placeholder="Tháng">
-            </p-dropdown>
+        @if (!infoForm.get("month")!.pristine && infoForm.get("month")?.touched && infoForm.get("month")!.invalid) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Chọn tháng sinh của bạn.</span>
+            </p>   
+        }
 
-            <input
-            pInputText
-            type="number"
-            maxlength="4"
-            formControlName="year"/>
-        </div>
+        @if (!infoForm.get("year")!.pristine && infoForm.get("year")?.touched && infoForm.get("year")!.hasError("yearLength")) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Vui lòng nhập năm sinh của bạn bằng 4 chữ số (ví dụ: 1990).</span>
+            </p>   
+        }
 
-        <div>
-            <label for="gender">Giới tính</label>
-            <small id="gender-help">
-                Giới tính của bạn giúp chúng tôi cung cấp nội dung đề xuất và quảng cáo phù hợp với bạn.
-            </small>
+        @else if (!infoForm.get("year")!.pristine && infoForm.get("year")!.hasError("year")) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Vui lòng nhập năm sinh từ 1900 trở đi.</span>
+            </p>  
+        }
+    </div>
+
+    <div>
+        <label for="gender">Giới tính</label>
+        <span class="text" id="gender-help">
+            Giới tính của bạn giúp chúng tôi cung cấp nội dung đề xuất và quảng cáo phù hợp với bạn.
+        </span>
+        <div class="card flex flex-row flex-wrap gap-3 p-fluid">
             @for (gender of genders; track $index) {
-                <label [for]="gender.code" class="ml-2">
-                    {{ gender.label }}
-                </label>
                 <p-radioButton
                     [inputId]="gender.code"
                     [value]="gender"
-                    formControlName="gender">
-                </p-radioButton>
+                    formControlName="gender"
+                    [label]="gender.label"/>
+
             }
         </div>
+        @if (!infoForm.get("gender")!.pristine && infoForm.get("gender")!.invalid) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Chọn giới tính của bạn.</span>
+            </p>   
+        }
+    </div>
 
-        <p-button
-            pButton
-            pRipple
-            label="Tiếp theo"
-            (click)="emitNextStep()"
-            >
-            <!-- [disabled]="infoForm.invalid" -->
-        </p-button>
-    </form>
-</p-card>
+    <button (click)="emitNextStep()">
+        Tiếp theo
+    </button>
+</form>

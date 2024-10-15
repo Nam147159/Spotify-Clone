@@ -7,7 +7,8 @@
             inputId="ads"
             (mouseover)="changeBorderColor($event, 'hover')"
             (mouseout)="changeBorderColor($event, 'default')"
-            label="Tôi không muốn nhận tin nhắn tiếp thị từ Spotify"/>
+            label="Tôi không muốn nhận tin nhắn tiếp thị từ Spotify"
+            [style]="{accentColor: 'yellow', backgroundColor: 'yellow'}"/>
 
         <p-checkbox
             class="font box"
@@ -24,12 +25,8 @@
     </div>
 
     <button
-        class=""
-        pButton
-        pRipple
-        label="Đăng ký"
         (click)="emitNextStep()">
         <!-- [disabled]="!form.valid || !form.get('ads')?.value || !form.get('share')?.value" -->
-
+        Đăng ký
     </button>
 </form>
