@@ -1,1 +1,95 @@
-<p>login works!</p>
+<div class="login-page">
+  <div class="login-container">
+    <div class="page-title">
+      <img src="/public/spotify-icon.png" alt="" width="40" height="40" />
+      <h1>Log in to Spotify</h1>
+    </div>
+
+    <div class="auth-methods">
+      <div class="auth-method-wrapper">
+        <button class="auth-method">
+          <span class="google-icon"></span>
+          <span class="auth-method-name">Continue with Google</span>
+        </button>
+      </div>
+      <div class="auth-method-wrapper">
+        <button class="auth-method">
+          <span class="facebook-icon"></span>
+          <span class="auth-method-name">Continue with Facebook</span>
+        </button>
+      </div>
+      <div class="auth-method-wrapper">
+        <button class="auth-method">
+          <span class="apple-icon"></span>
+          <span class="auth-method-name">Continue with Apple</span>
+        </button>
+      </div>
+      <div class="auth-method-wrapper">
+        <button class="auth-method">
+          <span class="auth-method-name"> Continue with phone number </span>
+        </button>
+      </div>
+    </div>
+
+    <hr id="separator" />
+
+    <form class="login-form" [formGroup]="loginForm">
+      <div class="username">
+        <label for="username">Email or username</label>
+        <input
+          pInputText
+          name="username ng-invalid ng-dirty"
+          placeholder="Email or username"
+          formControlName="username"
+        />
+        @if (
+          !loginForm.get("username")!.pristine &&
+          loginForm.get("username")!.invalid
+        ) {
+          <div class="error-message">
+            <i class="pi pi-exclamation-circle"></i>
+            <small>Please enter your Spotify username or email address.</small>
+          </div>
+        }
+      </div>
+
+      <div class="password">
+        <label for="password">Password</label>
+        <p-password
+          [toggleMask]="true"
+          name="password"
+          placeholder="Password"
+          [style]="{ width: '100%' }"
+          [inputStyle]="{ width: '100%' }"
+          formControlName="password"
+        />
+        @if (
+          !loginForm.get("password")!.pristine &&
+          loginForm.get("password")!.invalid
+        ) {
+          <div class="error-message">
+            <i class="pi pi-exclamation-circle"></i>
+            <small> Please enter your password. </small>
+          </div>
+        }
+      </div>
+
+      <div class="submit">
+        <button type="submit" class="submit-button" (click)="handleLogin()">
+          Log In
+        </button>
+      </div>
+
+      <div class="forgot-password">
+        <a href="">Forgot your password?</a>
+      </div>
+
+      <div class="register">
+        <p>
+          <span class="dimmed-text">Don't have an account? </span>
+          <a href="">Sign up for Spotify</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
