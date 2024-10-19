@@ -1,0 +1,31 @@
+@import 'primeflex/primeflex.scss';
+
+.overflow-y-auto::-webkit-scrollbar {
+    display: none;
+}
+
+.overflow-y-auto {
+    scrollbar-width: none; 
+}
+
+.overflow-y-auto {
+    -ms-overflow-style: none;
+}
+
+.overflow-y-auto {
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    height: calc(100% - 10px);
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+    display: none;
+}
+
+.overflow-x-auto {
+    scrollbar-width: none; 
+}
+
+.overflow-x-auto {
+    -ms-overflow-style: none;
+}
