@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,16 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = 'final-project';
+
+export class AppComponent implements OnInit {
+  message = '';
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getMessage().subscribe((data: any) => {
+      this.message = data.message;
+      console.log(this.message);
+    });
+  }
 }
