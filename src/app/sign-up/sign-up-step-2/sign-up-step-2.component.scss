@@ -1,0 +1,69 @@
+.form {
+    color: #fff;
+    font-size: 9.75px;
+    align-items: left;
+
+    label {
+        font-weight: bold;
+    }
+
+    button {
+        width: 100%;
+        padding: 1rem;
+        background: #1ed760;
+        color: #000;
+        border-radius: 100px;
+        border: none;
+        font-size: 12px;
+        font-weight: bold;
+        margin-top: 10px;
+
+        &:hover {
+            background: #3be477;
+        }
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background: #121212;
+    margin-bottom: 20px;
+
+    div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+}
+  
+.gender {
+    flex-wrap: wrap;
+    margin: 5px;
+    justify-content: space-between;
+}
+
+.text {
+    color: #b3b3b3;
+
+    a {
+        color: #b3b3b3
+    }
+}
+
+p-calendar {
+    width: fit-content;
+}
+
+p-radiobutton {
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.genderDeco {
+
+    display: flex;
+    flex-direction: column;
+    
+}

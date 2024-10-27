@@ -1,0 +1,79 @@
+<form [formGroup]="infoForm" (ngSubmit)="emitNextStep()" class="form">
+
+    <div class="container">
+        <label for="Username">Name</label>
+        <span class="text" id="Username-help">
+            This name will appear on your profile.
+        </span>
+        <input
+        pInputText
+        type="text"
+        aria-describedby="Username-help"
+        formControlName="username"/>   
+
+        @if (!infoForm.get("username")!.pristine && infoForm.get("username")?.touched && infoForm.get("username")!.invalid) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Enter a name for your profile.</span>
+            </p>   
+        }
+    </div>
+
+    <div class="container">
+        <label for="birthDay">Date of birth</label>
+        <span class="text" id="birthDay-help">
+            Why do we need to know your date of birth? <a href="#">Learn more.</a>
+        </span>
+
+        <div class="">
+            <p-calendar
+                [showIcon]="true"
+                formControlName="date"/>
+        </div>
+        @if (!infoForm.get("date")!.pristine && infoForm.get("date")?.touched && infoForm.get("date")!.invalid) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Please enter date of birth.</span>
+            </p>   
+        }
+    </div>
+
+    <div class="container">
+        <label for="gender">Gender</label>
+        <span class="text" id="gender-help">
+            Your gender helps us deliver relevant content and advertising recommendations to you.
+        </span>
+        <div class="flex flex-wrap gap-3 gender">
+            <p-radioButton
+                value="Male"
+                formControlName="gender"
+                label="Male"/>
+            <p-radioButton
+                value="Female"
+                formControlName="gender"
+                label="Female"/>
+            <p-radioButton
+                value="No-gender"
+                formControlName="gender"
+                label="No-gender"/>
+            <p-radioButton
+                value="Other"
+                formControlName="gender"
+                label="Other"/>
+            <p-radioButton
+                value="No-specify"
+                formControlName="gender"
+                label="No-specify"/>
+        </div>
+        @if (!infoForm.get("gender")!.pristine && infoForm.get("gender")!.invalid) {
+            <p class="error-message flex flex-row align-items-center justify-content-center gap-1 mx-0 my-0 p-error">
+                <i class="pi pi-exclamation-circle"></i>
+                <span> Select your gender.</span>
+            </p>   
+        }
+    </div>
+
+    <button type="submit">
+        Next
+    </button>
+</form>

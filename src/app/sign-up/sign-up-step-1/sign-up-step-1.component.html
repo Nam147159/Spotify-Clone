@@ -1,0 +1,55 @@
+<div class="container">
+  <form
+    [formGroup]="passwordForm"
+    (ngSubmit)="emitNextStep()"
+    class="password-form"
+  >
+    <label for="password">Password</label>
+    <p-password
+      formControlName="password"
+      [feedback]="false"
+      [toggleMask]="true"
+      [inputStyle]="{ width: '100%' }"
+      [style]="{ width: '100%' }"
+    />
+
+    <div class="errors">
+      <span class="condition-text">Your password must contain at least</span>
+      <ul class="errors-list">
+        <li>
+          @if (passwordForm.get("password")!.hasError("noLetter")) {
+            <i class="pi pi-circle error"></i>
+            <span class="error">1 letter</span>
+          } @else {
+            <i class="pi pi-check-circle success"></i>
+            <span>1 letter</span>
+          }
+        </li>
+        <li>
+          @if (passwordForm.get("password")!.hasError("noSpecialCharacter")) {
+            <i class="pi pi-circle error"></i>
+            <span class="error"
+              >1 number or special character (example: # ? ! &)</span
+            >
+          } @else {
+            <i class="pi pi-check-circle success"></i>
+            <span>1 number or special character (example: # ? ! &)</span>
+          }
+        </li>
+        <li>
+          @if (
+            passwordForm.get("password")!.hasError("required") ||
+            passwordForm.get("password")!.hasError("minlength")
+          ) {
+            <i class="pi pi-circle error"></i>
+            <span class="error">10 characters</span>
+          } @else {
+            <i class="pi pi-check-circle success"></i>
+            <span>10 characters</span>
+          }
+        </li>
+      </ul>
+    </div>
+    <button type="submit" class="next-btn">Next</button>
+  </form>
+</div>

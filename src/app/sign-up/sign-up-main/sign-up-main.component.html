@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="title">
+    <img src="/public/spotify-icon.png" alt="" width="40" height="40" />
+  </div>
+  @if (step >= 1) {
+    <div class="step-indicator">
+      <app-step-indicator
+        [currentStep]="step"
+        (previousStep)="previousStep()"
+      />
+    </div>
+  }
+  <div class="login-steps">
+    @if (step === 0) {
+      <app-sign-up-welcome (nextStep)="nextStep()" [emailForm]="emailForm" />
+    } @else if (step === 1) {
+      <app-sign-up-step-1 (nextStep)="nextStep()" [passwordForm]="passwordForm" />
+    } @else if (step === 2) {
+      <app-sign-up-step-2 (nextStep)="nextStep()" [infoForm]="infoForm"/>
+    } @else if (step === 3) {
+      <app-sign-up-step-3 (nextStep)="nextStep()" [registerForm]="registerForm"/>
+    }
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<form [formGroup]="registerForm" (ngSubmit)="emitNextStep()" class="form">
+    <div class="flex align-items-center ">
+        <p-checkbox
+            class="font box"
+            formControlName="ads"
+            value="true"
+            inputId="ads"
+            (mouseover)="changeBorderColor($event, 'hover')"
+            (mouseout)="changeBorderColor($event, 'default')"
+            label="I don't want to receive further messages from Spotify"/>
+
+        <p-checkbox
+            class="font box"
+            formControlName="share"
+            value="true"
+            inputId="share"
+            (mouseover)="changeBorderColor($event, 'hover')"
+            (mouseout)="changeBorderColor($event, 'default')"
+            label="Share my subscription data with Spotify content providers for marketing purposes."/>
+    </div>
+    <div class="flex align-items-center font">
+        <p>By clicking the Sign Up button, you agree to <a href="#">Spotify's Terms and Conditions of Use.</a></p>
+        <p>To learn more about how Spotify collects, uses, shares and protects your personal data, please see <a href="#">Spotify Privacy Policy</a>.</p>
+    </div>
+
+    <button
+        type="submit">
+        Register
+    </button>
+</form>
