@@ -7,9 +7,13 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  FormBuilder,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthenticationService } from '../../services/authentication-service/authentication.service';
+import { error } from 'console';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,18 +30,36 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  public loginForm = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-  });
 
-  constructor() {
-    this.loginForm.markAsPristine();
+  loginForm: FormGroup;
+  // identifier: string = '';
+  // password: string = '';
+
+  constructor(private router: Router, private fb: FormBuilder, private authService: AuthenticationService) { 
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
   }
 
-  public handleLogin(): void {
-    alert(
-      `username: ${this.loginForm.get('username')!.value}\npassword: ${this.loginForm.get('password')!.value}`,
-    );
+  login() {
+    if (this.loginForm.valid) {
+      const { identifier, password } = this.loginForm.value;
+
+      this.authService.login(identifier, password).subscribe({
+        next: (response) => {
+          localStorage.setItem('token', response.token);
+          this.router.navigate(['']);
+        },
+        error: (error) => {
+          console.error('Login failed', error);
+        },
+        complete: () => {
+          console.log('Login complete');
+        }
+      });
+    }
+    
   }
+
 }

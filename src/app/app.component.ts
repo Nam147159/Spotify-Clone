@@ -10,15 +10,15 @@ import { ApiService } from '../services/api.service';
   styleUrl: './app.component.scss'
 })
 
-export class AppComponent implements OnInit {
-  message = '';
+export class AppComponent {
+  // message = '';
 
-  constructor(private apiService: ApiService) {}
+  // constructor(private apiService: ApiService) {}
 
-  ngOnInit() {
-    this.apiService.getMessage().subscribe((data: any) => {
-      this.message = data.message;
-      console.log(this.message);
-    });
-  }
+  // ngOnInit() {
+  //   this.apiService.getMessage().subscribe((data: any) => {
+  //     this.message = data.message;
+  //     console.log(this.message);
+  //   });
+  // }
 }

@@ -2,26 +2,31 @@
     <div>
         <h2>Popular Albums</h2>
         <div class="flex flex-row gap-3 overflow-y-hidden overflow-x-auto w-full">
-            <div *ngFor="let album of popularAlbums">
+            @for (album of popularAlbums; track $index) {
+            <div>
                 <album-card [album]="album"></album-card>
             </div>
+            }
         </div>
     </div>
     <div>
         <h2>Popular Artists</h2>
         <div class="flex flex-row gap-3 overflow-x-auto w-full">
-            <div *ngFor="let artist of popularArtists">
+            @for (artist of popularArtists; track $index) {
+            <div>
                 <artist-card [artist]="artist"></artist-card>
             </div>
+            }
         </div>
     </div>
     <div>
         <h2>Popular Artists</h2>
-
         <div class="flex flex-row gap-3 overflow-x-auto w-full">
-            <div *ngFor="let artist of popularArtists">
+            @for (artist of popularArtists; track $index) {
+            <div>
                 <artist-card [artist]="artist"></artist-card>
             </div>
+            }
         </div>
     </div>
 </div>
