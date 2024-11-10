@@ -1,0 +1,74 @@
+@import 'primeflex/primeflex.scss';
+
+div {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    display: inline-block; 
+}
+
+.card-hover:hover {
+    background-color: rgba(197, 183, 181, 0.7);
+}
+
+.image-container {
+    position: relative;
+    width: 100%; 
+    height: 0;
+    padding-top: 100%; 
+    overflow: hidden;
+}
+
+img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 50%; 
+}
+
+h3, h4 {
+    margin: 0; 
+}
+
+.overlay-button {
+    position: relative;
+    left: 75%;
+    transform: translate(-50%, -100%);
+    background-color: rgba(95, 193, 95, 1);
+    color: white;
+    border: none;
+    padding: 18px 18px;
+    font-size: 16px;
+    border-radius: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: bottom 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay-button:hover {
+    position: relative;
+    left: 75%;
+    transform: translate(-50%, -100%) scale(1.2);
+    background-color: rgba(95, 193, 95, 1);
+    color: white;
+    border: none;
+    padding: 18px 18px;
+    font-size: 16px;
+    border-radius: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: bottom 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay-container {
+    height: 0px;
+}
+
+.card-container:hover .overlay-button {
+    bottom: 10px;
+    opacity: 1;
+    visibility: visible;
+}
