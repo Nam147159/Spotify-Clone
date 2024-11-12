@@ -37,7 +37,7 @@ export class LoginComponent {
 
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthenticationService) { 
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      identifier: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
@@ -46,9 +46,12 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { identifier, password } = this.loginForm.value;
 
+      console.log(identifier + ' ' + password);
+
       this.authService.login(identifier, password).subscribe({
         next: (response) => {
           localStorage.setItem('token', response.token);
+          console.log(response);
           this.router.navigate(['']);
         },
         error: (error) => {

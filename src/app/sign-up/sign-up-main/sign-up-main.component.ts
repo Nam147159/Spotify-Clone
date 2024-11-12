@@ -6,6 +6,7 @@ import { SignUpStep3Component } from '../sign-up-step-3/sign-up-step-3.component
 import { StepIndicatorComponent } from '../step-indicator/step-indicator.component';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { SignUpService } from '../../../services/sign-up-service/sign-up.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,7 +24,7 @@ import { SignUpService } from '../../../services/sign-up-service/sign-up.service
 })
 export class SignUpMainComponent {
 
-  constructor(private signupService: SignUpService) {}
+  constructor(private router: Router, private signupService: SignUpService) {}
 
   public step = 0;
   public password = '';
@@ -94,6 +95,8 @@ export class SignUpMainComponent {
         next: (response) => {
           console.log('User registered:', response);
           alert('Đăng ký thành công!');
+          this.router.navigate(['']);
+          
         },
         error: (error) => {
             console.error('Error during registration:', error);

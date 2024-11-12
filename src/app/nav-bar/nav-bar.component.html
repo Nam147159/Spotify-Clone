@@ -7,12 +7,22 @@
                 <button id="search-btn">
                     <img src="/public/search-icon.png" id="search-btn-icon">
                 </button>
-                <input type="text" placeholder="What do you want to play?" class="search-input" id="search-box"/>
+                <input type="text" placeholder="What do you want to play?" class="search-input" id="search-box" />
             </div>
         </div>
+        @if (!isLoggedIn) {
         <div class="nav-right">
             <a href="sign-up" class="nav-btn" id="sign-up-btn">Sign Up</a>
             <a href="login" class="nav-btn" id="login-btn">Login</a>
         </div>
+        }
+        @if (isLoggedIn) {
+        <div class="nav-right">
+            <a href="" class="nav-btn" id="explore-premium-btn">Explore Premium</a>
+            <a href="" class="nav-btn" id="install-app-btn">Install App</a>
+            <a href="" class="nav-btn" id="notification-btn">Notification</a>
+            <a href="" class="nav-btn" id="profile-btn">Profile</a>
+        </div>
+        }
     </nav>
 </div>
