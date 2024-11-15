@@ -10,6 +10,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './album-card.component.scss'
 })
 export class AlbumCardComponent {
+  isHovered: boolean = false;
+
+  onHover(isHovered: boolean): void {
+    this.isHovered = isHovered;
+  }
+
   @Input() album: { name: string; image: string; artistNames: string; } = {
     name: '',
     image: '',
