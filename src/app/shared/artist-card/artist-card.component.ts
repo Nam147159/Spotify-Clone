@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
+import { Artist } from '../../models/spotify.model';
 
 @Component({
   selector: 'artist-card',
@@ -10,9 +11,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './artist-card.component.scss'
 })
 export class ArtistCardComponent {
-  @Input() artist: { name: string; image: string; type: string; } = {
-    name: '',
-    image: '',
-    type: '',
-  }; 
+  @Input() artist!: Artist;
 }

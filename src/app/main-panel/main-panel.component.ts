@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlbumCardComponent } from '../shared/album-card/album-card.component';
 import { ArtistCardComponent } from '../shared/artist-card/artist-card.component';
 import { ScrollerModule } from 'primeng/scroller';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { MainPanelService } from '../../services/main-panel-service/main-panel.service';
+import { response } from 'express';
+import { error } from 'console';
+import { Album, Artist } from '../models/spotify.model';
 
 @Component({
   selector: 'app-main-panel',
@@ -12,26 +16,50 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
   templateUrl: './main-panel.component.html',
   styleUrl: './main-panel.component.scss'
 })
-export class MainPanelComponent {
-  popularAlbums = [
-    { name: 'Album 1', image: 'https://i.scdn.co/image/ab67616d00001e0226597c053b38c9cf93f8f3a9', artistNames: 'Artist names' },
-    { name: 'Album 1', image: 'https://i.scdn.co/image/ab67616d00001e0226597c053b38c9cf93f8f3a9', artistNames: 'Artist names' },
-    { name: 'Album 1', image: 'https://i.scdn.co/image/ab67616d00001e0226597c053b38c9cf93f8f3a9', artistNames: 'Artist names' },
-    { name: 'Album 1', image: 'https://i.scdn.co/image/ab67616d00001e0226597c053b38c9cf93f8f3a9', artistNames: 'Artist names' },
-    { name: 'Album 1', image: 'https://i.scdn.co/image/ab67616d00001e0226597c053b38c9cf93f8f3a9', artistNames: 'Artist names' },
-    { name: 'Album 1', image: 'https://i.scdn.co/image/ab67616d00001e0226597c053b38c9cf93f8f3a9', artistNames: 'Artist names' },
-    { name: 'Album 1', image: 'https://i.scdn.co/image/ab67616d00001e0226597c053b38c9cf93f8f3a9', artistNames: 'Artist names' },
-    { name: 'Album 1', image: 'https://i.scdn.co/image/ab67616d00001e0226597c053b38c9cf93f8f3a9', artistNames: 'Artist names' },
-  ];
+export class MainPanelComponent implements OnInit {
+  popularArtists: Artist[] = [];
+  popularAlbums: Album[] = []; 
 
-  popularArtists = [
-    { name: 'Name', image: 'https://i.scdn.co/image/2f0c6c465a83cd196e651e3d4e7625ba799a6f60', type: 'Artist' },
-    { name: 'Name', image: 'https://i.scdn.co/image/2f0c6c465a83cd196e651e3d4e7625ba799a6f60', type: 'Artist' },
-    { name: 'Name', image: 'https://i.scdn.co/image/2f0c6c465a83cd196e651e3d4e7625ba799a6f60', type: 'Artist' },
-    { name: 'Name', image: 'https://i.scdn.co/image/2f0c6c465a83cd196e651e3d4e7625ba799a6f60', type: 'Artist' },
-    { name: 'Name', image: 'https://i.scdn.co/image/2f0c6c465a83cd196e651e3d4e7625ba799a6f60', type: 'Artist' },
-    { name: 'Name', image: 'https://i.scdn.co/image/2f0c6c465a83cd196e651e3d4e7625ba799a6f60', type: 'Artist' },
-    { name: 'Name', image: 'https://i.scdn.co/image/2f0c6c465a83cd196e651e3d4e7625ba799a6f60', type: 'Artist' },
-    { name: 'Name', image: 'https://i.scdn.co/image/2f0c6c465a83cd196e651e3d4e7625ba799a6f60', type: 'Artist' },
-  ];
+  constructor(private mainPanelService: MainPanelService) { }
+
+  ngOnInit(): void {
+    this.fetchPopularArtists();
+    this.fetchPopularAlbums();
+  }
+
+  fetchPopularArtists(): void {
+    this.mainPanelService.getPopularArtists().subscribe({
+      next: (response: { success: boolean; message: string; data: Artist[] }) => {
+        if (response.success && Array.isArray(response.data)) {
+          this.popularArtists = response.data;
+        } else {
+          console.error('Invalid data structure:', response);
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching popular artists:', error);
+      },
+      complete: () => {
+        console.log('Popular artists fetch complete');
+      }
+    });
+  }
+
+  fetchPopularAlbums(): void {
+    this.mainPanelService.getPopularAlbums().subscribe({
+      next: (response: { success: boolean; message: string; data: Album[] }) => {
+        if (response.success && Array.isArray(response.data)) {
+          this.popularAlbums = response.data;
+        } else {
+          console.error('Invalid data structure:', response);
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching popular albums:', error);
+      },
+      complete: () => {
+        console.log('Popular albums fetch complete');
+      }
+    });
+  }
 }

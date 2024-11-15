@@ -186,6 +186,16 @@ a {
   gap: $input-gap;
 }
 
+.password-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  background-color: #090909;
+  outline: none;
+  border: 1px solid #414141;
+  border-radius: 4px;
+}
+
 .forgot-password {
   display: flex;
   justify-content: center;

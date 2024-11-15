@@ -4,7 +4,7 @@
     (mouseenter)="onHover(true)" 
     (mouseleave)="onHover(false)">
 
-    <img alt="{{ album.name }}" [src]="album.image" style="width: 100%; height: auto; border-radius: 10px;" />
+    <img alt="{{ album.name }}" [src]="album.images" style="width: 100%; height: auto; border-radius: 10px;" />
 
     <div class="overlay-container">
         <button class="overlay-button"><i class="pi pi-play"></i>
@@ -13,6 +13,6 @@
    
 
     <h3 class="font-light m-0">{{ album.name }}</h3>
-    <h4 class="font-light text-gray-400 m-0">{{ album.artistNames }}</h4>
+    <h4 class="font-light text-gray-400 m-0">{{ album.artists }}</h4>
 
 </div>

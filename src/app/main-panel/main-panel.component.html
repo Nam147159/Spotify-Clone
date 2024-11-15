@@ -1,39 +1,32 @@
-<div >
-    <div class="overflow-x-hidden">
-        <div class="flex md:justify-content-between">
-            <h2>Popular Albums</h2>
-            <p>Show all</p>
-        </div>
-        
-        <div class="section-flex-container">
-            <div class="card-hover" *ngFor="let album of popularAlbums">
+<div>
+    <div>
+        <h2>Popular Albums</h2>
+        <div class="flex flex-row gap-3 overflow-y-hidden overflow-x-auto w-full">
+            @for (album of popularAlbums; track $index) {
+            <div>
                 <album-card [album]="album"></album-card>
             </div>
+            }
         </div>
     </div>
-    <div class="overflow-x-hidden">
-        
-        <div class="flex md:justify-content-between">
-            <h2>Popular Artists</h2>
-            <p>Show all</p>
-        </div>
-        <div class="section-flex-container">
-            <div  class="card-hover" *ngFor="let artist of popularArtists">
+    <div>
+        <h2>Popular Artists</h2>
+        <div class="flex flex-row gap-3 overflow-x-auto w-full">
+            @for (artist of popularArtists; track $index) {
+            <div>
                 <artist-card [artist]="artist"></artist-card>
             </div>
+            }
         </div>
     </div>
-
-    <div class="overflow-x-hidden">
-        
-        <div class="flex md:justify-content-between">
-            <h2>Popular Artists</h2>
-            <p>Show all</p>
-        </div>
-        <div class="section-flex-container">
-            <div  class="card-hover" *ngFor="let artist of popularArtists">
+    <div>
+        <h2>Popular Artists</h2>
+        <div class="flex flex-row gap-3 overflow-x-auto w-full">
+            @for (artist of popularArtists; track $index) {
+            <div>
                 <artist-card [artist]="artist"></artist-card>
             </div>
+            }
         </div>
     </div>
 </div>

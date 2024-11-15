@@ -33,7 +33,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
+              "src/styles.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -44,68 +44,74 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
+              "fileReplacements": [
                 {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "final-project:build:production"
-            },
-            "development": {
-              "buildTarget": "final-project:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
+              "budgets": [
+                  {
+                    "type": "initial",
+                    "maximumWarning": "500kB",
+                    "maximumError": "1MB"
+                  },
+                  {
+                    "type": "anyComponentStyle",
+                    "maximumWarning": "2kB",
+                    "maximumError": "4kB"
+                  }
+                ],
+                "outputHashing": "all"
+              },
+              "development": {
+                "optimization": false,
+                "extractLicenses": false,
+                "sourceMap": true
               }
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
+            },
+            "defaultConfiguration": "production"
+          },
+          "serve": {
+            "builder": "@angular-devkit/build-angular:dev-server",
+            "configurations": {
+              "production": {
+                "buildTarget": "final-project:build:production"
+              },
+              "development": {
+                "buildTarget": "final-project:build:development"
+              }
+            },
+            "defaultConfiguration": "development"
+          },
+          "extract-i18n": {
+            "builder": "@angular-devkit/build-angular:extract-i18n"
+          },
+          "test": {
+            "builder": "@angular-devkit/build-angular:karma",
+            "options": {
+              "polyfills": [
+                "zone.js",
+                "zone.js/testing"
+              ],
+              "tsConfig": "tsconfig.spec.json",
+              "inlineStyleLanguage": "scss",
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "public"
+                }
+              ],
+              "styles": [
+                "src/styles.scss"
+              ],
+              "scripts": []
+            }
           }
         }
       }
+    },
+    "cli": {
+      "analytics": "4c8c6bb4-0ae0-4562-b943-474f95f00018"
     }
-  },
-  "cli": {
-    "analytics": "4c8c6bb4-0ae0-4562-b943-474f95f00018"
   }
-}

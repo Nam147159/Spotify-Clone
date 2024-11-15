@@ -5,6 +5,8 @@ import { SignUpStep2Component } from '../sign-up-step-2/sign-up-step-2.component
 import { SignUpStep3Component } from '../sign-up-step-3/sign-up-step-3.component';
 import { StepIndicatorComponent } from '../step-indicator/step-indicator.component';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { SignUpService } from '../../../services/sign-up-service/sign-up.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,8 +20,12 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
   ],
   templateUrl: './sign-up-main.component.html',
   styleUrls: ['./sign-up-main.component.scss'],
+  providers: [SignUpService]
 })
 export class SignUpMainComponent {
+
+  constructor(private router: Router, private signupService: SignUpService) {}
+
   public step = 0;
   public password = '';
 
@@ -75,22 +81,29 @@ export class SignUpMainComponent {
 
   public nextStep(): void {
     if (this.step === 3) {
-      const email = this.form.get("emailForm")!.get("email")!.value;
-      const password = this.form.get("passwordForm")!.get("password")!.value;
-      const username = this.form.get("infoForm")!.get("username")!.value;
-      const date = this.form.get("infoForm")!.get("date")!.value;
-      const gender = this.form.get("infoForm")!.get("gender")!.value;
-      const ads = this.form.get("registerForm")!.get("ads")!.value;
-      const share = this.form.get("registerForm")!.get("share")!.value;
-      alert(`
-email: ${email}
-password: ${password}
-username: ${username}
-date: ${date}
-gender: ${gender}
-ads: ${ads}
-share: ${share}
-        `);
+      const formData = {
+        email: this.form.get("emailForm")!.get("email")!.value,
+        password: this.form.get("passwordForm")!.get("password")!.value,
+        username: this.form.get("infoForm")!.get("username")!.value,
+        dateOfBirth: this.form.get("infoForm")!.get("date")!.value,
+        gender: this.form.get("infoForm")!.get("gender")!.value,
+        //ads: this.form.get("registerForm")!.get("ads")!.value,
+        //share: this.form.get("registerForm")!.get("share")!.value,
+    };
+     
+      this.signupService.register(formData).subscribe({
+        next: (response) => {
+          console.log('User registered:', response);
+          alert('Đăng ký thành công!');
+          this.router.navigate(['']);
+          
+        },
+        error: (error) => {
+            console.error('Error during registration:', error);
+            alert('Đăng ký thất bại!');
+        }
+      });
+
       return;
     }
     this.step++;
