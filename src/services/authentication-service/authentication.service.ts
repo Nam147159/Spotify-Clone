@@ -1,9 +1,10 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { catchError, map } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
+import { StorageService } from '../storage-service/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,22 @@ export class AuthenticationService implements OnDestroy {
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  private isBrowser: boolean;
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.checkAuthStatus();
-    
-    // Thêm event listener cho việc đóng tab
-    window.addEventListener('beforeunload', this.handleTabClose.bind(this));
+  constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) platformId: Object, private storageService: StorageService) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    if (this.isBrowser) {
+      this.checkAuthStatus();
+      // Thêm event listener cho việc đóng tab
+      window.addEventListener('beforeunload', this.handleTabClose.bind(this));
+    }
   }
 
   ngOnDestroy() {
     // Xóa event listener khi service bị destroy
-    window.removeEventListener('beforeunload', this.handleTabClose.bind(this));
+    if (this.isBrowser) {
+      window.removeEventListener('beforeunload', this.handleTabClose.bind(this));
+    }
   }
 
   private handleTabClose() {
@@ -31,8 +37,10 @@ export class AuthenticationService implements OnDestroy {
 
   private checkAuthStatus(): void {
     // Sử dụng sessionStorage thay vì localStorage
-    const token = sessionStorage.getItem('token');
-    this.isAuthenticatedSubject.next(!!token);
+    if (this.isBrowser) {
+      const token = this.storageService.getItem('token');
+      this.isAuthenticatedSubject.next(!!token);
+    }
   }
 
   login(identifier: string, password: string): Observable<any> {
@@ -44,11 +52,24 @@ export class AuthenticationService implements OnDestroy {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']); // điều hướng về trang đăng nhập
+    if (this.isBrowser) {
+      sessionStorage.removeItem('token');
+      this.router.navigate(['/login']); // điều hướng về trang đăng nhập
+      this.isAuthenticatedSubject.next(false);
+    }
   }
 
   getToken(): string | null {
-    return sessionStorage.getItem('token');
+    if (this.isBrowser) {
+      return sessionStorage.getItem('token');
+    }
+    return null;
+  }
+
+  setToken(token: string): void {
+    if (this.isBrowser) {
+      sessionStorage.setItem('token', token);
+      this.isAuthenticatedSubject.next(true);
+    }
   }
 }

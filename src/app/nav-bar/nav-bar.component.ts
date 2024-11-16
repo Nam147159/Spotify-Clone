@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from './../../services/authentication-service/authentication.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,22 +9,32 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
-export class NavBarComponent implements OnInit{
+export class NavBarComponent implements OnInit, OnDestroy{
 
   isLoggedIn: boolean = false;
+  private authSubscription?: Subscription;
 
-  constructor (private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-    if (typeof window !== 'undefined' && window.sessionStorage) {
-        const token = sessionStorage.getItem('token');
-        if (token) {
-            this.isLoggedIn = true;
-        } else {
-            sessionStorage.removeItem('token'); // Xóa token không hợp lệ
-            this.isLoggedIn = false;
-        }
+    // Subscribe to authentication state changes
+    this.authSubscription = this.authService.isAuthenticated$.subscribe(
+      (isAuthenticated) => {
+        this.isLoggedIn = isAuthenticated;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscription when component is destroyed
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
-}
+  }
+
+  logout(): void {
+    this.authService.logout();
+    // Additional logout logic if needed (e.g., navigation)
+  }
   
 }
