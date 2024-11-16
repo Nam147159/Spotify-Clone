@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -29,7 +29,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   // identifier: string = '';
@@ -42,6 +42,13 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    // Kiểm tra nếu đã đăng nhập thì chuyển hướng
+    if (this.authService.getToken()) {
+      this.router.navigate(['']);
+    }
+  }
+
   login() {
     if (this.loginForm.valid) {
       const { identifier, password } = this.loginForm.value;
@@ -50,8 +57,10 @@ export class LoginComponent {
 
       this.authService.login(identifier, password).subscribe({
         next: (response) => {
-          localStorage.setItem('token', response.token);
+          sessionStorage.setItem('token', response.token);
+          this.authService['isAuthenticatedSubject'].next(true);
           console.log(response);
+          console.log(localStorage.getItem('token'));
           this.router.navigate(['']);
         },
         error: (error) => {
@@ -61,8 +70,7 @@ export class LoginComponent {
           console.log('Login complete');
         }
       });
-    }
-    
+    }  
   }
 
 }
