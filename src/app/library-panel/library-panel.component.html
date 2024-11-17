@@ -9,10 +9,9 @@
     </svg>
   </div>
 
-  <div class="tooltip" 
-  *ngIf="showTooltip"
-  (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false"
-  [@openClose]="showTooltip ? 'open' : 'closed'">
+  @if (showTooltip) {
+  <div class="tooltip" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false"
+    [@openClose]="showTooltip ? 'open' : 'closed'">
     <div class="title">Create a playlist</div>
     <div class="description">Log in to create and share playlists.</div>
     <div class="tooltip-actions">
@@ -20,20 +19,24 @@
       <button class="btn-primary">Log in</button>
     </div>
   </div>
+  }
 
-  <div class="section">
-    <div class="section-title">Create your first playlist</div>
-    <div class="section-description">It's easy, we'll help you</div>
-    <button (click)="toggleTooltip()">Create playlist</button>
+  <div class="panel-body">
+    <div class="section">
+      <div class="section-title">Create your first playlist</div>
+      <div class="section-description">It's easy, we'll help you</div>
+      <button (click)="toggleTooltip()">Create playlist</button>
+    </div>
+
+    <div style="height: 20px;"></div>
+
+    <div class="section">
+      <div class="section-title">Let's find some podcasts to follow</div>
+      <div class="section-description">We'll keep you updated on new episodes</div>
+      <button>Browse podcasts</button>
+    </div>
   </div>
 
-  <div style="height: 20px;"></div>
-
-  <div class="section">
-    <div class="section-title">Let's find some podcasts to follow</div>
-    <div class="section-description">We'll keep you updated on new episodes</div>
-    <button>Browse podcasts</button>
-  </div>
 
   <div class="footer">
     <div class="option-wrapper">
@@ -57,5 +60,5 @@
     </div>
   </div>
 
-  <div style="height: 40px;"></div>
+  <!-- <div style="height: 40px;"></div> -->
 </div>
