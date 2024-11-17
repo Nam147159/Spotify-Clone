@@ -18,7 +18,7 @@ import { Album, Artist } from '../models/spotify.model';
 })
 export class MainPanelComponent implements OnInit {
   popularArtists: Artist[] = [];
-  popularAlbums: Album[] = []; 
+  popularAlbums: Album[] = [];
 
   constructor(private mainPanelService: MainPanelService) { }
 

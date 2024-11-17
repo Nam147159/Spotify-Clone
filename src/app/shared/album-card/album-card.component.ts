@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { Album } from '../../models/spotify.model';
@@ -10,8 +10,11 @@ import { Album } from '../../models/spotify.model';
   templateUrl: './album-card.component.html',
   styleUrl: './album-card.component.scss'
 })
-export class AlbumCardComponent {
+export class AlbumCardComponent implements OnInit {
   @Input() album!: Album;
+
+  ngOnInit() {
+  }
 
   get artistNames(): string {
     return this.album.artists.map(artist => artist.name).join(', ');
@@ -21,5 +24,17 @@ export class AlbumCardComponent {
 
   onHover(isHovered: boolean): void {
     this.isHovered = isHovered;
+  }
+
+  getImageUrl(): string | null {
+    return this.album.images && this.album.images.length > 0 
+      ? this.album.images[0].url 
+      : null;
+  }
+
+  getArtistNames(): string {
+    return this.album.artists
+      .map(artist => artist.name)
+      .join(', ');
   }
 }

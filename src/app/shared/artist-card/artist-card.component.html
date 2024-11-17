@@ -1,19 +1,14 @@
 <p-card 
     [header]="artist.name" 
     [subheader]="artist.type"
-    [style]="{ width: '200px', backgroundColor: 'transparent', color: 'white' }">
+    [style]="{ width: '150px', backgroundColor: 'transparent', color: 'white' }">
 
     <ng-template pTemplate="header">
         <img 
             class="border-circle w-6rem h-6rem" 
             alt="{{ artist.name }}" 
-            [src]="artist.images?.[0]?.url"
-            style="width: 100%; height: 200px; border-radius: 100px;" 
+            [src]="getImageUrl()"
+            style="width: 100%; height: 200px; border-radius: 100px;"
         />
     </ng-template>
-
-    <p>Followers: {{ artist.followers?.total | number }}</p>
-    <p>Genres: {{ artist.genres?.join(', ') }}</p>
-    <a [href]="artist.external_urls.spotify" target="_blank">View on Spotify</a>
-
 </p-card>
