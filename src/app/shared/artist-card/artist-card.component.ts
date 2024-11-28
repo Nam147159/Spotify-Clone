@@ -17,7 +17,6 @@ export class ArtistCardComponent implements OnInit {
   }
 
   getImageUrl(): string | null {
-    console.log('Images array:', this.artist.images)
     return this.artist.images && this.artist.images.length > 0
       ? this.artist.images[0].url 
       : null;

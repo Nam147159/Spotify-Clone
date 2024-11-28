@@ -1,8 +1,8 @@
-<div>
+<div #mainDiv>
     <div>
         <h2>Recommend playlists</h2>
         <div class="flex flex-row gap-3 overflow-x-auto w-full">
-            @for (playlist of recommendedPlaylists.slice(0, 10); track $index) {
+            @for (playlist of recommendedPlaylists.slice(0, calculateDisplayedItems()); track $index) {
             <div>
                 <playlist-card [playlist]="playlist"></playlist-card>
             </div>
@@ -12,7 +12,7 @@
     <div>
         <h2>Top 100 playlists</h2>
         <div class="flex flex-row gap-3 overflow-x-auto w-full">
-            @for (playlist of top100Playlists.slice(0, 10); track $index) {
+            @for (playlist of top100Playlists.slice(0, calculateDisplayedItems()); track $index) {
             <div>
                 <playlist-card [playlist]="playlist"></playlist-card>
             </div>
@@ -22,7 +22,7 @@
     <div>
         <h2>Popular Albums</h2>
         <div class="flex flex-row gap-3 overflow-y-hidden overflow-x-auto w-full">
-            @for (album of popularAlbums.slice(0, 7); track $index) {
+            @for (album of popularAlbums.slice(0, calculateDisplayedItems()); track $index) {
             <div>
                 <album-card [album]="album"></album-card>
             </div>
@@ -32,7 +32,7 @@
     <div>
         <h2>Popular Artists</h2>
         <div class="flex flex-row gap-3 overflow-x-auto w-full">
-            @for (artist of popularArtists.slice(0, 7); track $index) {
+            @for (artist of popularArtists.slice(0, calculateDisplayedItems()); track $index) {
             <div>
                 <artist-card [artist]="artist"></artist-card>
             </div>

@@ -1,15 +1,16 @@
-@if (artist?.name && artist?.type && getImageUrl()) {
+
 <p-card 
     [header]="artist.name" 
     [subheader]="artist.type.charAt(0).toUpperCase() + artist.type.slice(1)"
-    class="w-15rem"
+    class="w-full"
     [style]="{backgroundColor: 'transparent', color: 'white' }">
 
     <ng-template pTemplate="header">
         <img 
-            class="border-circle w-15rem h-15rem" 
+            class="border-circle w-full" 
             alt="{{ artist.name }}" 
-            [src]="getImageUrl()"
+            [src]="getImageUrl()" 
+            style="height: auto;"
         />
     </ng-template>
-</p-card>}
+</p-card>
