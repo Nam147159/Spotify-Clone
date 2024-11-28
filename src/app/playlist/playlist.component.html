@@ -48,7 +48,7 @@
               (onChange)="sortItems()"
             >
               <ng-template let-option pTemplate="item">
-                <div class="flex justify-between ">
+                <div class="flex justify-between">
                   <span>{{ option.label }} </span>
 
                   @if (selectedSortOption.value === option.value) {
@@ -75,8 +75,8 @@
                   <i [ngClass]="option.icon"></i>
                   <span> {{ option.label }} </span>
                   @if (selectedViewOption.value === option.value) {
-                    <i class="pi pi-check text-green-400"></i>
-                    }
+                  <i class="pi pi-check text-green-400"></i>
+                  }
                 </div>
               </ng-template>
             </p-listbox>
@@ -85,53 +85,61 @@
       </p-overlayPanel>
     </ng-template>
   </p-menubar>
-  @if (selectedViewOption.value === 'compact') { @for (item of playlists; track
-  $index) {
-  <div class="flex flex-row p-fluid">
-    <p-button [text]="true">
-      <span> {{ item.title }} - {{ item.description }} </span>
-    </p-button>
-  </div>
-  } } @if (selectedViewOption.value !== 'compact') {
-  <p-dataView #dv [value]="playlists" [layout]="selectedViewOption.value">
-    <ng-template pTemplate="list">
+  @if (selectedViewOption.value === 'compact') {
+  <div>
+    <p-scrollPanel [style]="{ width: '100%', height: height }">
       @for (item of playlists; track $index) {
-      <div class="flex p-fluid">
+      <div class="flex flex-row p-fluid">
         <p-button [text]="true">
-          <p-image
-            class="block border-round"
-            [src]="item.cover"
-            [alt]="item.title"
-          />
-          <div>
-            <div class="">
-              {{ item.title }}
-            </div>
-            <div class="">
-              {{ item.description }} - {{ item.creator }}
-            </div>
-          </div>
+          <span> {{ item.title }} - {{ item.description }} </span>
         </p-button>
       </div>
       }
+    </p-scrollPanel>
+  </div>
+  } @if (selectedViewOption.value !== 'compact') {
+  <p-dataView #dv [value]="playlists" [layout]="selectedViewOption.value">
+    <ng-template pTemplate="list">
+      <div>
+        <p-scrollPanel [style]="{ width: '100%', height: height }">
+          @for (item of playlists; track $index) {
+          <div class="flex p-fluid">
+            <p-button [text]="true">
+              <p-image
+                class="block border-round"
+                [src]="item.cover"
+                [alt]="item.title"
+              />
+              <div>
+                <div class="">
+                  {{ item.title }}
+                </div>
+                <div class="">{{ item.description }} - {{ item.creator }}</div>
+              </div>
+            </p-button>
+          </div>
+
+          }
+        </p-scrollPanel>
+      </div>
     </ng-template>
 
     <ng-template pTemplate="grid">
-      @for (item of playlists; track $index) {
-      <p-button [text]="true">
-        <div>
-          <p-image [src]="item.cover" />
+      <p-scrollPanel [style]="{ width: '100%', height: height }">
+        @for (item of playlists; track $index) {
+        <p-button [text]="true">
           <div>
-            <div class="">
-              {{ item.title }}
-            </div>
-            <div class="">
-              {{ item.description }} - {{ item.creator }}
+            <p-image [src]="item.cover" />
+            <div>
+              <div class="">
+                {{ item.title }}
+              </div>
+              <div class="">{{ item.description }} - {{ item.creator }}</div>
             </div>
           </div>
-        </div>
-      </p-button>
-      }
+        </p-button>
+        }
+      </p-scrollPanel>
     </ng-template>
   </p-dataView>
   }

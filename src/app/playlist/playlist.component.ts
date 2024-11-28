@@ -13,6 +13,8 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { ImageModule } from 'primeng/image';
 import { MenubarModule } from 'primeng/menubar';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+
 
 @Component({
   selector: 'app-playlist',
@@ -32,6 +34,7 @@ import { MenubarModule } from 'primeng/menubar';
     AutoFocusModule,
     ImageModule,
     MenubarModule,
+    ScrollPanelModule,
   ],
   providers: [],
   templateUrl: './playlist.component.html',
@@ -41,6 +44,7 @@ export class PlaylistComponent {
   playlists!: any[];
   isInputVisible = false;
   searchTerm = '';
+  height = '500px'
 
   sortOptions = [
     { label: 'Recents', value: 'recents' },
@@ -55,9 +59,9 @@ export class PlaylistComponent {
     value: 'list' | 'grid' | 'compact';
     icon: string;
   }> = [
-    { label: 'Compact View', value: 'compact', icon: 'pi pi-bars' },
-    { label: 'List View', value: 'list', icon: 'pi pi-list' },
-    { label: 'Grid View', value: 'grid', icon: 'pi pi-th-large' },
+    { label: 'Compact', value: 'compact', icon: 'pi pi-bars' },
+    { label: 'List', value: 'list', icon: 'pi pi-list' },
+    { label: 'Grid', value: 'grid', icon: 'pi pi-th-large' },
   ];
 
   selectedViewOption = this.viewOptions[1];
@@ -67,6 +71,42 @@ export class PlaylistComponent {
 
   ngOnInit() {
     this.playlists = [
+      {
+        id: 1,
+        title: 'Chill Vibes',
+        cover: 'https://via.placeholder.com/150',
+        description: 'Relax and unwind',
+        creator: 'NTT',
+        addedDate: new Date('2023-11-26'),
+        lastModifiedDate: new Date('2023-11-26'),
+      },
+      {
+        id: 2,
+        title: 'Workout Beats',
+        cover: 'https://via.placeholder.com/150',
+        description: 'Get pumped up!',
+        creator: 'NTT',
+        addedDate: new Date('2023-11-24'),
+        lastModifiedDate: new Date('2023-11-28'),
+      },
+      {
+        id: 3,
+        title: 'Focus Time',
+        cover: 'https://via.placeholder.com/150',
+        description: 'Stay productive',
+        creator: 'NTT',
+        addedDate: new Date('2023-11-24'),
+        lastModifiedDate: new Date('2023-11-28'),
+      },
+      {
+        id: 4,
+        title: 'Party Hits',
+        cover: 'https://via.placeholder.com/150',
+        description: "Let's dance!",
+        creator: 'NTT',
+        addedDate: new Date('2023-11-25'),
+        lastModifiedDate: new Date('2023-11-27'),
+      },
       {
         id: 1,
         title: 'Chill Vibes',
@@ -131,22 +171,18 @@ export class PlaylistComponent {
   sortItems() {
     switch (this.selectedSortOption.value) {
       case 'recents': {
-        // Sắp xếp theo ngày chỉnh sửa gần nhất (lastModifiedDate)
         this.playlists.sort((a, b) => b.lastModifiedDate.getTime() - a.lastModifiedDate.getTime());
         break;
       }
       case 'recentlyAdded': {
-        // Sắp xếp theo ngày thêm gần nhất (addedDate)
         this.playlists.sort((a, b) => b.addedDate.getTime() - a.addedDate.getTime());
         break;
       }
       case 'alphabetical': {
-        // Sắp xếp theo tiêu đề (title) từ A-Z
         this.playlists.sort((a, b) => a.title.localeCompare(b.title));
         break;
       }
       case 'creator': {
-        // Sắp xếp theo tên người tạo (creator) từ A-Z
         this.playlists.sort((a, b) => a.creator.localeCompare(b.creator));
         break;
       }
