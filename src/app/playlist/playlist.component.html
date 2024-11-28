@@ -1,4 +1,6 @@
 <div class="card">
+  <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
+
   <p-menubar>
     <ng-template pTemplate="start">
       @if (!isInputVisible) {
@@ -96,11 +98,13 @@
       </div>
       }
     </p-scrollPanel>
+    <p-contextMenu [model]="contextMenuItems" [global]="true"/>
   </div>
   } @if (selectedViewOption.value !== 'compact') {
   <p-dataView #dv [value]="playlists" [layout]="selectedViewOption.value">
     <ng-template pTemplate="list">
       <div>
+        <p-contextMenu [model]="contextMenuItems" [global]="true"/>
         <p-scrollPanel [style]="{ width: '100%', height: height }">
           @for (item of playlists; track $index) {
           <div class="flex p-fluid">
@@ -125,6 +129,7 @@
     </ng-template>
 
     <ng-template pTemplate="grid">
+      <p-contextMenu [model]="contextMenuItems" [global]="true"/>
       <p-scrollPanel [style]="{ width: '100%', height: height }">
         @for (item of playlists; track $index) {
         <p-button [text]="true">

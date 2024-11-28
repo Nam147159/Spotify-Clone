@@ -14,7 +14,7 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { ImageModule } from 'primeng/image';
 import { MenubarModule } from 'primeng/menubar';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-
+import { ContextMenuModule } from 'primeng/contextmenu';
 
 @Component({
   selector: 'app-playlist',
@@ -35,6 +35,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     ImageModule,
     MenubarModule,
     ScrollPanelModule,
+    ContextMenuModule,
   ],
   providers: [],
   templateUrl: './playlist.component.html',
@@ -66,6 +67,19 @@ export class PlaylistComponent {
 
   selectedViewOption = this.viewOptions[1];
   dv = { layout: this.selectedViewOption.value };
+
+  contextMenuItems = [
+    {
+      label: 'Create playlist',
+      icon: 'pi pi-pencil',
+      // command: () => this.editProduct(this.selectedProduct),
+    },
+    {
+      label: 'Create folder',
+      icon: 'pi pi-trash',
+      // command: () => this.deleteProduct(this.selectedProduct),
+    },
+  ];
 
   constructor() {}
 
