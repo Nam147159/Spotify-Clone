@@ -47,7 +47,9 @@ export class PlaylistComponent {
     { label: 'List', icon: 'pi pi-list', value: 'list' },
     { label: 'Grid', icon: 'pi pi-th-large', value: 'grid' },
   ];
+  
   selectedViewOption = this.viewOptions[0];
+  dv = { layout: this.selectedViewOption.value };
   constructor(){}
 
   ngOnInit() {
@@ -61,5 +63,10 @@ export class PlaylistComponent {
     //     this.products = data;
     //     console.log(this.products);
     // });
+  }
+
+  changeView(event: any) {
+    console.log(event.value.value);
+    this.dv.layout = event.value.value;
   }
 }

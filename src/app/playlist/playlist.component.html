@@ -1,7 +1,7 @@
 <div class="card">
   <p-dataView #dv [value]="products">
     <ng-template pTemplate="header">
-      <div class="flex flex-row justify-content-end">
+      <div class="flex justify-end">
         <input pInputText />
         <p-button
           [label]="selectedSortOption.label"
@@ -13,7 +13,6 @@
 
         <p-overlayPanel #op>
           <div class="p-4 w-64 bg-gray-900 text-white rounded-md">
-            <!-- Sort by Section -->
             <div>
               <p class="text-sm font-semibold mb-2 text-gray-400">Sort by</p>
               <p-listbox
@@ -22,12 +21,23 @@
                 optionLabel="label"
                 class="bg-gray-800 text-white"
               >
+                <ng-template let-option pTemplate="item">
+                  <div class="flex justify-between">
+                    <!-- Hiển thị tên của tùy chọn -->
+                    <span>{{ option.label }}</span>
+
+                    <!-- Hiển thị biểu tượng nếu tùy chọn được chọn -->
+                    @if (selectedSortOption.value === option.value) {
+                    <i class="pi pi-check text-green-400"></i>
+                    }
+                  </div>
+                </ng-template>
               </p-listbox>
+              
             </div>
 
             <hr class="my-4 border-gray-700" />
 
-            <!-- View as Section -->
             <div>
               <p class="text-sm font-semibold mb-2 text-gray-400">Sort by</p>
               <p-listbox
@@ -35,12 +45,15 @@
                 [(ngModel)]="selectedViewOption"
                 optionLabel="label"
                 class="bg-gray-800 text-white"
+                (onChange)="changeView($event)"
               >
               </p-listbox>
+              <!-- <p-dataViewLayoutOptions/> -->
+
             </div>
           </div>
         </p-overlayPanel>
-        <p-dataViewLayoutOptions />
+
       </div>
     </ng-template>
 
