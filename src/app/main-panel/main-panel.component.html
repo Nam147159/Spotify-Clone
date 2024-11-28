@@ -1,5 +1,25 @@
 <div>
     <div>
+        <h2>Recommend playlists</h2>
+        <div class="flex flex-row gap-3 overflow-x-auto w-full">
+            @for (playlist of recommendedPlaylists.slice(0, 10); track $index) {
+            <div>
+                <playlist-card [playlist]="playlist"></playlist-card>
+            </div>
+            }
+        </div>
+    </div>
+    <div>
+        <h2>Top 100 playlists</h2>
+        <div class="flex flex-row gap-3 overflow-x-auto w-full">
+            @for (playlist of top100Playlists.slice(0, 10); track $index) {
+            <div>
+                <playlist-card [playlist]="playlist"></playlist-card>
+            </div>
+            }
+        </div>
+    </div>
+    <div>
         <h2>Popular Albums</h2>
         <div class="flex flex-row gap-3 overflow-y-hidden overflow-x-auto w-full">
             @for (album of popularAlbums.slice(0, 7); track $index) {
