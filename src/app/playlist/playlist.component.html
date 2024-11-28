@@ -1,19 +1,55 @@
 <div class="card">
-  <p-dataView #dv [value]="products" [layout]="'grid'">
+  <p-dataView #dv [value]="products">
     <ng-template pTemplate="header">
-      <div class="flex justify-content-end">
+      <div class="flex flex-row justify-content-end">
+        <input pInputText />
+        <p-button
+          [label]="selectedSortOption.label"
+          [icon]="selectedViewOption.icon"
+          [iconPos]="'right'"
+          [text]="true"
+          (onClick)="op.toggle($event)"
+        />
+
+        <p-overlayPanel #op>
+          <div class="p-4 w-64 bg-gray-900 text-white rounded-md">
+            <!-- Sort by Section -->
+            <div>
+              <p class="text-sm font-semibold mb-2 text-gray-400">Sort by</p>
+              <p-listbox
+                [options]="sortOptions"
+                [(ngModel)]="selectedSortOption"
+                optionLabel="label"
+                class="bg-gray-800 text-white"
+              >
+              </p-listbox>
+            </div>
+
+            <hr class="my-4 border-gray-700" />
+
+            <!-- View as Section -->
+            <div>
+              <p class="text-sm font-semibold mb-2 text-gray-400">Sort by</p>
+              <p-listbox
+                [options]="viewOptions"
+                [(ngModel)]="selectedViewOption"
+                optionLabel="label"
+                class="bg-gray-800 text-white"
+              >
+              </p-listbox>
+            </div>
+          </div>
+        </p-overlayPanel>
         <p-dataViewLayoutOptions />
       </div>
     </ng-template>
+
     <ng-template pTemplate="list" let-products>
       <div class="grid grid-nogutter">
         <div class="col-12 flex flex-column">
           @for (item of products; track $index) {
-          <div
-            class="flex flex-column p-4 gap-3 p-fluid"
-            [ngClass]="{ 'border-top-1 surface-border': !$index }"
-          >
-            <p-button>
+          <div class="flex flex-column p-4 gap-3 p-fluid">
+            <p-button [text]="true">
               <div class="md:w-10rem relative">
                 <img
                   class="block xl:block mx-auto border-round w-full"
@@ -43,29 +79,27 @@
         </div>
       </div>
     </ng-template>
+
     <ng-template let-product pTemplate="grid" let-products>
       <div class="grid grid-nogutter">
         <div class="col-12 sm:col-6 md:col-4 xl:col-6 p-2">
           @for (product of products; track $index) {
-          <div
-            class="p-4 border-1 surface-border surface-card border-round flex flex-column"
-          >
-            <p-button>
-              <div
-                class="surface-50 flex justify-content-center border-round p-3"
-              >
-                <div class="relative mx-auto">
-                  <img
-                    class="border-round w-full"
-                    [src]="
-                      'https://primefaces.org/cdn/primeng/images/demo/product/' +
-                      product.image
-                    "
-                    [alt]="product.name"
-                    style="max-width: 300px"
-                  />
-                </div>
+          <p-button>
+            <div
+              class="surface-50 flex justify-content-center border-round p-3 flex flex-col"
+            >
+              <div class="relative mx-auto">
+                <img
+                  class="border-round w-full"
+                  [src]="
+                    'https://primefaces.org/cdn/primeng/images/demo/product/' +
+                    product.image
+                  "
+                  [alt]="product.name"
+                  style="max-width: 300px"
+                />
               </div>
+
               <div class="pt-4">
                 <div
                   class="flex flex-row justify-content-between align-items-start gap-2"
@@ -82,8 +116,8 @@
                   }}</span>
                 </div>
               </div>
-            </p-button>
-          </div>
+            </div>
+          </p-button>
           }
         </div>
       </div>

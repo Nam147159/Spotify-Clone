@@ -4,6 +4,12 @@ import { DataViewModule } from 'primeng/dataview';
 import { ListboxModule } from 'primeng/listbox';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ToastModule } from 'primeng/toast';
+import { FormsModule } from '@angular/forms';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { DropdownModule } from 'primeng/dropdown';
+
 
 @Component({
   selector: 'app-playlist',
@@ -14,18 +20,35 @@ import { CommonModule } from '@angular/common';
     ListboxModule,
     ButtonModule,
     CommonModule,
+    OverlayPanelModule,
+    ToastModule,
+    FormsModule,
+    SelectButtonModule,
+    DropdownModule
   ],
   providers: [],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss',
 })
 export class PlaylistComponent {
-  layout: string = `list`;
-
   products!: any[];
 
-  constructor() // private testService: MainPanelService
-  {}
+  sortOptions = [
+    { label: 'Recents', value: 'recents' },
+    { label: 'Recently Added', value: 'recentlyAdded' },
+    { label: 'Alphabetical', value: 'alphabetical' },
+    { label: 'Creator', value: 'creator' },
+    { label: 'Custom Order', value: 'customOrder' },
+  ];
+  selectedSortOption = this.sortOptions[1];
+
+  viewOptions = [
+    { label: 'Compact', icon: 'pi pi-bars', value: 'compact' },
+    { label: 'List', icon: 'pi pi-list', value: 'list' },
+    { label: 'Grid', icon: 'pi pi-th-large', value: 'grid' },
+  ];
+  selectedViewOption = this.viewOptions[0];
+  constructor(){}
 
   ngOnInit() {
     this.products = [
