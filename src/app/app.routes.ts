@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpMainComponent } from './sign-up/sign-up-main/sign-up-main.component';
+import { PlaylistComponent } from './playlist/playlist.component';
 
 export const routes: Routes = [
   {
@@ -19,4 +20,9 @@ export const routes: Routes = [
     component: LoginComponent,
     title: 'Spotify - Web Player: Music for everyone',
   },
+  {
+    path: 'playlist',
+    component: PlaylistComponent,
+    title: 'Spotify - Web Player: Music for everyone',
+  }
 ];
