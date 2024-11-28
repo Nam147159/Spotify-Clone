@@ -1,139 +1,138 @@
 <div class="card">
-  <p-dataView #dv [value]="products">
-    <ng-template pTemplate="header">
-      <div class="flex justify-end">
-        <input pInputText />
-        <p-button
-          [label]="selectedSortOption.label"
-          [icon]="selectedViewOption.icon"
-          [iconPos]="'right'"
-          [text]="true"
-          (onClick)="op.toggle($event)"
+  <p-menubar>
+    <ng-template pTemplate="start">
+      @if (!isInputVisible) {
+      <p-button
+        class="p-button-rounded"
+        icon="pi pi-search"
+        [text]="true"
+        (click)="showInput()"
+      />
+      } @if (isInputVisible) {
+      <p-inputGroup>
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-search text-gray-400"></i>
+        </span>
+        <input
+          pInputText
+          pAutoFocus
+          [autofocus]="true"
+          [(ngModel)]="searchTerm"
+          placeholder="Search"
+          (blur)="hideInput()"
+          class="p-inputtext-sm bg-gray-800 text-white rounded"
+          (keydown.enter)="performSearch()"
         />
+      </p-inputGroup>
+      }
+    </ng-template>
 
-        <p-overlayPanel #op>
-          <div class="p-4 w-64 bg-gray-900 text-white rounded-md">
-            <div>
-              <p class="text-sm font-semibold mb-2 text-gray-400">Sort by</p>
-              <p-listbox
-                [options]="sortOptions"
-                [(ngModel)]="selectedSortOption"
-                optionLabel="label"
-                class="bg-gray-800 text-white"
-              >
-                <ng-template let-option pTemplate="item">
-                  <div class="flex justify-between">
-                    <!-- Hiển thị tên của tùy chọn -->
-                    <span>{{ option.label }}</span>
+    <ng-template pTemplate="end">
+      <p-button
+        [label]="selectedSortOption.label"
+        [icon]="selectedViewOption.icon"
+        [iconPos]="'right'"
+        [text]="true"
+        (onClick)="op.toggle($event)"
+      />
 
-                    <!-- Hiển thị biểu tượng nếu tùy chọn được chọn -->
-                    @if (selectedSortOption.value === option.value) {
+      <p-overlayPanel #op>
+        <div class="p-4 w-64 bg-gray-900 text-white rounded-md">
+          <div>
+            <p class="text-sm font-semibold mb-2 text-gray-400">Sort by</p>
+            <p-listbox
+              [options]="sortOptions"
+              [(ngModel)]="selectedSortOption"
+              optionLabel="label"
+              class="bg-gray-800 text-white"
+              (onChange)="sortItems()"
+            >
+              <ng-template let-option pTemplate="item">
+                <div class="flex justify-between ">
+                  <span>{{ option.label }} </span>
+
+                  @if (selectedSortOption.value === option.value) {
+                  <i class="pi pi-check text-green-400"></i>
+                  }
+                </div>
+              </ng-template>
+            </p-listbox>
+          </div>
+
+          <hr class="my-4 border-gray-700" />
+
+          <div>
+            <p class="text-sm font-semibold mb-2 text-gray-400">Sort by</p>
+            <p-listbox
+              [options]="viewOptions"
+              [(ngModel)]="selectedViewOption"
+              optionLabel="label"
+              class="bg-gray-800 text-white"
+              (onChange)="changeView($event)"
+            >
+              <ng-template let-option pTemplate="item">
+                <div class="flex items-center gap-2">
+                  <i [ngClass]="option.icon"></i>
+                  <span> {{ option.label }} </span>
+                  @if (selectedViewOption.value === option.value) {
                     <i class="pi pi-check text-green-400"></i>
                     }
-                  </div>
-                </ng-template>
-              </p-listbox>
-              
+                </div>
+              </ng-template>
+            </p-listbox>
+          </div>
+        </div>
+      </p-overlayPanel>
+    </ng-template>
+  </p-menubar>
+  @if (selectedViewOption.value === 'compact') { @for (item of playlists; track
+  $index) {
+  <div class="flex flex-row p-fluid">
+    <p-button [text]="true">
+      <span> {{ item.title }} - {{ item.description }} </span>
+    </p-button>
+  </div>
+  } } @if (selectedViewOption.value !== 'compact') {
+  <p-dataView #dv [value]="playlists" [layout]="selectedViewOption.value">
+    <ng-template pTemplate="list">
+      @for (item of playlists; track $index) {
+      <div class="flex p-fluid">
+        <p-button [text]="true">
+          <p-image
+            class="block border-round"
+            [src]="item.cover"
+            [alt]="item.title"
+          />
+          <div>
+            <div class="">
+              {{ item.title }}
             </div>
-
-            <hr class="my-4 border-gray-700" />
-
-            <div>
-              <p class="text-sm font-semibold mb-2 text-gray-400">Sort by</p>
-              <p-listbox
-                [options]="viewOptions"
-                [(ngModel)]="selectedViewOption"
-                optionLabel="label"
-                class="bg-gray-800 text-white"
-                (onChange)="changeView($event)"
-              >
-              </p-listbox>
-              <!-- <p-dataViewLayoutOptions/> -->
-
+            <div class="">
+              {{ item.description }} - {{ item.creator }}
             </div>
           </div>
-        </p-overlayPanel>
-
+        </p-button>
       </div>
+      }
     </ng-template>
 
-    <ng-template pTemplate="list" let-products>
-      <div class="grid grid-nogutter">
-        <div class="col-12 flex flex-column">
-          @for (item of products; track $index) {
-          <div class="flex flex-column p-4 gap-3 p-fluid">
-            <p-button [text]="true">
-              <div class="md:w-10rem relative">
-                <img
-                  class="block xl:block mx-auto border-round w-full"
-                  [src]="
-                    'https://primefaces.org/cdn/primeng/images/demo/product/' +
-                    item.image
-                  "
-                  [alt]="item.name"
-                />
-              </div>
-              <div
-                class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4"
-              >
-                <div
-                  class="flex flex-row md:flex-column justify-content-between align-items-start gap-2"
-                >
-                  <div>
-                    <span class="font-medium text-secondary text-sm">{{
-                      item.category
-                    }}</span>
-                  </div>
-                </div>
-              </div>
-            </p-button>
-          </div>
-          }
-        </div>
-      </div>
-    </ng-template>
-
-    <ng-template let-product pTemplate="grid" let-products>
-      <div class="grid grid-nogutter">
-        <div class="col-12 sm:col-6 md:col-4 xl:col-6 p-2">
-          @for (product of products; track $index) {
-          <p-button>
-            <div
-              class="surface-50 flex justify-content-center border-round p-3 flex flex-col"
-            >
-              <div class="relative mx-auto">
-                <img
-                  class="border-round w-full"
-                  [src]="
-                    'https://primefaces.org/cdn/primeng/images/demo/product/' +
-                    product.image
-                  "
-                  [alt]="product.name"
-                  style="max-width: 300px"
-                />
-              </div>
-
-              <div class="pt-4">
-                <div
-                  class="flex flex-row justify-content-between align-items-start gap-2"
-                >
-                  <div>
-                    <span class="font-medium text-secondary text-sm">{{
-                      product.category
-                    }}</span>
-                  </div>
-                </div>
-                <div class="flex flex-column gap-4 mt-4">
-                  <span class="text-2xl font-semibold">{{
-                    "$" + product.price
-                  }}</span>
-                </div>
-              </div>
+    <ng-template pTemplate="grid">
+      @for (item of playlists; track $index) {
+      <p-button [text]="true">
+        <div>
+          <p-image [src]="item.cover" />
+          <div>
+            <div class="">
+              {{ item.title }}
             </div>
-          </p-button>
-          }
+            <div class="">
+              {{ item.description }} - {{ item.creator }}
+            </div>
+          </div>
         </div>
-      </div>
+      </p-button>
+      }
     </ng-template>
   </p-dataView>
+  }
 </div>
