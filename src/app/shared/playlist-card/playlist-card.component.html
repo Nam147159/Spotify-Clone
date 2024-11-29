@@ -1,10 +1,11 @@
 <div 
-    [style]="{ backgroundColor: 'transparent', color: 'white', borderRadius: '10px', padding: '5px'}"
-    class="card-container  w-full max-w-12rem"
+    [ngStyle]="{'background-color': isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent'}"
+    [style]="{width: width, backgroundColor: 'transparent', color: 'white', borderRadius: '10px', padding: '10px'}"
+    class="card-container"
     (mouseenter)="onHover(true)" 
     (mouseleave)="onHover(false)">
 
-    <img alt="{{ playlist?.name }}" [src]="getImageUrl()" style="width: 100%; height: auto; border-radius: 10px;" />
+    <img alt="{{ playlist.name }}" [src]="getImageUrl()" style="width: 100%; height: auto; border-radius: 10px;" />
 
     <div class="overlay-container">
         <button class="overlay-button"><i class="pi pi-play"></i>

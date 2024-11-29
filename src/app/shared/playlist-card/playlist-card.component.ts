@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CardModule, CommonModule],
   templateUrl: './playlist-card.component.html',
-  styleUrl: './playlist-card.component.scss'
+  styleUrls: ['./playlist-card.component.scss']
 })
 export class PlaylistCardComponent implements OnInit {
   @Input() playlist!: Playlist; 
+  @Input() width: string = '200px';
 
   ngOnInit() {
   }

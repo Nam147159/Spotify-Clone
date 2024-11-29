@@ -1,6 +1,8 @@
 <div
-    [style]="{backgroundColor: 'transparent', color: 'white', borderRadius: '10px', padding: '5px'}"
-    class="card-container w-full max-w-12rem"
+
+    [ngStyle]="{'background-color': isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent'}"
+    [style]="{backgroundColor: 'transparent', color: 'white', borderRadius: '10px', padding: '10px'}"
+    class="card-container w-full max-w-15rem"
     (mouseenter)="onHover(true)" 
     (mouseleave)="onHover(false)">
 

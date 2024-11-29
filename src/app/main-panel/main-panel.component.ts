@@ -36,11 +36,13 @@ export class MainPanelComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.calculateDisplayedItems();
+    this.widthPerCard();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.calculateDisplayedItems();
+    this.widthPerCard();  
   }
 
   getMainWidth(): number {
@@ -49,6 +51,13 @@ export class MainPanelComponent implements OnInit, AfterViewInit {
       return divWidth;
     }
     return 1000;
+  }
+
+  widthPerCard(): string {
+    const divWidth = this.getMainWidth();
+    const itemsToShow = this.calculateDisplayedItems();
+    const width = divWidth / itemsToShow;
+    return width + 'px';
   }
 
   calculateDisplayedItems(): number {

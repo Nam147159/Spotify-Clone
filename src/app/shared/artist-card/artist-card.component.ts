@@ -12,8 +12,15 @@ import { Artist } from '../../models/spotify.model';
 })
 export class ArtistCardComponent implements OnInit {
   @Input() artist!: Artist;
+  @Input() width: string = '200px';
+
+  isHovered: boolean = false
 
   ngOnInit() {
+  }
+
+  onHover(isHovered: boolean): void {
+    this.isHovered = isHovered;
   }
 
   getImageUrl(): string | null {
