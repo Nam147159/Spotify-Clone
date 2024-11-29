@@ -36,9 +36,9 @@
 
   <div class="panel-body">
     <!-- playlist -->
-    @if (playlist>0) {
+    @if (isPlaylistVisible) {
     <app-playlist></app-playlist>
-    } @if (playlist < 1) {
+    } @if (!isPlaylistVisible) {
 
     <div class="section">
       <div class="section-title">Create your first playlist</div>

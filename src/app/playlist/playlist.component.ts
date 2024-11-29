@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { DataViewModule } from 'primeng/dataview';
 import { ListboxModule } from 'primeng/listbox';
@@ -42,10 +42,11 @@ import { ContextMenuModule } from 'primeng/contextmenu';
   styleUrl: './playlist.component.scss',
 })
 export class PlaylistComponent {
-  playlists!: any[];
+  playlists: any[] = [];
   isInputVisible = false;
   searchTerm = '';
-  height = '500px'
+  filteredPlaylists = [...this.playlists];
+  height = '500px';
 
   sortOptions = [
     { label: 'Recents', value: 'recents' },
@@ -71,125 +72,61 @@ export class PlaylistComponent {
   contextMenuItems = [
     {
       label: 'Create playlist',
-      icon: 'pi pi-pencil',
-      // command: () => this.editProduct(this.selectedProduct),
+      icon: 'pi pi-file-plus',
+      command: () => this.createPlaylist(),
     },
     {
       label: 'Create folder',
-      icon: 'pi pi-trash',
-      // command: () => this.deleteProduct(this.selectedProduct),
+      icon: 'pi pi-folder-plus',
+      // command: () => this.createFolder(),
     },
   ];
 
   constructor() {}
 
   ngOnInit() {
-    this.playlists = [
-      {
-        id: 1,
-        title: 'Chill Vibes',
-        cover: 'https://via.placeholder.com/150',
-        description: 'Relax and unwind',
-        creator: 'NTT',
-        addedDate: new Date('2023-11-26'),
-        lastModifiedDate: new Date('2023-11-26'),
-      },
-      {
-        id: 2,
-        title: 'Workout Beats',
-        cover: 'https://via.placeholder.com/150',
-        description: 'Get pumped up!',
-        creator: 'NTT',
-        addedDate: new Date('2023-11-24'),
-        lastModifiedDate: new Date('2023-11-28'),
-      },
-      {
-        id: 3,
-        title: 'Focus Time',
-        cover: 'https://via.placeholder.com/150',
-        description: 'Stay productive',
-        creator: 'NTT',
-        addedDate: new Date('2023-11-24'),
-        lastModifiedDate: new Date('2023-11-28'),
-      },
-      {
-        id: 4,
-        title: 'Party Hits',
-        cover: 'https://via.placeholder.com/150',
-        description: "Let's dance!",
-        creator: 'NTT',
-        addedDate: new Date('2023-11-25'),
-        lastModifiedDate: new Date('2023-11-27'),
-      },
-      {
-        id: 1,
-        title: 'Chill Vibes',
-        cover: 'https://via.placeholder.com/150',
-        description: 'Relax and unwind',
-        creator: 'NTT',
-        addedDate: new Date('2023-11-26'),
-        lastModifiedDate: new Date('2023-11-26'),
-      },
-      {
-        id: 2,
-        title: 'Workout Beats',
-        cover: 'https://via.placeholder.com/150',
-        description: 'Get pumped up!',
-        creator: 'NTT',
-        addedDate: new Date('2023-11-24'),
-        lastModifiedDate: new Date('2023-11-28'),
-      },
-      {
-        id: 3,
-        title: 'Focus Time',
-        cover: 'https://via.placeholder.com/150',
-        description: 'Stay productive',
-        creator: 'NTT',
-        addedDate: new Date('2023-11-24'),
-        lastModifiedDate: new Date('2023-11-28'),
-      },
-      {
-        id: 4,
-        title: 'Party Hits',
-        cover: 'https://via.placeholder.com/150',
-        description: "Let's dance!",
-        creator: 'NTT',
-        addedDate: new Date('2023-11-25'),
-        lastModifiedDate: new Date('2023-11-27'),
-      },
-    ];
-
-    // this.testService.getPopularAlbums().subscribe((data: any[]) => {
-    //     this.products = data;
-    //     console.log(this.products);
-    // });
+    if (this.playlists.length === 0) {
+      this.createPlaylist()
+    }
   }
 
-  changeView(event: any) {
+  public changeView(event: any) {
     console.log(event.value.value);
     this.dv.layout = event.value.value;
   }
 
-  showInput() {
+  public showInput() {
     this.isInputVisible = true;
   }
 
-  hideInput() {
+  public hideInput() {
     this.isInputVisible = false;
   }
 
-  performSearch() {
-    console.log('Searching for:', this.searchTerm);
+  public performSearch() {
+    const term = this.searchTerm.toLowerCase().trim();
+    if (term) {
+      this.filteredPlaylists = this.playlists.filter((playlist)=>
+      playlist.title.toLowerCase().includes(term) || playlist.description.toLowerCase().includes(term) || playlist.creator.toLowerCase().includes(term))
+    }
+    else {
+      this.filteredPlaylists = [...this.playlists];
+    }
+    
   }
 
-  sortItems() {
+  public sortItems() {
     switch (this.selectedSortOption.value) {
       case 'recents': {
-        this.playlists.sort((a, b) => b.lastModifiedDate.getTime() - a.lastModifiedDate.getTime());
+        this.playlists.sort(
+          (a, b) => b.lastModifiedDate.getTime() - a.lastModifiedDate.getTime()
+        );
         break;
       }
       case 'recentlyAdded': {
-        this.playlists.sort((a, b) => b.addedDate.getTime() - a.addedDate.getTime());
+        this.playlists.sort(
+          (a, b) => b.addedDate.getTime() - a.addedDate.getTime()
+        );
         break;
       }
       case 'alphabetical': {
@@ -205,6 +142,34 @@ export class PlaylistComponent {
         break;
       }
     }
+    this.filteredPlaylists = [...this.playlists]
   }
-  
+
+  public createPlaylist() {
+    if (this.playlists.length === 0) {
+      this.playlists.push({
+        id: 1,
+        title: 'My Playlist #1',
+        cover: 'https://via.placeholder.com/150',
+        description: 'Playlist',
+        creator: 'NTT',
+        addedDate: new Date(Date.now()),
+        lastModifiedDate: new Date(Date.now()),
+      });
+    } else {
+      this.playlists.push({
+        id: this.playlists[this.playlists.length - 1].id + 1,
+        title: `My Playlist #${
+          this.playlists[this.playlists.length - 1].id + 1
+        }`,
+        cover: 'https://via.placeholder.com/150',
+        description: 'Playlist',
+        creator: 'NTT',
+        addedDate: new Date(Date.now()),
+        lastModifiedDate: new Date(Date.now()),
+      });
+    }
+    this.filteredPlaylists = [...this.playlists]
+    console.log(this.playlists[this.playlists.length - 1]);
+  }
 }
