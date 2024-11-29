@@ -1,6 +1,6 @@
 <div class="card">
-  <p-contextMenu #cm [model]="contextMenu"/>
-  <p-contextMenu #cmItem [model]="contextMenuItems"/>
+  <p-contextMenu #cm [model]="contextMenu" />
+  <p-contextMenu #cmItem [model]="contextMenuItems" />
   <p-menubar>
     <ng-template pTemplate="start">
       @if (!isInputVisible) {
@@ -87,19 +87,24 @@
       </p-overlayPanel>
     </ng-template>
   </p-menubar>
+
   @if (selectedViewOption.value === 'compact') {
 
-  <div (contextmenu)="showMenu($event)">
-    <p-scrollPanel [style]="{ width: '100%', height: height }">
-      @for (item of filteredPlaylists; track $index) {
-      <div (contextmenu)="showMenuItem($event, item)" class="flex flex-row p-fluid">
-        <p-button [text]="true">
-          <span> {{ item.title }} - {{ item.description }} </span>
-        </p-button>
-      </div>
-      }
-    </p-scrollPanel>
-  </div>
+  <p-scrollPanel
+    (contextmenu)="showMenu($event)"
+    [style]="{ width: '100%', height: height }"
+  >
+    @for (item of filteredPlaylists; track $index) {
+    <div
+      (contextmenu)="showMenuItem($event, item)"
+      class="flex flex-row p-fluid"
+    >
+      <p-button [text]="true">
+        <span> {{ item.title }} - {{ item.description }} </span>
+      </p-button>
+    </div>
+    }
+  </p-scrollPanel>
   } @if (selectedViewOption.value !== 'compact') {
   <p-dataView
     #dv
@@ -151,4 +156,30 @@
     </ng-template>
   </p-dataView>
   }
+  <p-dialog
+    header="Edit details"
+    [modal]="true"
+    [(visible)]="dialogVisible"
+    [style]="{ width: '30rem', height: '30rem' }"
+  >
+    <div class="flex flex-row w-full">
+      <p-image [src]="selectedPlaylist.cover" [alt]="selectedPlaylist.title">
+      </p-image>
+      <div class="flex flex-col align-items-center gap-3 mb-5 p-fluid">
+        <input type="text" pInputText [(ngModel)]="selectedPlaylist.title" />
+        <textarea
+          rows="5"
+          cols="20"
+          pInputTextarea
+          [(ngModel)]="selectedPlaylist.description"
+          [autoResize]="true"
+        >
+        </textarea>
+      </div>
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Save" (onClick)="savePlaylist(selectedPlaylist)" />
+    </div>
+  </p-dialog>
 </div>

@@ -15,6 +15,8 @@ import { ImageModule } from 'primeng/image';
 import { MenubarModule } from 'primeng/menubar';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-playlist',
@@ -36,6 +38,8 @@ import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
     MenubarModule,
     ScrollPanelModule,
     ContextMenuModule,
+    DialogModule,
+    InputTextareaModule,
   ],
   providers: [],
   templateUrl: './playlist.component.html',
@@ -47,7 +51,17 @@ export class PlaylistComponent {
   @Output() playlistVisibilityChange = new EventEmitter<boolean>();
   playlists: any[] = [];
   isInputVisible = false;
-  selectedPlaylist: any;
+  dialogVisible = false;
+  selectedPlaylist: any = {
+    id: 0,
+    title: '',
+    cover: '',
+    description: '',
+    creator: '',
+    addedDate: new Date(Date.now()),
+    lastModifiedDate: new Date(Date.now()),
+  };
+
   searchTerm = '';
   filteredPlaylists = [...this.playlists];
   height = '600px';
@@ -98,7 +112,7 @@ export class PlaylistComponent {
     {
       label: 'Edit details',
       icon: 'pi pi-folder-plus',
-      // command: () => this.createFolder(),
+      command: () => this.editPlaylist(this.selectedPlaylist),
     },
     {
       label: 'Delete',
@@ -271,5 +285,19 @@ export class PlaylistComponent {
     if (this.playlists.length === 0) {
       this.playlistVisibilityChange.emit(false);
     }
+  }
+
+  public editPlaylist(playlist: any) {
+    this.selectedPlaylist = { ...playlist };
+    this.dialogVisible = true;
+  }
+
+  public savePlaylist(playlist: any) {
+    const index = this.playlists.findIndex(p => p.id === this.selectedPlaylist.id);
+    if (index !== -1) {
+      this.playlists[index] = { ...this.selectedPlaylist };
+    }
+    this.dialogVisible = false;
+    this.filteredPlaylists = [...this.playlists];
   }
 }
