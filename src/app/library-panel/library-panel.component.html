@@ -32,14 +32,10 @@
       <button class="btn-primary">Log in</button>
     </div>
   </div>
-  }
-
+  } @if (isPlaylistVisible) {
+  <app-playlist (playlistVisibilityChange)="changePlaylistVisibility($event)"></app-playlist>
+  } @if (!isPlaylistVisible) {
   <div class="panel-body">
-    <!-- playlist -->
-    @if (isPlaylistVisible) {
-    <app-playlist></app-playlist>
-    } @if (!isPlaylistVisible) {
-
     <div class="section">
       <div class="section-title">Create your first playlist</div>
       <div class="section-description">It's easy, we'll help you</div>
@@ -55,7 +51,6 @@
       </div>
       <button>Browse podcasts</button>
     </div>
-    }
   </div>
 
   <div class="footer">
@@ -79,6 +74,6 @@
       <div class="language">English</div>
     </div>
   </div>
-
+  }
   <!-- <div style="height: 40px;"></div> -->
 </div>

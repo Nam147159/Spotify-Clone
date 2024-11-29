@@ -1,5 +1,6 @@
 <div class="card">
-  <p-contextMenu #cm [model]="contextMenuItems" />
+  <p-contextMenu #cm [model]="contextMenu"/>
+  <p-contextMenu #cmItem [model]="contextMenuItems"/>
   <p-menubar>
     <ng-template pTemplate="start">
       @if (!isInputVisible) {
@@ -88,10 +89,10 @@
   </p-menubar>
   @if (selectedViewOption.value === 'compact') {
 
-  <div (contextmenu)="cm.show($event)">
+  <div (contextmenu)="showMenu($event)">
     <p-scrollPanel [style]="{ width: '100%', height: height }">
       @for (item of filteredPlaylists; track $index) {
-      <div class="flex flex-row p-fluid">
+      <div (contextmenu)="showMenuItem($event, item)" class="flex flex-row p-fluid">
         <p-button [text]="true">
           <span> {{ item.title }} - {{ item.description }} </span>
         </p-button>
@@ -104,13 +105,13 @@
     #dv
     [value]="filteredPlaylists"
     [layout]="selectedViewOption.value"
-    (contextmenu)="cm.show($event)"
+    (contextmenu)="showMenu($event)"
   >
     <ng-template pTemplate="list">
       <div>
         <p-scrollPanel [style]="{ width: '100%', height: height }">
           @for (item of filteredPlaylists; track $index) {
-          <div class="flex p-fluid">
+          <div (contextmenu)="showMenuItem($event, item)" class="flex p-fluid">
             <p-button [text]="true">
               <p-image
                 class="block border-round"
@@ -134,7 +135,7 @@
     <ng-template pTemplate="grid">
       <p-scrollPanel [style]="{ width: '100%', height: height }">
         @for (item of filteredPlaylists; track $index) {
-        <p-button [text]="true">
+        <p-button (contextmenu)="showMenuItem($event, item)" [text]="true">
           <div>
             <p-image [src]="item.cover" />
             <div>

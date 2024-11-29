@@ -17,7 +17,10 @@ export class LibraryPanelComponent {
   toggleTooltip() {
     this.showTooltip = !this.showTooltip;
     this.isPlaylistVisible = true
-    console.log(1)
+  }
+
+  public changePlaylistVisibility(value: boolean) {
+    this.isPlaylistVisible = value;
   }
 }
 
