@@ -1,22 +1,10 @@
-<<<<<<< HEAD
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpMainComponent } from './sign-up/sign-up-main/sign-up-main.component';
 import { PlaylistComponent } from './playlist/playlist.component';
-||||||| parent of dcf229a (basic profile page)
-import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { SignUpMainComponent } from './sign-up/sign-up-main/sign-up-main.component';
-=======
-import { Routes } from "@angular/router";
-import { HomeComponent } from "./home/home.component";
-import { LoginComponent } from "./login/login.component";
-import { SignUpMainComponent } from "./sign-up/sign-up-main/sign-up-main.component";
 import { UserProfileComponent } from "./user-profile/user-profile.component";
 import { MainPanelComponent } from "./main-panel/main-panel.component";
->>>>>>> dcf229a (basic profile page)
 
 export const routes: Routes = [
   {
