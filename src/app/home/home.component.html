@@ -10,7 +10,9 @@
       <router-outlet></router-outlet>
     </div>
   </div>
-  <div class="sign-up-bar">
-    <app-sign-up-bar></app-sign-up-bar>
-  </div>
+  @if (!isLoggedIn) {
+    <app-sign-up-bar class="signup-bar"></app-sign-up-bar>
+  } @else {
+    <app-sign-up-bar class="signup-bar"></app-sign-up-bar>
+  }
 </div>

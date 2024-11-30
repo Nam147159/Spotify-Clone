@@ -1,12 +1,1 @@
-<div class="layout">
-    <app-nav-bar class="navbar"></app-nav-bar>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-    @if (!isLoggedIn) {
-      <app-sign-up-bar class="signup-bar"></app-sign-up-bar>
-    }
-    @else {
-      <app-sign-up-bar class="signup-bar"></app-sign-up-bar>
-    }
-</div>
+<router-outlet></router-outlet>
