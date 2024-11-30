@@ -1,16 +1,30 @@
 <div class="container">
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
-  <p>Hello world Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis vitae optio ullam architecto quisquam cumque asperiores eligendi magni. Quos quo et eum architecto consequatur placeat ipsa, cum alias. Enim, expedita?</p>
+  <div class="header-container">
+    <div class="header">
+      <div class="avatar">
+        <img src="https://picsum.photos/300" alt="" />
+      </div>
+      <div class="brief-intro">
+        <p>Profile</p>
+        <h2>Username</h2>
+        <p>2 Public Playlists</p>
+      </div>
+    </div>
+  </div>
+  <div class="details">
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam
+      praesentium provident sint est aliquid? Autem ab dolorem error corrupti,
+      expedita nobis perspiciatis soluta incidunt ipsum dolorum odio. Quibusdam,
+      expedita corrupti.
+    </p>
+    <div class="albums">
+      <h2>Public Albums</h2>
+      <div class="flex overflow-x-auto overflow-y-hidden flex-row gap-3 w-ful">
+        @for (album of albums; track album.id) {
+          <album-card [album]="album"></album-card>
+        }
+      </div>
+    </div>
+  </div>
 </div>

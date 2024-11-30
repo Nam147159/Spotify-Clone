@@ -5,6 +5,7 @@ import { SignUpMainComponent } from "./sign-up/sign-up-main/sign-up-main.compone
 import { PlaylistComponent } from "./playlist/playlist.component";
 import { UserProfileComponent } from "./user-profile/user-profile.component";
 import { MainPanelComponent } from "./main-panel/main-panel.component";
+import { SettingsComponent } from "./settings/settings.component";
 
 export const routes: Routes = [
   {
@@ -25,6 +26,11 @@ export const routes: Routes = [
       {
         path: "playlist",
         component: PlaylistComponent,
+        title: "Spotify - Web Player: Music for everyone",
+      },
+      {
+        path: "settings",
+        component: SettingsComponent,
         title: "Spotify - Web Player: Music for everyone",
       },
     ],
