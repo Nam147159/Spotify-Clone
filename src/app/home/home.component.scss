@@ -4,11 +4,6 @@
   flex-direction: column;
 }
 
-.nav-bar {
-  margin: 0;
-  padding: 0;
-}
-
 .container {
   display: flex;
   padding: 0;
@@ -30,7 +25,7 @@
   border-radius: 8px;
 
   overflow-y: auto; // overflow for main-panel
-  max-height: calc(100vh - 170px); // set max height for over-flow 
+  max-height: calc(100vh - 90px); // set max height for over-flow 
 }
 
 .app-main-panel::-webkit-scrollbar {
