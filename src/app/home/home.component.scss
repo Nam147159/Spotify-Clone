@@ -5,40 +5,33 @@ $content-padding: 0.5rem;
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background-color: #000000;
-}
-
-.content {
-  display: grid;
-  padding: 0;
   grid-template-columns: auto 1fr;
-  grid-gap: $content-padding;
-}
-
-.app-library-panel {
-  margin-left: $content-padding;
-}
-
-.app-content {
-  border-radius: 8px;
-  background-color: #121212;
-  margin-right: $content-padding;
-}
-
-
-.app-main-panel {
+  grid-template-areas:
+    "nav-bar nav-bar"
+    "library-panel content"
+    "signup-bar signup-bar";
   background-color: #000000;
-  border-radius: 8px;
+  padding: $content-padding;
+  gap: $content-padding;
 
-  overflow-y: auto; // overflow for main-panel
-  max-height: calc(100vh - 90px); // set max height for over-flow
-}
-
-.app-main-panel::-webkit-scrollbar {
-  display: none;
 }
 
 .signup-bar {
-  padding: $content-padding;
+  grid-area: signup-bar;
 }
-// hide scroll bar
+
+.nav-bar {
+  grid-area: nav-bar;
+}
+
+.library-panel {
+  grid-area: library-panel;
+  overflow: auto;
+}
+
+.content {
+  grid-area: content;
+  border-radius: 8px;
+  background-color: #121212;
+  overflow: auto;
+}
