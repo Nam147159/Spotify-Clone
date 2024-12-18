@@ -1,9 +1,9 @@
 <div class="player-bar">
   <div class="track-info">
-    <img [src]="track.albumArt" alt="Album Art" class="album-art" />
+    <img src="https:placehold.co/150x100" alt="Album Art" class="album-art" />
     <div class="track-details">
-      <span class="track-title">{{ track.title }}</span>
-      <span class="track-artist">{{ track.artist }}</span>
+      <span class="track-title">Tittle</span>
+      <span class="track-artist">Artist</span>
     </div>
     <span class="track-status">✔</span>
   </div>
@@ -15,21 +15,24 @@
       <button class="control-button">
         <i class="pi pi-sync"></i>
       </button>
-      <button class="control-button" (click)="previousTrack()">&#9664;</button>
-      <button class="play-pause-button" (click)="playPause()">
-        {{ playing ? '❚❚' : '▶' }}
+      <button class="control-button" (click)="previous()">&#9664;</button>
+      <button class="play-pause-button" (click)="play()">
+        <!-- {{ playing ? '❚❚' : '▶' }} -->
       </button>
-      <button class="control-button" (click)="nextTrack()">&#9654;</button>
+      <button class="control-button" (click)="next()">&#9654;</button>
       <button class="control-button" id="repeat-btn"><i class="pi pi-replay"></i></button>
     </div>
 
     <div class="player-progress-container">
-      <div class="time-left">{{ elapsedTime | date: 'm:ss' }}</div>
+      <!-- <div class="time-left">{{ elapsedTime | date: 'm:ss' }}</div> -->
+      <div class="time-left">9:00</div>
       <!-- Thanh progress -->
       <div class="player-progress">
-        <p-slider [(ngModel)]="progress" [min]="0" [max]="100" [step]="1"></p-slider>
+        <!-- <p-slider [(ngModel)]="progress" [min]="0" [max]="100" [step]="1"></p-slider> -->
+        <p-slider [min]="0" [max]="100" [step]="1"></p-slider>
       </div>
-      <div class="time-right">{{ elapsedTime | date: 'm:ss' }}</div>
+      <!-- <div class="time-right">{{ elapsedTime | date: 'm:ss' }}</div> -->
+      <div class="time-right">0:00</div>
     </div>
   </div>
 
@@ -38,7 +41,9 @@
     <button class="icon-button">&#x2630;</button>
     <button class="icon-button">&#x1f4fa;</button>
     <button class="icon-button">&#x1f50a;</button>
-    <p-slider [(ngModel)]="volume" [min]="0" [max]="100" [step]="1" [style]="{ 'width': '100px' }"></p-slider>
+    <!-- <p-slider [(ngModel)]="volume" [min]="0" [max]="100" [step]="1" [style]="{ 'width': '100px' }"></p-slider> -->
+    <p-slider [min]="0" [max]="100" [step]="1" [style]="{ 'width': '100px' }"></p-slider>
     <button class="icon-button">&#x26f6;</button>
   </div>
 </div>
+<script src="https://sdk.scdn.co/spotify-player.js"></script>
