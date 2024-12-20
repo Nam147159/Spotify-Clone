@@ -16,38 +16,38 @@ import { PlayerService } from '../../services/player-service/player.service';
 })
 export class PlayerComponent {
 
-  constructor(private playerService: PlayerService) { }
+  // constructor(private playerService: PlayerService) { }
 
-  private accessToken: string = "";
+  // private accessToken: string = "";
 
-  ngOnInit() {
-    this.playerService.getAccessToken().subscribe({
-      next: (response) => {
-        this.accessToken = response.token;  // Lưu token
-        this.playerService.initializePlayer(this.accessToken);  // Khởi tạo player với token
-      },
-      error: (error) => {
-        console.error('Error fetching token:', error);  // Xử lý lỗi nếu có
-      },
-      complete: () => {
-        console.log('Token request complete');  // Thực thi khi hoàn thành stream
-      }
-    });
-  }
+  // ngOnInit() {
+  //   this.playerService.getAccessToken().subscribe({
+  //     next: (response) => {
+  //       this.accessToken = response.token;  // Lưu token
+  //       this.playerService.initializePlayer(this.accessToken);  // Khởi tạo player với token
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching token:', error);  // Xử lý lỗi nếu có
+  //     },
+  //     complete: () => {
+  //       console.log('Token request complete');  // Thực thi khi hoàn thành stream
+  //     }
+  //   });
+  // }
 
-  play() {
-    this.playerService.play();
-  }
+  // play() {
+  //   this.playerService.play();
+  // }
 
-  pause() {
-    this.playerService.pause();
-  }
+  // pause() {
+  //   this.playerService.pause();
+  // }
 
-  next() {
-    this.playerService.nextTrack();
-  }
+  // next() {
+  //   this.playerService.nextTrack();
+  // }
 
-  previous() {
-    this.playerService.previousTrack();
-  }
+  // previous() {
+  //   this.playerService.previousTrack();
+  // }
 }

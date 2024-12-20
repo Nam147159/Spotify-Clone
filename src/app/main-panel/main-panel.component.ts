@@ -8,6 +8,7 @@ import { MainPanelService } from '../../services/main-panel-service/main-panel.s
 import { response } from 'express';
 import { error } from 'console';
 import { Album, Artist } from '../models/spotify.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-panel',
@@ -20,7 +21,7 @@ export class MainPanelComponent implements OnInit {
   popularArtists: Artist[] = [];
   popularAlbums: Album[] = [];
 
-  constructor(private mainPanelService: MainPanelService) { }
+  constructor(private mainPanelService: MainPanelService, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchPopularArtists();
@@ -50,6 +51,12 @@ export class MainPanelComponent implements OnInit {
       next: (response: { success: boolean; message: string; data: Album[] }) => {
         if (response.success && Array.isArray(response.data)) {
           this.popularAlbums = response.data;
+
+          console.log("Albums ID")
+          this.popularAlbums.forEach(album => {
+            console.log(album.id);
+          });
+
         } else {
           console.error('Invalid data structure:', response);
         }
@@ -62,4 +69,10 @@ export class MainPanelComponent implements OnInit {
       }
     });
   }
+
+  // navigateToAlbumDetail(album: any) {
+  //   this.router.navigate(['/album', album], { 
+  //     state: { album: album } 
+  //   });
+  // }
 }
