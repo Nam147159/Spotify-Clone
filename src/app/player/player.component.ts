@@ -6,6 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { PrimeIcons } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { PlayerService } from '../../services/player-service/player.service';
+import { Track } from '../models/spotify.model';
+import { TokenService } from '../../services/token-service/token.service';
 
 @Component({
   selector: 'app-player',
@@ -16,38 +18,34 @@ import { PlayerService } from '../../services/player-service/player.service';
 })
 export class PlayerComponent {
 
-  // constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService, private tokenService: TokenService) { }
 
-  // private accessToken: string = "";
+  private accessToken: string = "";
 
-  // ngOnInit() {
-  //   this.playerService.getAccessToken().subscribe({
-  //     next: (response) => {
-  //       this.accessToken = response.token;  // Lưu token
-  //       this.playerService.initializePlayer(this.accessToken);  // Khởi tạo player với token
-  //     },
-  //     error: (error) => {
-  //       console.error('Error fetching token:', error);  // Xử lý lỗi nếu có
-  //     },
-  //     complete: () => {
-  //       console.log('Token request complete');  // Thực thi khi hoàn thành stream
-  //     }
-  //   });
-  // }
+  ngOnInit() {
+    this.tokenService.getAccessToken().subscribe({
+      next: (response) => {
+        this.accessToken = response.token;  // Lưu token
+        this.playerService.initializePlayer(this.accessToken);  // Khởi tạo player với token
+      },
+      error: (error) => {
+        console.error('Error fetching token:', error);  // Xử lý lỗi nếu có
+      },
+      complete: () => {
+        console.log('Token request complete');  // Thực thi khi hoàn thành stream
+      }
+    });
+  }
 
-  // play() {
-  //   this.playerService.play();
-  // }
+  togglePlay() {
+    this.playerService.togglePlay();
+  }
 
-  // pause() {
-  //   this.playerService.pause();
-  // }
+  next() {
+    this.playerService.nextTrack();
+  }
 
-  // next() {
-  //   this.playerService.nextTrack();
-  // }
-
-  // previous() {
-  //   this.playerService.previousTrack();
-  // }
+  previous() {
+    this.playerService.previousTrack();
+  }
 }

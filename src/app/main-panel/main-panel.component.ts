@@ -51,12 +51,6 @@ export class MainPanelComponent implements OnInit {
       next: (response: { success: boolean; message: string; data: Album[] }) => {
         if (response.success && Array.isArray(response.data)) {
           this.popularAlbums = response.data;
-
-          console.log("Albums ID")
-          this.popularAlbums.forEach(album => {
-            console.log(album.id);
-          });
-
         } else {
           console.error('Invalid data structure:', response);
         }

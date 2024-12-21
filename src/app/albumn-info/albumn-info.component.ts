@@ -3,11 +3,12 @@ import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { TrackService } from '../../services/track-service/track.service';
 import { MainPanelComponent } from '../main-panel/main-panel.component';
 import { Track } from '../models/spotify.model';
+import { TrackCardComponent } from "../shared/track/track.component";
 
 @Component({
   selector: 'app-albumn-info',
   standalone: true,
-  imports: [],
+  imports: [TrackCardComponent],
   templateUrl: './albumn-info.component.html',
   styleUrl: './albumn-info.component.scss'
 })
@@ -21,13 +22,13 @@ export class AlbumnInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private trackService: TrackService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const albumID = params.get('id') ?? '';
-      
-      console.log("ID: ", albumID);
+
+      console.log("ALBUM ID: ", albumID);
 
       this.fetchAlbumDetails(albumID);
 
@@ -48,7 +49,6 @@ export class AlbumnInfoComponent implements OnInit {
   fetchAlbumDetails(albumID: string) {
     this.trackService.getTracksFromAlbum(albumID).subscribe({
       next: (response) => {
-        console.log('Tracks from API:', response.data);
         this.tracks = response.data; // Gán dữ liệu vào biến `tracks`
       },
       error: (error) => {
@@ -59,5 +59,9 @@ export class AlbumnInfoComponent implements OnInit {
         console.log("Fetch album detail complete");
       },
     });
+  }
+
+  onClick() {
+
   }
 }
