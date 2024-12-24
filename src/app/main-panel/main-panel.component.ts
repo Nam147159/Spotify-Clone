@@ -35,8 +35,8 @@ export class MainPanelComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.calculateDisplayedItems();
-    this.widthPerCard();
+    // this.calculateDisplayedItems();
+    // this.widthPerCard();
   }
 
   @HostListener('window:resize', ['$event'])
