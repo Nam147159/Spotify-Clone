@@ -15,17 +15,20 @@
 .app-library-panel {
   width: 23%;
   margin-left: 10px;
+  border-radius: 8px;
+  margin-top: 65px;
+  height: calc(100vh - 150px);
 }
 
 .app-main-panel {
   background-color: #1c1c1c;
   width: 77%;
   padding: 10px;
-  margin-bottom: -3px;
+  margin-top: 65px;
   border-radius: 8px;
 
-  overflow-y: auto; // overflow for main-panel
-  max-height: calc(100vh - 90px); // set max height for over-flow 
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
 }
 
 .app-main-panel::-webkit-scrollbar {

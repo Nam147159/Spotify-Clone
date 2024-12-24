@@ -4,7 +4,8 @@
     [style]="{backgroundColor: 'transparent', color: 'white', borderRadius: '10px', padding: '10px'}"
     class="card-container w-full max-w-15rem"
     (mouseenter)="onHover(true)" 
-    (mouseleave)="onHover(false)">
+    (mouseleave)="onHover(false)"
+    (click)="onAlbumClick()">
 
     <img alt="{{ album.name }}" [src]="getImageUrl()" style="width: 100%; height: auto; border-radius: 10px;" />
 

@@ -25,7 +25,7 @@ export class ArtistCardComponent implements OnInit {
 
   getImageUrl(): string | null {
     return this.artist.images && this.artist.images.length > 0
-      ? this.artist.images[0].url 
+      ? this.artist.images[0].url
       : null;
   }
 }

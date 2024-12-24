@@ -9,6 +9,7 @@ import { MainPanelService } from '../../services/main-panel-service/main-panel.s
 import { response } from 'express';
 import { error } from 'console';
 import { Album, Artist, Playlist } from '../models/spotify.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-panel',
@@ -25,7 +26,7 @@ export class MainPanelComponent implements OnInit, AfterViewInit {
   recommendedPlaylists: Playlist[] = [];
   top100Playlists: Playlist[] = [];
 
-  constructor(private mainPanelService: MainPanelService) { }
+  constructor(private mainPanelService: MainPanelService, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchPopularArtists();

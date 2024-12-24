@@ -1,0 +1,110 @@
+.player-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 13px;
+  background-color: #000; /* Màu nền */
+  color: #fff; /* Màu chữ */
+}
+
+.time-left, .time-right {
+  font-size: 12px; /* Điều chỉnh kích thước chữ */
+  white-space: nowrap;
+  text-align: center;
+}
+
+.controls-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.player-progress-container {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  gap: 15px; /* Khoảng cách giữa thời gian và progress bar */
+  width: 70%;
+} 
+
+.player-controls {
+  display: flex;
+  gap: 20px; /* Khoảng cách giữa các nút */
+  align-items: center;
+}
+
+.control-button, .play-pause-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.play-pause-button {
+  background-color: #fff;
+  color: #000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-progress {
+  width: 100%;
+  background-color: #fff;
+  margin-top: 10px;
+  align-items: center;
+  flex: 1;
+}
+
+p-slider {
+  width: 70%;
+  height: 6px; /* Điều chỉnh chiều cao thanh progress */
+}
+
+.track-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 30%; /* Chiếm 30% player bar */
+}
+
+.album-art {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+}
+
+.track-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.track-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.track-artist {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.track-status {
+  color: #00cc00; /* Màu xanh ✔ */
+  font-size: 18px;
+}
+
+.additional-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 20%; /* Chiếm 20% chiều rộng */
+  justify-content: flex-end;
+}
