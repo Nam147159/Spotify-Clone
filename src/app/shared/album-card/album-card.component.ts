@@ -12,6 +12,7 @@ import { Album } from '../../models/spotify.model';
 })
 export class AlbumCardComponent implements OnInit {
   @Input() album!: Album;
+  @Input() width: string = '200px';
 
   ngOnInit() {
   }

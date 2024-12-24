@@ -44,3 +44,31 @@ export interface Album {
   type: string;
   uri: string;
 }
+
+// Interface cho Playlist
+export interface Playlist {
+  collaborative: boolean;
+  description: string | null;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  images: Image[];
+  name: string | null;
+  owner: {
+    display_name: string;
+    external_urls: ExternalUrls;
+    href: string;
+    id: string;
+    type: string;
+    uri: string;
+  };
+  primary_color: string | null;
+  public: boolean | null;
+  snapshot_id: string;
+  tracks: {
+    href: string;
+    total: number;
+  };
+  type: string;
+  uri: string;
+}

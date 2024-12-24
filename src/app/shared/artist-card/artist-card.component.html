@@ -1,14 +1,20 @@
-<p-card 
-    [header]="artist.name" 
-    [subheader]="artist.type"
-    [style]="{ width: '150px', backgroundColor: 'transparent', color: 'white' }">
+<div [ngStyle]="{'background-color': isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent'}"
+    [style]="{width: width, backgroundColor: 'transparent', color: 'white', borderRadius: '10px', padding: '10px'}"
+    class="card-container w-full max-w-15rem" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
 
-    <ng-template pTemplate="header">
-        <img 
-            class="border-circle w-6rem h-6rem" 
-            alt="{{ artist.name }}" 
-            [src]="getImageUrl()"
-            style="width: 100%; height: 200px; border-radius: 100px;"
-        />
-    </ng-template>
-</p-card>
+    <img class="border-circle w-full" alt="{{ artist.name }}" [src]="getImageUrl()" style="height: auto;" />
+
+    <div class="overlay-container">
+        <button class="overlay-button"><i class="pi pi-play"></i>
+        </button>
+    </div>
+
+    <h3 class="font-light m-0"
+        style="display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
+        {{ artist.name || 'No Name' }}</h3>
+    <h4 class="font-light text-gray-400 m-0 text-overflow-ellipsis"
+        style="display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+        {{ artist.type.charAt(0).toUpperCase() + artist.type.slice(1)|| '' }}</h4>
+
+
+</div>
