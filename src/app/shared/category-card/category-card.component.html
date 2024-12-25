@@ -1,0 +1,12 @@
+<div 
+    [style]="{backgroundColor: backgroundColor, borderRadius: '8px', alignItems: 'start', overflow: 'hidden'}"
+    
+    class="flex justify-content-between card-container w-full pl-4 py-2 h-10rem border-round-lg" >
+    <div style=" z-index: 1; text-align: center;">
+        <h3 style="font-size: 1.2rem; margin: 0; color: white;">{{ category.name }}</h3>
+    </div>
+
+    <img class=" w-8rem h-8rem translate-x-40 origin-left rotate-45" alt="{{ category.name }}" [src]="getImageUrl()"  />
+
+</div>
+
