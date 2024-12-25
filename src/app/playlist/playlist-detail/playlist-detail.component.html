@@ -9,7 +9,8 @@
     </div>
   </div>
   <p-toast />
-  <p-menu #menu [model]="musicOptions" [popup]="true"></p-menu>
+  <p-menu #musicMenu [model]="musicOptions" [popup]="true"></p-menu>
+  <p-menu #playlistMenu [model]="playlistOptions" [popup]="true"></p-menu>
 
   <p-overlayPanel #op>
     <div class="p-4 w-64 bg-gray-900 text-white rounded-md">
@@ -35,11 +36,7 @@
       <div class="flex flex-row justify-between w-full">
         <div class="flex gap-2">
           <p-button severity="success" [rounded]="true" icon="pi pi-play" />
-          <p-button
-            [text]="true"
-            icon="pi pi-ellipsis-h
-          "
-          />
+          <p-button [text]="true" icon="pi pi-ellipsis-h" (onClick)="playlistMenu.toggle($event)"/>
         </div>
       </div>
     </ng-template>
@@ -130,7 +127,7 @@
               [text]="true"
               icon="pi pi-ellipsis-h"
               [rounded]="true"
-              (onClick)="menu.toggle($event); selectedMusic(music)"
+              (onClick)="musicMenu.toggle($event); selectedMusic(music)"
             />
           </div>
         </td>

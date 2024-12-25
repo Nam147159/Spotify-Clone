@@ -28,7 +28,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { CardModule } from 'primeng/card';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { MenuModule } from 'primeng/menu';
+import { Menu, MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -61,10 +61,11 @@ import { MenuModule } from 'primeng/menu';
 })
 export class PlaylistDetailComponent implements OnInit {
   submitted = false;
-  musicList!: MenuItem[];
+  musicList!: any[];
   searchValue: string | undefined;
   showBtn: boolean = false;
-  musicOptions: any[] = [];
+  musicOptions: MenuItem[] = [];
+  playlistOptions: MenuItem[] = [];
   playlists!: any[];
   public sortOption: string = 'list';
   public searchText = '';
@@ -88,6 +89,14 @@ export class PlaylistDetailComponent implements OnInit {
         label: 'Remove form this playlist',
         icon: 'pi pi-trash',
         command: () => this.removeFromPlaylist(this.selectedMusics),
+      },
+    ];
+
+    this.playlistOptions = [
+      {
+        label: 'Remove playlist',
+        icon: 'pi pi-trash',
+        command: () => this.removePlaylist(this.playlistId),
       },
     ];
     console.log(this.musicOptions);
@@ -147,21 +156,29 @@ export class PlaylistDetailComponent implements OnInit {
       (music: any) => music.id !== value.id
     );
 
-    this.playlistService.updatePlaylist(this.playlistId, this.playlist).subscribe(
-      (data) => {
-        this.playlist = data;
-        this.musicList = this.playlist.musicList;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-     
+    this.playlistService
+      .updatePlaylist(this.playlistId, this.playlist)
+      .subscribe(
+        (data) => {
+          this.playlist = data;
+          this.musicList = this.playlist.musicList;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
     this.updateTable();
   }
 
   public selectedMusic(value: any) {
     console.log('Selected music', value);
     this.selectedMusics = value;
+  }
+
+  public removePlaylist(id: number) {
+    console.log('Remove playlist', id);
+    this.playlistService.deletePlaylist(id);
+    this.router.navigate(['/']);
   }
 }
