@@ -9,6 +9,8 @@
     </div>
   </div>
   <p-toast />
+  <p-menu #menu [model]="musicOptions" [popup]="true"></p-menu>
+
   <p-overlayPanel #op>
     <div class="p-4 w-64 bg-gray-900 text-white rounded-md">
       <p>View as</p>
@@ -122,11 +124,15 @@
           {{ music.duration }}
         </td>
         <td>
-          <p-button
-            icon="pi pi-ellipsis-h"
-            [rounded]="true"
-            [text]="true"
-          />
+          <div>
+            <p-toast />
+            <p-button
+              [text]="true"
+              icon="pi pi-ellipsis-h"
+              [rounded]="true"
+              (onClick)="menu.toggle($event); selectedMusic(music)"
+            />
+          </div>
         </td>
       </tr>
     </ng-template>

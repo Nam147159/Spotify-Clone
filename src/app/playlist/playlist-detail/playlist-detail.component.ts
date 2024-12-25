@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -21,7 +27,8 @@ import { PlaylistService } from '../../../services/playlist-service/playlist.ser
 import { ToolbarModule } from 'primeng/toolbar';
 import { CardModule } from 'primeng/card';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -45,23 +52,27 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ToolbarModule,
     CardModule,
     OverlayPanelModule,
+    SplitButtonModule,
+    MenuModule,
   ],
   providers: [MessageService, ConfirmationService, DialogService],
   templateUrl: './playlist-detail.component.html',
   styleUrl: './playlist-detail.component.scss',
 })
 export class PlaylistDetailComponent implements OnInit {
-
   submitted = false;
-  musicList: any[] = [];
+  musicList!: MenuItem[];
   searchValue: string | undefined;
   showBtn: boolean = false;
-  public sortOption: string = "list";
+  musicOptions: any[] = [];
+  playlists!: any[];
+  public sortOption: string = 'list';
   public searchText = '';
   public loading = false;
   public playlistId: number = 0;
   public playlist: any = {};
   private searchText$ = new RxSubject<string>();
+  selectedMusics: any;
 
   constructor(
     private readonly router: Router,
@@ -70,8 +81,17 @@ export class PlaylistDetailComponent implements OnInit {
     private readonly confirmationService: ConfirmationService,
     private readonly dialogService: DialogService,
     private readonly playlistService: PlaylistService,
-    private readonly fb: FormBuilder,
-  ) {}
+    private readonly fb: FormBuilder
+  ) {
+    this.musicOptions = [
+      {
+        label: 'Remove form this playlist',
+        icon: 'pi pi-trash',
+        command: () => this.removeFromPlaylist(this.selectedMusics),
+      },
+    ];
+    console.log(this.musicOptions);
+  }
 
   public ngOnInit() {
     this.playlistId = this.getPlaylistId();
@@ -80,7 +100,15 @@ export class PlaylistDetailComponent implements OnInit {
       this.musicList = this.playlist.musicList;
     });
 
+    this.updateTable();
+
     console.log(this.playlist);
+  }
+
+  public updateTable() {
+    this.playlistService.getPlaylists().subscribe((playlists) => {
+      this.playlists = playlists;
+    });
   }
 
   private getPlaylistId(): number {
@@ -109,7 +137,31 @@ export class PlaylistDetailComponent implements OnInit {
     this.sortOption = value;
   }
 
-  public showBtnPlay(value: boolean) {
-    return this.showBtn = value;
+  public addToPlaylist() {
+    console.log('Add to playlist');
+  }
+
+  public removeFromPlaylist(value: any) {
+    console.log('Remove from playlist', value);
+    this.playlist.musicList = this.playlist.musicList.filter(
+      (music: any) => music.id !== value.id
+    );
+
+    this.playlistService.updatePlaylist(this.playlistId, this.playlist).subscribe(
+      (data) => {
+        this.playlist = data;
+        this.musicList = this.playlist.musicList;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+     
+    this.updateTable();
+  }
+
+  public selectedMusic(value: any) {
+    console.log('Selected music', value);
+    this.selectedMusics = value;
   }
 }
