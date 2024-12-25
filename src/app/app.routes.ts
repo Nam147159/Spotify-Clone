@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { SignUpMainComponent } from './sign-up/sign-up-main/sign-up-main.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { AlbumnInfoComponent } from './albumn-info/albumn-info.component';
+import { PlaylistDetailComponent } from './playlist/playlist-detail/playlist-detail.component';
 
 export const routes: Routes = [
   {
@@ -30,5 +31,10 @@ export const routes: Routes = [
     path: 'album/:id',
     component: AlbumnInfoComponent,
     title: 'Spotify - Web Player: Music for everyone'
-  }
+  },
+  {
+    path: 'playlist/:id',
+    component: PlaylistDetailComponent,
+    title: 'Spotify - Web Player: Music for everyone',
+  },
 ];

@@ -1,0 +1,137 @@
+<div class="card flex flex-col">
+  <div class="flex flex-row justify-between items-center">
+    <p-image [src]="playlist.cover" [alt]="playlist.title" />
+    <div class="flex flex-col justify-center items-center gap-2">
+      <h1>
+        {{ playlist.title }}
+      </h1>
+      <p>By {{ playlist.creator }}</p>
+    </div>
+  </div>
+  <p-toast />
+  <p-overlayPanel #op>
+    <div class="p-4 w-64 bg-gray-900 text-white rounded-md">
+      <p>View as</p>
+      <div class="flex flex-col justify-center">
+        <p-button
+          [text]="true"
+          label="List"
+          icon="pi pi-list"
+          (onClick)="sortBy('list')"
+        />
+        <p-button
+          [text]="true"
+          label="Compact"
+          icon="pi pi-bars"
+          (onClick)="sortBy('compact')"
+        />
+      </div>
+    </div>
+  </p-overlayPanel>
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <div class="flex flex-row justify-between w-full">
+        <div class="flex gap-2">
+          <p-button severity="success" [rounded]="true" icon="pi pi-play" />
+          <p-button
+            [text]="true"
+            icon="pi pi-ellipsis-h
+          "
+          />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <div class="flex flex-row justify-between w-full">
+        <div class="flex gap-2">
+          <p-button
+            [text]="true"
+            [label]="sortOption == 'list' ? 'List' : 'Compact'"
+            [icon]="sortOption == 'list' ? 'pi pi-list' : 'pi pi-bars'"
+            (onClick)="op.toggle($event)"
+          />
+        </div>
+      </div>
+    </ng-template>
+  </p-toolbar>
+  <p-table
+    #dt
+    [value]="musicList"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true"
+    dataKey="id"
+    [lazy]="true"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th></th>
+        <th>Title</th>
+        @if (sortOption == 'compact') {
+        <th>Artist</th>
+        }
+        <th>Album</th>
+        <th>Date Added</th>
+        <th>Duration</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-music>
+      <tr>
+        <td>
+          {{ music.id }}
+        </td>
+        <td>
+          <p-button
+            icon="pi pi-play"
+            [rounded]="true"
+            [text]="true"
+            class="ml-2"
+          />
+        </td>
+        <td class="flex flex-row">
+          @if (sortOption == 'list') {
+          <p-image
+            [src]="music.cover"
+            [alt]="music.title"
+            width="48px"
+          ></p-image>
+          }
+
+          <div class="flex flex-col">
+            <p>{{ music.title }}</p>
+            @if (sortOption == 'list') {
+            <p>{{ music.artist }}</p>
+            }
+          </div>
+        </td>
+        @if (sortOption == 'compact') {
+        <td>
+          {{ music.artist }}
+        </td>
+        }
+
+        <td>
+          {{ music.album }}
+        </td>
+        <td>
+          {{ music.dateAdded }}
+        </td>
+        <td>
+          {{ music.duration }}
+        </td>
+        <td>
+          <p-button
+            icon="pi pi-ellipsis-h"
+            [rounded]="true"
+            [text]="true"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog />
+  <p-confirmDialog [style]="{ width: '450px' }" />
+</div>

@@ -99,7 +99,7 @@
       (contextmenu)="showMenuItem($event, item)"
       class="flex flex-row p-fluid"
     >
-      <p-button [text]="true">
+      <p-button [text]="true" (onClick)="getDetail(item)">
         <span> {{ item.title }} - {{ item.description }} </span>
       </p-button>
     </div>
@@ -117,7 +117,7 @@
         <p-scrollPanel [style]="{ width: '100%', height: height }">
           @for (item of filteredPlaylists; track $index) {
           <div (contextmenu)="showMenuItem($event, item)" class="flex p-fluid">
-            <p-button [text]="true">
+            <p-button [text]="true" (onClick)="getDetail(item)">
               <p-image
                 class="block border-round"
                 [src]="item.cover"

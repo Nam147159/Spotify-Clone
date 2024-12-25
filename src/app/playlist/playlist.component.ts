@@ -1,4 +1,10 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  ViewChild,
+  OnInit,
+} from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { DataViewModule } from 'primeng/dataview';
 import { ListboxModule } from 'primeng/listbox';
@@ -18,6 +24,7 @@ import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PlaylistService } from '../../services/playlist-service/playlist.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-playlist',
@@ -46,7 +53,7 @@ import { PlaylistService } from '../../services/playlist-service/playlist.servic
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss',
 })
-export class PlaylistComponent {
+export class PlaylistComponent implements OnInit {
   @ViewChild('cmItem') cmItem!: ContextMenu;
   @ViewChild('cm') cm!: ContextMenu;
   @Output() playlistVisibilityChange = new EventEmitter<boolean>();
@@ -164,9 +171,13 @@ export class PlaylistComponent {
     },
   ];
 
-  constructor(private playlistService: PlaylistService) {}
+  constructor(
+    private playlistService: PlaylistService,
+    private route: Router,
+  ) {}
 
   ngOnInit() {
+    console.log('PlaylistComponent');
     this.selectedSortOption = this.sortOptions[1];
     this.selectedViewOption = this.viewOptions[1];
     this.dv = { layout: this.selectedViewOption.value };
@@ -177,17 +188,20 @@ export class PlaylistComponent {
   }
 
   public loadPlaylists() {
-    this.playlists = this.playlistService.getPlaylists();
-    this.filteredPlaylists = [...this.playlists];
+    this.playlistService.getPlaylists().subscribe((playlists) => {
+      this.playlists = playlists;
+      this.filteredPlaylists = [...this.playlists];
+    });
   }
 
   public createPlaylist() {
-    const newPlaylist = this.playlistService.addPlaylist(
-      `My Playlist #${this.playlists.length + 1}`,
-      'https://via.placeholder.com/150',
-      'Playlist',
-      'NTT'
-    );
+    const newPlaylist = this.playlistService.createPlaylist({
+      title: `My Playlist #${this.playlists.length + 1}`,
+      cover: 'https://via.placeholder.com/150',
+      description: 'Playlist',
+      creator: 'NTT'
+    });
+
     this.loadPlaylists();
     console.log('Created playlist:', newPlaylist);
   }
@@ -210,6 +224,7 @@ export class PlaylistComponent {
       title: this.selectedPlaylist.title,
       description: this.selectedPlaylist.description,
       creator: this.selectedPlaylist.creator,
+      cover: this.selectedPlaylist.cover,
     });
     this.dialogVisible = false;
     this.loadPlaylists();
@@ -284,5 +299,10 @@ export class PlaylistComponent {
     event.preventDefault();
     this.cm.show(event);
     this.cmItem.visible.set(false);
+  }
+
+  public getDetail(index: any) {
+    console.log('Selected playlist:', index);
+    this.route.navigate(['/playlist', index.id]);
   }
 }
