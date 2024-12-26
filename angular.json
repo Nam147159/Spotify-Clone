@@ -104,7 +104,8 @@
                 }
               ],
               "styles": [
-                "src/styles.scss"
+                "src/styles.scss",
+                "node_modules/primeicons/primeicons.css"
               ],
               "scripts": ["lib/spotify-web-playback-sdk.js"]
             }

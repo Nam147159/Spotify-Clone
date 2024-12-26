@@ -12,6 +12,7 @@
   font-size: 12px; /* Điều chỉnh kích thước chữ */
   white-space: nowrap;
   text-align: center;
+  width: 50px;
 }
 
 .controls-progress {
@@ -43,6 +44,11 @@
   padding: 0;
 }
 
+.control-button img {
+  width: 24px; /* Điều chỉnh kích thước hình ảnh */
+  height: 24px; /* Điều chỉnh kích thước hình ảnh */
+}
+
 .play-pause-button {
   background-color: #fff;
   color: #000;
@@ -55,6 +61,7 @@
 }
 
 .player-progress {
+  flex-grow: 1;
   width: 100%;
   background-color: #fff;
   margin-top: 10px;
@@ -64,7 +71,11 @@
 
 p-slider {
   width: 70%;
-  height: 6px; /* Điều chỉnh chiều cao thanh progress */
+  height: 4px; /* Điều chỉnh chiều cao thanh progress */
+}
+
+.progress-bar {
+  width: 70%;
 }
 
 .track-info {

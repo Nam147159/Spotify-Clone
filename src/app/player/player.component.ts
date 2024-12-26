@@ -18,9 +18,13 @@ import { TokenService } from '../../services/token-service/token.service';
 })
 export class PlayerComponent {
 
-  constructor(private playerService: PlayerService, private tokenService: TokenService) { }
-
   private accessToken: string = "";
+  currentTrack: Track | null = null;
+  isPlaying: boolean = false;
+  currentTime: number = 0;
+  duration: number = 0;
+
+  constructor(private playerService: PlayerService, private tokenService: TokenService) { }
 
   ngOnInit() {
     this.tokenService.getAccessToken().subscribe({
@@ -35,6 +39,17 @@ export class PlayerComponent {
         console.log('Token request complete');  // Thực thi khi hoàn thành stream
       }
     });
+
+    this.playerService.playerState$.subscribe(state => {
+      this.currentTrack = state.currentTrack;
+      this.isPlaying = state.isPlaying;
+      this.currentTime = state.position;
+      this.duration = state.duration;
+
+      // console.log('Current Time:', this.currentTime);
+    });
+
+    
   }
 
   togglePlay() {

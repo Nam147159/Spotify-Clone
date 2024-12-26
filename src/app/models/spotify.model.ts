@@ -1,16 +1,12 @@
-// Interface chung cho các liên kết bên ngoài (dùng chung cho album và artist)
 export interface ExternalUrls {
   spotify: string;
 }
 
-// Interface cho hình ảnh (dùng chung cho album và artist)
 export interface Image {
-  height: number;
+  height?: number;
   url: string;
-  width: number;
+  width?: number;
 }
-
-// Interface cho Artist (có thể dùng trong album hoặc để lưu trữ dữ liệu artist)
 export interface Artist {
   external_urls: ExternalUrls;
   href: string;
@@ -18,7 +14,6 @@ export interface Artist {
   name: string;
   type: string;
   uri: string;
-  // Các trường chỉ có ở full artist data
   followers?: {
     href: string | null;
     total: number;
@@ -27,11 +22,10 @@ export interface Artist {
   images?: Image[];
   popularity?: number;
 }
-
-// Interface cho Album (đã định nghĩa ở trên nhưng bổ sung thêm trường `artists`)
 export interface Album {
   album_type: string;
   artists: Artist[]; // Sử dụng lại Artist interface nhưng sẽ không có các trường optional
+  available_markets: string[];
   external_urls: ExternalUrls;
   href: string;
   id: string;
@@ -45,7 +39,6 @@ export interface Album {
   uri: string;
 }
 
-// Interface cho Playlist
 export interface Playlist {
   collaborative: boolean;
   description: string | null;
@@ -72,16 +65,30 @@ export interface Playlist {
   type: string;
   uri: string;
 }
+
 export interface Track {
+  album: Album;
   artists: Artist[];
   available_markets: string[];
   disc_number: number;
   duration_ms: number;
   explicit: boolean;
-  external_urls: ExternalUrls; 
+  external_ids: {
+    isrc: string;
+  };
+  external_urls: ExternalUrls;
   href: string;
-  id: string; 
+  id: string;
+  is_playable: boolean;
+  linked_from: {
+    external_urls: ExternalUrls;
+    href: string;
+    id: string;
+    type: string;
+    uri: string;
+  };
   name: string;
+  popularity: number;
   preview_url: string | null;
   track_number: number;
   type: string;

@@ -27,8 +27,8 @@ declare namespace Spotify {
     };
     disallows: {
       pausing: boolean;
-      peeking_next: boolean;
-      peeking_prev: boolean;
+      // peeking_next: boolean;
+      // peeking_prev: boolean;
       resuming: boolean;
       seeking: boolean;
       skipping_next: boolean;
@@ -47,19 +47,75 @@ declare namespace Spotify {
   }
 
   interface Track {
-    album: {
-      images: { url: string }[];
-      name: string;
-      uri: string;
-    };
-    artists: {
-      name: string;
-      uri: string;
-    }[];
+    album: Album;
+    artists: Artist[];
+    available_markets: string[];
+    disc_number: number;
     duration_ms: number;
+    explicit: boolean;
+    external_ids: {
+      isrc: string;
+    };
+    external_urls: ExternalUrls;
+    href: string;
     id: string;
     is_playable: boolean;
+    linked_from: {
+      external_urls: ExternalUrls;
+      href: string;
+      id: string;
+      type: string;
+      uri: string;
+    };
     name: string;
+    popularity: number;
+    preview_url: string | null;
+    track_number: number;
+    type: string;
     uri: string;
+    is_local: boolean;
+  }
+
+  interface Album {
+    album_type: string;
+    artists: Artist[];
+    available_markets: string[];
+    external_urls: ExternalUrls;
+    href: string;
+    id: string;
+    images: Image[];
+    is_playable: boolean;
+    name: string;
+    release_date: string;
+    release_date_precision: string;
+    total_tracks: number;
+    type: string;
+    uri: string;
+  }
+
+  interface Artist {
+    external_urls: ExternalUrls;
+    href: string;
+    id: string;
+    name: string;
+    type: string;
+    uri: string;
+    followers?: {
+      href: string | null;
+      total: number;
+    };
+    genres?: string[];
+    images?: Image[];
+    popularity?: number;
+  }
+
+  interface ExternalUrls {
+    spotify: string;
+  }
+
+  interface Image {
+    height: number;
+    url: string;
+    width: number;
   }
 }

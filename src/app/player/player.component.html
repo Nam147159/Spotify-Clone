@@ -1,12 +1,17 @@
 <div class="player-bar">
+  @if (currentTrack) {
   <div class="track-info">
-    <img src="https:placehold.co/150x100" alt="Album Art" class="album-art" />
+    <img [src]="currentTrack.album.images[0].url || 'https://placehold.co/150x100'" alt="Album Art" class="album-art" />
     <div class="track-details">
-      <span class="track-title">Tittle</span>
-      <span class="track-artist">Artist</span>
+      <span class="track-title">{{ currentTrack.name }}</span>
+      <span class="track-artist">{{ currentTrack.artists[0].name }}</span>
     </div>
     <span class="track-status">✔</span>
   </div>
+  }
+  @else {
+  <div class="track-info"></div>
+  }
 
   <!-- Thanh điều khiển và play -->
   <div class="controls-progress">
@@ -15,27 +20,25 @@
       <button class="control-button">
         <i class="pi pi-sync"></i>
       </button>
-      <!-- <button class="control-button" (click)="previous()">&#9664;</button>
-      <button class="play-pause-button" (click)="play()"> -->
-      <button class="control-button">&#9664;</button>
-      <button class="play-pause-button">
-        <!-- {{ playing ? '❚❚' : '▶' }} -->
+      <button class="control-button" (click)="previous()">
+        <img src="/public/backward-icon.png" alt="Previous">
       </button>
-      <!-- <button class="control-button" (click)="next()">&#9654;</button> -->
-      <button class="control-button">&#9654;</button>
+      <button class="play-pause-button" (click)="togglePlay()">
+        {{ isPlaying ? '❚❚' : '▶' }}
+      </button>
+      <button class="control-button" (click)="next()">
+        <img src="/public/forward-icon.png" alt="Next">
+      </button>
       <button class="control-button" id="repeat-btn"><i class="pi pi-replay"></i></button>
     </div>
 
-    <div class="player-progress-container">
-      <!-- <div class="time-left">{{ elapsedTime | date: 'm:ss' }}</div> -->
-      <div class="time-left">9:00</div>
+    <div class="player-progress-container"> 
+      <div class="time-left">{{ currentTime | date:'mm:ss' }}</div>
       <!-- Thanh progress -->
       <div class="player-progress">
-        <!-- <p-slider [(ngModel)]="progress" [min]="0" [max]="100" [step]="1"></p-slider> -->
-        <p-slider [min]="0" [max]="100" [step]="1"></p-slider>
+        <p-progressBar class="progress-bar" [style]="{ height: '4px' }" [value]="(currentTime / duration) * 100" [showValue]="false"></p-progressBar>
       </div>
-      <!-- <div class="time-right">{{ elapsedTime | date: 'm:ss' }}</div> -->
-      <div class="time-right">0:00</div>
+      <div class="time-right">{{ duration | date:'mm:ss' }}</div>
     </div>
   </div>
 
