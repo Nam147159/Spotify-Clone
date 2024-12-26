@@ -1,3 +1,11 @@
 <div class="container" (click)="onClick()">
-    <h3>{{ track.name }}</h3>
+  <div class="track-row">
+    <div class="track-index">{{ index + 1 }}</div>
+    <div class="track-title">
+      <h3>{{ track.name }}</h3>
+<!--      <span *ngIf="track.isExplicit" class="explicit-marker">E</span>-->
+<!--      <span *ngIf="track.features.length > 0"> (feat. {{ track.features.join(', ') }})</span>-->
+    </div>
+<!--    <div class="track-duration">{{ track.duration }}</div>-->
+  </div>
 </div>

@@ -14,6 +14,7 @@ import { response } from 'express';
 })
 export class TrackCardComponent {
   @Input() track!: Track;
+  @Input() index!: number;
   isCurrentlyPlaying = false;
   deviceID: string | null = null;
 
@@ -58,7 +59,7 @@ export class TrackCardComponent {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          uris: [`spotify:track:${this.track.id}`]  
+          uris: [`spotify:track:${this.track.id}`]
         })
       });
 
@@ -66,7 +67,7 @@ export class TrackCardComponent {
         console.log('Track is playing (No content response)');
         return;
       }
-  
+
       if (!response.ok) {
         const errorData = await response.text();
         console.error('Error response:', {
@@ -86,7 +87,7 @@ export class TrackCardComponent {
     } catch (error) {
       console.error('Error playing track:', error);
     }
-    
+
   }
 
   getArtistsString(): string {

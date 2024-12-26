@@ -4,11 +4,13 @@ import { TrackService } from '../../services/track-service/track.service';
 import { MainPanelComponent } from '../main-panel/main-panel.component';
 import { Track } from '../models/spotify.model';
 import { TrackCardComponent } from "../shared/track/track.component";
+import {NgForOf} from "@angular/common";
+import {LibraryPanelComponent} from "../library-panel/library-panel.component";
 
 @Component({
   selector: 'app-albumn-info',
   standalone: true,
-  imports: [TrackCardComponent],
+  imports: [TrackCardComponent, NgForOf, LibraryPanelComponent],
   templateUrl: './albumn-info.component.html',
   styleUrl: './albumn-info.component.scss'
 })

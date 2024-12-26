@@ -1,3 +1,31 @@
+.album-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  padding: 0;
+  justify-content: space-between;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.app-library-panel {
+  width: 23%;
+  margin-left: 10px;
+  border-radius: 8px;
+  margin-top: 65px;
+  height: calc(100vh - 150px);
+}
+
 .album-detail {
-    padding-top: 50px;
+  background-color: #1c1c1c;
+  width: 77%;
+  padding: 10px;
+  margin-top: 65px;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
 }
