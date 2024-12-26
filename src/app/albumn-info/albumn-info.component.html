@@ -1,8 +1,13 @@
-<div class="album-detail">
-    <h2>Danh sách bài hát</h2>
-    @for (track of tracks; track $index) {
-    <div>
-        <track-card [track]="track"></track-card>
+<div class="album-page">
+  <div class="container">
+    <div class="app-library-panel">
+      <app-library-panel></app-library-panel>
     </div>
-    }
+    <div class="album-detail">
+      <h2>Danh sách bài hát</h2>
+      <div *ngFor="let track of tracks; let i = index">
+        <track-card [track]="track" [index]="i"></track-card>
+      </div>
+    </div>
+  </div>
 </div>

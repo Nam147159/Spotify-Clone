@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  cursor: pointer; /* Indicate that the container is clickable */
+  transition: background-color 0.3s ease;
+}
+
+.container:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
+}
+
+.track-row {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  width: 100%;
+}
+
+.track-index {
+  width: 30px; /* Fixed width for index */
+  color: white; /* Text color */
+}
+
+.track-title {
+  flex-grow: 1; /* Takes the remaining space */
+  margin-left: 10px; /* Space between index and title */
+  color: white;
+}
+
+.track-duration {
+  width: 50px; /* Fixed width for duration */
+  color: white;
+}
+
+.explicit-marker {
+  color: red; /* Color for explicit marker */
+  margin-left: 5px;
+}
