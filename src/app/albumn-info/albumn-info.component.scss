@@ -29,3 +29,40 @@
   overflow-y: auto;
   max-height: calc(100vh - 150px);
 }
+
+.topbar {
+  background-color: #1e1e1e; /* Dark background similar to image */
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Light border for separation */
+}
+
+.topbar-content {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  color: white; /* Title color */
+  margin: 0; /* Remove default margin */
+}
+
+.topbar-columns {
+  display: flex;
+  justify-content: space-between; /* Space between groups */
+  margin-top: 10px; /* Space above column headers */
+}
+
+.header-group {
+  display: flex; /* Keep # and Title in the same line */
+  flex-grow: 1; /* Allow to take as much space as needed */
+}
+
+.column-header {
+  color: white; /* Header text color */
+  font-weight: bold; /* Bold font for headers */
+  margin-right: 0px; /* Space between header items */
+}
+
+.header-group .column-header:last-child {
+  margin-right: 0; /* Remove margin for the last header in the group */
+}

@@ -1,7 +1,7 @@
 .container {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 20px; /* Add more padding for better spacing */
   cursor: pointer; /* Indicate that the container is clickable */
   transition: background-color 0.3s ease;
 }
@@ -17,22 +17,31 @@
 }
 
 .track-index {
-  width: 30px; /* Fixed width for index */
-  color: white; /* Text color */
+  width: 40px; /* Adjust width for index */
+  color: #ffffff; /* Text color */
+  font-size: 16px; /* Slightly increase font size */
 }
 
 .track-title {
   flex-grow: 1; /* Takes the remaining space */
-  margin-left: 10px; /* Space between index and title */
-  color: white;
+  margin-left: 15px; /* Space between index and title */
+  color: #ffffff; /* Set text color */
+}
+
+.track-name {
+  margin: 0; /* Remove default margin */
+  color: #ffffff; /* Text color */
+  font-size: 16px; /* Font size for track name */
+}
+
+.track-artist {
+  margin: 0; /* Remove default margin */
+  color: rgba(255, 255, 255, 0.7); /* Lighter text for artist name */
+  font-size: 14px; /* Font size for artist name */
 }
 
 .track-duration {
   width: 50px; /* Fixed width for duration */
-  color: white;
-}
-
-.explicit-marker {
-  color: red; /* Color for explicit marker */
-  margin-left: 5px;
+  color: #ffffff; /* Text color */
+  font-size: 16px; /* More visible font size */
 }
