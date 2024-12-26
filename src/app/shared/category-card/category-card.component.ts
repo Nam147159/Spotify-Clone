@@ -25,7 +25,6 @@ export class CategoryCardComponent implements OnInit {
   
   ngOnInit() {
   }
-
  
   getImageUrl(): string | null {
     return this.category.icons && this.category.icons.length > 0

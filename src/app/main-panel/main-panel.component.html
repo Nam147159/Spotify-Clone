@@ -3,7 +3,7 @@
         <h2>Browse all</h2>
         <div class="grid">
             @for (category of categories | slice:0:categories.length-1; track $index) {
-            <div class="col-4">
+            <div class="md:col-4 lg:col-3 xl:col-3">
                 <category-card [category]="category"/>
             </div>
                
