@@ -60,6 +60,7 @@ import { Menu, MenuModule } from 'primeng/menu';
   styleUrl: './playlist-detail.component.scss',
 })
 export class PlaylistDetailComponent implements OnInit {
+  visible: boolean = false;
   submitted = false;
   musicList!: any[];
   searchValue: string | undefined;
@@ -97,6 +98,13 @@ export class PlaylistDetailComponent implements OnInit {
         label: 'Remove playlist',
         icon: 'pi pi-trash',
         command: () => this.removePlaylist(this.playlistId),
+      },
+      {
+        label: 'Edit detail',
+        icon: 'pi pi-pencil',
+        command: () => {
+          this.showDialog(); 
+        },
       },
     ];
     console.log(this.musicOptions);
@@ -155,18 +163,7 @@ export class PlaylistDetailComponent implements OnInit {
     this.playlist.musicList = this.playlist.musicList.filter(
       (music: any) => music.id !== value.id
     );
-
-    this.playlistService
-      .updatePlaylist(this.playlistId, this.playlist)
-      .subscribe(
-        (data) => {
-          this.playlist = data;
-          this.musicList = this.playlist.musicList;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    this.editPlaylist(); 
 
     this.updateTable();
   }
@@ -181,4 +178,21 @@ export class PlaylistDetailComponent implements OnInit {
     this.playlistService.deletePlaylist(id);
     this.router.navigate(['/']);
   }
+
+  public editPlaylist() {
+    this.playlistService
+      .updatePlaylist(this.playlistId, this.playlist)
+      .subscribe((data) => {
+        this.playlist = data;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Playlist updated',
+        });
+      });
+    console.log('Edit playlist');
+  }
+  public showDialog() {
+    this.visible = true;
+}
 }
