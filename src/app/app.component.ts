@@ -8,7 +8,7 @@ import { PlayerComponent } from "./player/player.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavBarComponent, SignUpBarComponent, PlayerComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
