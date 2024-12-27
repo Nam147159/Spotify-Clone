@@ -1,16 +1,5 @@
 <div #mainDiv>
-    <div *ngIf="searchValue==''">
-        <h2>Browse all</h2>
-        <div class="grid">
-            @for (category of categories | slice:0:categories.length-1; track $index) {
-            <div class="md:col-4 lg:col-3 xl:col-3">
-                <category-card [category]="category"/>
-            </div>
-               
-            }
-        </div>
-    </div>
-    <div *ngIf="searchValue==null">
+    <div >
         <div>
             <h2>Recommend playlists</h2>
             <div class="flex flex-row overflow-x-auto w-full">

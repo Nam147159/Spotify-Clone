@@ -1,0 +1,10 @@
+<div>
+    <div>
+        <h2>Browse all</h2>
+        <div class="grid">
+            <div *ngFor="let category of categories; let i = index" class="sm:col-12 md:col-6 lg:col-4 xl:col-3">
+                <category-card [category]="category"></category-card>
+            </div>
+        </div>
+    </div>
+</div>
