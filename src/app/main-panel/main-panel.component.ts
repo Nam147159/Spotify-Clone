@@ -20,7 +20,6 @@ import { Router } from '@angular/router';
 })
 export class MainPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('mainDiv') mainDiv!: ElementRef;
-
   popularArtists: Artist[] = [];
   popularAlbums: Album[] = [];
   recommendedPlaylists: Playlist[] = [];
@@ -33,6 +32,7 @@ export class MainPanelComponent implements OnInit, AfterViewInit {
     this.fetchPopularAlbums();
     this.fetchRecommendedPlaylists();
     this.fetchTop100Playlists();
+    
   }
 
   ngAfterViewInit(): void {

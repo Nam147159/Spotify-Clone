@@ -55,12 +55,10 @@ import { Subscription } from 'rxjs';
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss',
 })
-export class PlaylistComponent implements OnInit, OnDestroy {
+export class PlaylistComponent implements OnInit {
   @ViewChild('cmItem') cmItem!: ContextMenu;
   @ViewChild('cm') cm!: ContextMenu;
   @Output() playlistVisibilityChange = new EventEmitter<boolean>();
-  @Output() updatePlaylistId = new EventEmitter<number>();
-  private subscription!: Subscription;
   playlists: any[] = [];
   filteredPlaylists: any[] = [];
   selectedPlaylist: any = {};
@@ -72,6 +70,7 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   searchTerm = '';
   height = '600px';
   id: number = 0;
+  currentPlaylistId: number = 0;
 
   sortOptions = [
     { label: 'Recents', value: 'recents' },
@@ -184,27 +183,14 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     this.selectedSortOption = this.sortOptions[1];
     this.selectedViewOption = this.viewOptions[1];
     this.dv = { layout: this.selectedViewOption.value };
-    // this.loadPlaylists();
-
-    this.subscription = this.playlistService.$playlists.subscribe((playlists) => {
-      this.playlists = playlists;
-      this.filteredPlaylists = [...this.playlists];
-    });
-
+    this.loadPlaylists();
     if (this.playlists.length === 0) {
       this.createPlaylist();
     }
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    console.log('Unsubscribed');
-  }
-
   public loadPlaylists() {
-    this.playlistService.$playlists.subscribe((playlists) => {
+    this.playlistService.getPlaylists().subscribe((playlists) => {
       this.playlists = playlists;
       this.filteredPlaylists = [...this.playlists];
     });
@@ -225,6 +211,9 @@ export class PlaylistComponent implements OnInit, OnDestroy {
   public deletePlaylist(playlist: any) {
     this.playlistService.deletePlaylist(playlist.id);
     this.loadPlaylists();
+    if (this.currentPlaylistId === playlist.id) {
+      this.route.navigate(['/']);
+    }
     console.log('Deleted playlist:', playlist);
     if (this.playlists.length === 0) {
       this.playlistVisibilityChange.emit(false);
@@ -320,9 +309,10 @@ export class PlaylistComponent implements OnInit, OnDestroy {
 
   public getDetail(index: any) {
     console.log('Selected playlist:', index.id);
-    this.id = index.id;
-    this.updatePlaylistId.emit(index.id);
+    this.currentPlaylistId = index.id
+    // this.id = index.id;
+    // this.updatePlaylistId.emit(index.id);
     // this.playlistService.updatePlaylistId(index.id);
-    // this.route.navigate(['/playlist', index.id]);
+    this.route.navigate(['/playlist', index.id]);
   }
 }

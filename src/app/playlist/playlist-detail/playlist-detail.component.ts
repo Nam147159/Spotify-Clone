@@ -68,9 +68,7 @@ import { PlaylistComponent } from '../playlist.component';
   templateUrl: './playlist-detail.component.html',
   styleUrl: './playlist-detail.component.scss',
 })
-export class PlaylistDetailComponent implements OnInit, OnChanges {
-  @Input() playlistId!: number;
-  @Output() deletedPlaylist = new EventEmitter<number>();
+export class PlaylistDetailComponent implements OnInit {
   visible: boolean = false;
   submitted = false;
   musicList!: any[];
@@ -85,6 +83,8 @@ export class PlaylistDetailComponent implements OnInit, OnChanges {
   public playlist: any = {};
   private searchText$ = new RxSubject<string>();
   selectedMusics: any;
+  playlistId!: number;
+  form!: FormGroup;
 
   constructor(
     private readonly router: Router,
@@ -95,6 +95,7 @@ export class PlaylistDetailComponent implements OnInit, OnChanges {
     private readonly playlistService: PlaylistService,
     private readonly fb: FormBuilder
   ) {
+    this.playlistId = this.route.snapshot.params['id'];
     this.musicOptions = [
       {
         label: 'Remove form this playlist',
@@ -104,11 +105,6 @@ export class PlaylistDetailComponent implements OnInit, OnChanges {
     ];
 
     this.playlistOptions = [
-      {
-        label: 'Remove playlist',
-        icon: 'pi pi-trash',
-        command: () => this.removePlaylist(this.playlistId),
-      },
       {
         label: 'Edit detail',
         icon: 'pi pi-pencil',
@@ -121,20 +117,35 @@ export class PlaylistDetailComponent implements OnInit, OnChanges {
   }
 
   public ngOnInit() {
+    this.form = this.fb.group({
+      id: [''],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      cover: ['', Validators.required],
+      creator: ['', Validators.required],
+    });
+
+    this.route.paramMap.subscribe((params) => {
+      this.playlistId = +params.get('id')!;
+      console.log('bruh', this.playlistId);
+      this.loadPlaylist();
+      this.updateTable();
+    });
+  }
+
+  public loadPlaylist() {
     this.playlistService.retrivePlaylist(this.playlistId).subscribe((data) => {
       this.playlist = data;
       this.musicList = this.playlist.musicList;
     });
+    console.log('Playlist:', this.playlist);
 
-    this.updateTable();
-
-    console.log(this.playlist);
-  }
-
-  public ngOnChanges() {
-    this.playlistService.retrivePlaylist(this.playlistId).subscribe((data) => {
-      this.playlist = data;
-      this.musicList = this.playlist.musicList;
+    this.form.patchValue({
+      id: this.playlistId,
+      title: this.playlist.title,
+      description: this.playlist.description,
+      cover: this.playlist.cover,
+      creator: this.playlist.creator,
     });
   }
 
@@ -175,25 +186,14 @@ export class PlaylistDetailComponent implements OnInit, OnChanges {
     this.selectedMusics = value;
   }
 
-  public removePlaylist(id: number) {
-    console.log('Remove playlist', id);
-    this.playlistService.deletePlaylist(id);
-    // this.playlistComponent.deletePlaylist(id);
-    // this.deletedPlaylist.emit(0);
-  }
-
   public editPlaylist() {
-    this.playlistService
-      .updatePlaylist(this.playlistId, this.playlist)
-      .subscribe((data) => {
-        this.playlist = data;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Playlist updated',
-        });
-      });
-    console.log('Edit playlist');
+    this.playlistService.updatePlaylist(this.playlistId, this.form.value);
+    console.log('Edit playlist', this.form.value);
+    this.loadPlaylist();
+    this.updateTable();
+    this.playlistService.getPlaylists().subscribe((data) => {
+      console.log('Playlist:', data);
+    });
   }
 
   public showDialog() {

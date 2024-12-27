@@ -12,7 +12,6 @@ import { PlaylistComponent } from '../playlist/playlist.component';
 })
 export class LibraryPanelComponent {
   @ViewChild(PlaylistComponent) playlistComponent!: PlaylistComponent;
-  @Output() updatePlaylistId = new EventEmitter<number>();
   showTooltip: boolean = false;
   isPlaylistVisible: boolean = false
   toggleTooltip() {
@@ -22,10 +21,6 @@ export class LibraryPanelComponent {
 
   public changePlaylistVisibility(value: boolean) {
     this.isPlaylistVisible = value;
-  }
-
-  public updateId(event: any) {
-    this.updatePlaylistId.emit(event);
   }
 }
 

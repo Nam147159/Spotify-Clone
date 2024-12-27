@@ -33,7 +33,7 @@
     </div>
   </div>
   } @if (isPlaylistVisible) {
-  <app-playlist (updatePlaylistId)="updateId($event)" (playlistVisibilityChange)="changePlaylistVisibility($event)"></app-playlist>
+  <app-playlist (playlistVisibilityChange)="changePlaylistVisibility($event)"></app-playlist>
   } @if (!isPlaylistVisible) {
   <div class="panel-body">
     <div class="section">

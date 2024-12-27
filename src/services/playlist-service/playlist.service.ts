@@ -157,7 +157,9 @@ export class PlaylistService {
 
   retrivePlaylist(id: number): Observable<Playlist> {
     return new Observable((observer) => {
-      const playlist = this.playlists.value.find((playlist) => playlist.id === id);
+      const playlist = this.playlists.value.find(
+        (playlist) => playlist.id === id
+      );
       if (playlist) {
         observer.next(playlist);
       } else {
@@ -178,26 +180,48 @@ export class PlaylistService {
     return newPlaylist;
   }
 
-  updatePlaylist(id: number, p0: { title: any; cover: any; description: any; creator: any; }): Observable<Playlist> {
-    return new Observable((observer) => {
-      const index = this.playlists.value.findIndex((playlist) => playlist.id === id);
-      if (index !== -1) {
-        const playlists = this.playlists.value;
-        playlists[index] = {
-          ...playlists[index],
-          lastModifiedDate: new Date(),
-        };
-        this.playlists.next(playlists);
-        observer.next(this.playlists.value[index]);
-      } else {
+  updatePlaylist(
+    id: number,
+    data: Partial<Omit<Playlist, 'id'>>
+  ): Observable<Playlist> {
+    console.log('Updating playlist:', id, data); // Debug log
+
+    // Truy cập danh sách playlist hiện tại
+    const playlists = this.playlists.value;
+
+    // Tìm index của playlist cần cập nhật
+    const index = playlists.findIndex((playlist) => playlist.id === id);
+
+    if (index !== -1) {
+      // Cập nhật playlist với dữ liệu mới
+      const updatedPlaylist = {
+        ...playlists[index],
+        ...data,
+        lastModifiedDate: new Date(),
+      };
+      playlists[index] = updatedPlaylist;
+
+      // Cập nhật lại BehaviorSubject với danh sách playlist mới
+      this.playlists.next([...playlists]);
+
+      // Trả về playlist đã được cập nhật
+      return new Observable<Playlist>((observer) => {
+        observer.next(updatedPlaylist);
+        observer.complete();
+      });
+    } else {
+      // Nếu không tìm thấy playlist theo id, trả về lỗi
+      return new Observable<Playlist>((observer) => {
         observer.error('Playlist not found');
-      }
-      observer.complete();
-    });
-  }    
+        observer.complete();
+      });
+    }
+  }
 
   deletePlaylist(id: number) {
-    this.playlists.next(this.playlists.value.filter((playlist) => playlist.id !== id));
+    this.playlists.next(
+      this.playlists.value.filter((playlist) => playlist.id !== id)
+    );
     console.log('playlists:', this.playlists.value);
   }
 

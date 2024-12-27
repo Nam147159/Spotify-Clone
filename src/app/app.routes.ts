@@ -31,6 +31,11 @@ export const routes: Routes = [
         title: "Spotify - Web Player: Music for everyone",
       },
       {
+        path: "playlist/:id",
+        component: PlaylistDetailComponent,
+        title: "Spotify - Web Player: Music for everyone",
+      },
+      {
         path: "settings",
         component: SettingsComponent,
         title: "Spotify - Web Player: Music for everyone",
@@ -39,6 +44,7 @@ export const routes: Routes = [
   },
   {
     path: "sign-up",
+    component: SignUpMainComponent,
     title: 'Spotify - Web Player: Music for everyone'
   },
   {

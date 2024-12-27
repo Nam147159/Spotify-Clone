@@ -10,7 +10,7 @@ import { AuthenticationService } from '../../services/authentication-service/aut
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavBarComponent, LibraryPanelComponent, MainPanelComponent, SignUpBarComponent, RouterModule],
+  imports: [NavBarComponent, LibraryPanelComponent, SignUpBarComponent, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -20,10 +20,5 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.authService.getToken(); // Sử dụng hàm getToken để kiểm tra
-  }
-
-  updatePlaylistId(event: any){
-    this.playlistId = event;
-    console.log('Playlist ID home:', this.playlistId);
   }
 }

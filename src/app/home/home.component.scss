@@ -20,25 +20,6 @@ $content-padding: 0.5rem;
   grid-area: signup-bar;
 }
 
-<<<<<<< HEAD
-.app-library-panel {
-  width: 23%;
-  margin-left: 10px;
-  border-radius: 8px;
-  margin-top: 65px;
-  height: calc(100vh - 150px);
-}
-
-.app-main-panel {
-  background-color: #1c1c1c;
-  width: 77%;
-  padding: 10px;
-  margin-top: 65px;
-  border-radius: 8px;
-
-  overflow-y: auto;
-  max-height: calc(100vh - 150px);
-=======
 .nav-bar {
   grid-area: nav-bar;
 }
@@ -53,5 +34,4 @@ $content-padding: 0.5rem;
   border-radius: 8px;
   background-color: #121212;
   overflow: auto;
->>>>>>> profile-settings
 }
