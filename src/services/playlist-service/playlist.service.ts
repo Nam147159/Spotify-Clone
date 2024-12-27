@@ -25,9 +25,9 @@ interface Playlist {
   providedIn: 'root',
 })
 export class PlaylistService {
-  private dataSource = new BehaviorSubject<number>(1);
-  public currentPlaylistId = this.dataSource.asObservable();
-  private playlists: Playlist[] = [
+  private dataSource = new BehaviorSubject<string>('bruh');
+  data$ = this.dataSource.asObservable();
+  private playlists = new BehaviorSubject<Playlist[]>([
     {
       id: 1,
       title: 'My Playlist #1',
@@ -37,9 +37,9 @@ export class PlaylistService {
       musicList: [
         {
           id: 1,
-          title: 'Music #1',
-          artist: 'Artist #1',
-          album: 'Album #1',
+          title: 'Music #1.1',
+          artist: 'Artist #1.1',
+          album: 'Album #1.1',
           cover: 'https://via.placeholder.com/150',
           duration: 300,
           genre: 'Pop',
@@ -47,9 +47,9 @@ export class PlaylistService {
         },
         {
           id: 2,
-          title: 'Music #2',
-          artist: 'Artist #2',
-          album: 'Album #2',
+          title: 'Music #1.2',
+          artist: 'Artist #1.2',
+          album: 'Album #1.2',
           cover: 'https://via.placeholder.com/150',
           duration: 300,
           genre: 'Pop',
@@ -57,9 +57,9 @@ export class PlaylistService {
         },
         {
           id: 3,
-          title: 'Music #3',
-          artist: 'Artist #3',
-          album: 'Album #3',
+          title: 'Music #1.3',
+          artist: 'Artist #1.3',
+          album: 'Album #1.3',
           cover: 'https://via.placeholder.com/150',
           duration: 300,
           genre: 'Pop',
@@ -76,30 +76,33 @@ export class PlaylistService {
       musicList: [
         {
           id: 1,
-          title: 'Music #1',
-          artist: 'Artist #1',
-          album: 'Album #1',
+          title: 'Music #2.1',
+          artist: 'Artist #2.1',
+          album: 'Album #2.1',
           cover: 'https://via.placeholder.com/150',
           duration: 300,
           genre: 'Pop',
+          dateAdded: new Date(),
         },
         {
           id: 2,
-          title: 'Music #2',
-          artist: 'Artist #2',
-          album: 'Album #2',
+          title: 'Music #2.2',
+          artist: 'Artist #2.2',
+          album: 'Album #2.2',
           cover: 'https://via.placeholder.com/150',
           duration: 300,
           genre: 'Pop',
+          dateAdded: new Date(),
         },
         {
           id: 3,
-          title: 'Music #3',
-          artist: 'Artist #3',
-          album: 'Album #3',
+          title: 'Music #2.3',
+          artist: 'Artist #2.3',
+          album: 'Album #2.3',
           cover: 'https://via.placeholder.com/150',
           duration: 300,
           genre: 'Pop',
+          dateAdded: new Date(),
         },
       ],
     },
@@ -109,22 +112,52 @@ export class PlaylistService {
       cover: 'https://via.placeholder.com/150',
       description: 'Playlist',
       creator: 'NTT',
+      musicList: [
+        {
+          id: 1,
+          title: 'Music #3.1',
+          artist: 'Artist #3.1',
+          album: 'Album #3.1',
+          cover: 'https://via.placeholder.com/150',
+          duration: 300,
+          genre: 'Pop',
+          dateAdded: new Date(),
+        },
+        {
+          id: 2,
+          title: 'Music #3.2',
+          artist: 'Artist #3.2',
+          album: 'Album #3.2',
+          cover: 'https://via.placeholder.com/150',
+          duration: 300,
+          genre: 'Pop',
+          dateAdded: new Date(),
+        },
+        {
+          id: 3,
+          title: 'Music #3.3',
+          artist: 'Artist #3.3',
+          album: 'Album #3.3',
+          cover: 'https://via.placeholder.com/150',
+          duration: 300,
+          genre: 'Pop',
+          dateAdded: new Date(),
+        },
+      ],
     },
-  ];
+  ]);
+  public $playlists = this.playlists.asObservable();
   private nextId: number = 1;
 
   constructor() {}
 
   getPlaylists(): Observable<Playlist[]> {
-    return new Observable((observer) => {
-      observer.next(this.playlists);
-      observer.complete();
-    });
+    return this.$playlists;
   }
 
   retrivePlaylist(id: number): Observable<Playlist> {
     return new Observable((observer) => {
-      const playlist = this.playlists.find((playlist) => playlist.id === id);
+      const playlist = this.playlists.value.find((playlist) => playlist.id === id);
       if (playlist) {
         observer.next(playlist);
       } else {
@@ -141,19 +174,21 @@ export class PlaylistService {
       addedDate: new Date(),
       lastModifiedDate: new Date(),
     };
-    this.playlists.push(newPlaylist);
+    this.playlists.next([...this.playlists.value, newPlaylist]);
     return newPlaylist;
   }
 
   updatePlaylist(id: number, p0: { title: any; cover: any; description: any; creator: any; }): Observable<Playlist> {
     return new Observable((observer) => {
-      const index = this.playlists.findIndex((playlist) => playlist.id === id);
+      const index = this.playlists.value.findIndex((playlist) => playlist.id === id);
       if (index !== -1) {
-        this.playlists[index] = {
-          ...this.playlists[index],
+        const playlists = this.playlists.value;
+        playlists[index] = {
+          ...playlists[index],
           lastModifiedDate: new Date(),
         };
-        observer.next(this.playlists[index]);
+        this.playlists.next(playlists);
+        observer.next(this.playlists.value[index]);
       } else {
         observer.error('Playlist not found');
       }
@@ -162,11 +197,12 @@ export class PlaylistService {
   }    
 
   deletePlaylist(id: number) {
-    this.playlists = this.playlists.filter((playlist) => playlist.id !== id);
+    this.playlists.next(this.playlists.value.filter((playlist) => playlist.id !== id));
+    console.log('playlists:', this.playlists.value);
   }
 
-  updatePlaylistId(id: number) {
-    this.dataSource.next(id);
-    console.log('Playlist ID updated:', id);
+  updateDetailData(newData: string) {
+    console.log('Updating detail data to:', newData); // Debug log
+    this.dataSource.next(newData);
   }
 }

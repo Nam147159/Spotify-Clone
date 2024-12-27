@@ -4,6 +4,7 @@ import {
   EventEmitter,
   ViewChild,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { DataViewModule } from 'primeng/dataview';
@@ -25,6 +26,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PlaylistService } from '../../services/playlist-service/playlist.service';
 import { Route, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-playlist',
@@ -53,11 +55,12 @@ import { Route, Router } from '@angular/router';
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss',
 })
-export class PlaylistComponent implements OnInit {
+export class PlaylistComponent implements OnInit, OnDestroy {
   @ViewChild('cmItem') cmItem!: ContextMenu;
   @ViewChild('cm') cm!: ContextMenu;
   @Output() playlistVisibilityChange = new EventEmitter<boolean>();
-
+  @Output() updatePlaylistId = new EventEmitter<number>();
+  private subscription!: Subscription;
   playlists: any[] = [];
   filteredPlaylists: any[] = [];
   selectedPlaylist: any = {};
@@ -181,14 +184,27 @@ export class PlaylistComponent implements OnInit {
     this.selectedSortOption = this.sortOptions[1];
     this.selectedViewOption = this.viewOptions[1];
     this.dv = { layout: this.selectedViewOption.value };
-    this.loadPlaylists();
+    // this.loadPlaylists();
+
+    this.subscription = this.playlistService.$playlists.subscribe((playlists) => {
+      this.playlists = playlists;
+      this.filteredPlaylists = [...this.playlists];
+    });
+
     if (this.playlists.length === 0) {
       this.createPlaylist();
     }
   }
 
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    console.log('Unsubscribed');
+  }
+
   public loadPlaylists() {
-    this.playlistService.getPlaylists().subscribe((playlists) => {
+    this.playlistService.$playlists.subscribe((playlists) => {
       this.playlists = playlists;
       this.filteredPlaylists = [...this.playlists];
     });
@@ -205,6 +221,7 @@ export class PlaylistComponent implements OnInit {
     this.loadPlaylists();
     console.log('Created playlist:', newPlaylist);
   }
+
   public deletePlaylist(playlist: any) {
     this.playlistService.deletePlaylist(playlist.id);
     this.loadPlaylists();
@@ -304,6 +321,8 @@ export class PlaylistComponent implements OnInit {
   public getDetail(index: any) {
     console.log('Selected playlist:', index.id);
     this.id = index.id;
-    this.playlistService.updatePlaylistId(index.id);
+    this.updatePlaylistId.emit(index.id);
+    // this.playlistService.updatePlaylistId(index.id);
+    // this.route.navigate(['/playlist', index.id]);
   }
 }

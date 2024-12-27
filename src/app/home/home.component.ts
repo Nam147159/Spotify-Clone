@@ -12,5 +12,10 @@ import { SignUpBarComponent } from "../sign-up-bar/sign-up-bar.component";
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  playlistId: number = 0;
 
+  updatePlaylistId(event: any){
+    this.playlistId = event;
+    console.log('Playlist ID home:', this.playlistId);
+  }
 }

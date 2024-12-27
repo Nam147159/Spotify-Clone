@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgIf } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { PlaylistComponent } from '../playlist/playlist.component';
 
 @Component({
@@ -12,6 +12,7 @@ import { PlaylistComponent } from '../playlist/playlist.component';
 })
 export class LibraryPanelComponent {
   @ViewChild(PlaylistComponent) playlistComponent!: PlaylistComponent;
+  @Output() updatePlaylistId = new EventEmitter<number>();
   showTooltip: boolean = false;
   isPlaylistVisible: boolean = false
   toggleTooltip() {
@@ -21,6 +22,10 @@ export class LibraryPanelComponent {
 
   public changePlaylistVisibility(value: boolean) {
     this.isPlaylistVisible = value;
+  }
+
+  public updateId(event: any) {
+    this.updatePlaylistId.emit(event);
   }
 }
 

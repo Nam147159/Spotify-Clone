@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -29,6 +37,7 @@ import { CardModule } from 'primeng/card';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { Menu, MenuModule } from 'primeng/menu';
+import { PlaylistComponent } from '../playlist.component';
 
 @Component({
   selector: 'app-playlist-detail',
@@ -59,8 +68,9 @@ import { Menu, MenuModule } from 'primeng/menu';
   templateUrl: './playlist-detail.component.html',
   styleUrl: './playlist-detail.component.scss',
 })
-export class PlaylistDetailComponent implements OnInit {
+export class PlaylistDetailComponent implements OnInit, OnChanges {
   @Input() playlistId!: number;
+  @Output() deletedPlaylist = new EventEmitter<number>();
   visible: boolean = false;
   submitted = false;
   musicList!: any[];
@@ -72,7 +82,6 @@ export class PlaylistDetailComponent implements OnInit {
   public sortOption: string = 'list';
   public searchText = '';
   public loading = false;
-  // public playlistId: number = 0;
   public playlist: any = {};
   private searchText$ = new RxSubject<string>();
   selectedMusics: any;
@@ -104,7 +113,7 @@ export class PlaylistDetailComponent implements OnInit {
         label: 'Edit detail',
         icon: 'pi pi-pencil',
         command: () => {
-          this.showDialog(); 
+          this.showDialog();
         },
       },
     ];
@@ -112,7 +121,6 @@ export class PlaylistDetailComponent implements OnInit {
   }
 
   public ngOnInit() {
-    // this.playlistId = this.getPlaylistId();
     this.playlistService.retrivePlaylist(this.playlistId).subscribe((data) => {
       this.playlist = data;
       this.musicList = this.playlist.musicList;
@@ -123,25 +131,18 @@ export class PlaylistDetailComponent implements OnInit {
     console.log(this.playlist);
   }
 
+  public ngOnChanges() {
+    this.playlistService.retrivePlaylist(this.playlistId).subscribe((data) => {
+      this.playlist = data;
+      this.musicList = this.playlist.musicList;
+    });
+  }
+
   public updateTable() {
     this.playlistService.getPlaylists().subscribe((playlists) => {
       this.playlists = playlists;
     });
   }
-
-  // private getPlaylistId(): number {
-  //   const idStr = this.route.snapshot.paramMap.get('id');
-  //   const id = Number(idStr);
-  //   if (!idStr || isNaN(Number(idStr))) {
-  //     this.messageService.add({
-  //       severity: 'error',
-  //       summary: 'Error',
-  //       detail: 'Invalid classroom id',
-  //     });
-  //     this.router.navigate(['/']);
-  //   }
-  //   return id;
-  // }
 
   public getValue(event: Event) {
     return (event.target as HTMLInputElement).value;
@@ -164,7 +165,7 @@ export class PlaylistDetailComponent implements OnInit {
     this.playlist.musicList = this.playlist.musicList.filter(
       (music: any) => music.id !== value.id
     );
-    this.editPlaylist(); 
+    this.editPlaylist();
 
     this.updateTable();
   }
@@ -177,7 +178,8 @@ export class PlaylistDetailComponent implements OnInit {
   public removePlaylist(id: number) {
     console.log('Remove playlist', id);
     this.playlistService.deletePlaylist(id);
-    this.playlistService.updatePlaylistId(0);
+    // this.playlistComponent.deletePlaylist(id);
+    // this.deletedPlaylist.emit(0);
   }
 
   public editPlaylist() {
@@ -193,7 +195,8 @@ export class PlaylistDetailComponent implements OnInit {
       });
     console.log('Edit playlist');
   }
+
   public showDialog() {
     this.visible = true;
-}
+  }
 }
