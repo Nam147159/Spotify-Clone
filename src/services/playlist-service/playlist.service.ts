@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 interface Music {
   id: number;
@@ -25,6 +25,8 @@ interface Playlist {
   providedIn: 'root',
 })
 export class PlaylistService {
+  private dataSource = new BehaviorSubject<number>(1);
+  public currentPlaylistId = this.dataSource.asObservable();
   private playlists: Playlist[] = [
     {
       id: 1,
@@ -161,5 +163,10 @@ export class PlaylistService {
 
   deletePlaylist(id: number) {
     this.playlists = this.playlists.filter((playlist) => playlist.id !== id);
+  }
+
+  updatePlaylistId(id: number) {
+    this.dataSource.next(id);
+    console.log('Playlist ID updated:', id);
   }
 }

@@ -68,6 +68,7 @@ export class PlaylistComponent implements OnInit {
   dialogVisible = false;
   searchTerm = '';
   height = '600px';
+  id: number = 0;
 
   sortOptions = [
     { label: 'Recents', value: 'recents' },
@@ -177,7 +178,6 @@ export class PlaylistComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('PlaylistComponent');
     this.selectedSortOption = this.sortOptions[1];
     this.selectedViewOption = this.viewOptions[1];
     this.dv = { layout: this.selectedViewOption.value };
@@ -302,7 +302,8 @@ export class PlaylistComponent implements OnInit {
   }
 
   public getDetail(index: any) {
-    console.log('Selected playlist:', index);
-    this.route.navigate(['/playlist', index.id]);
+    console.log('Selected playlist:', index.id);
+    this.id = index.id;
+    this.playlistService.updatePlaylistId(index.id);
   }
 }
