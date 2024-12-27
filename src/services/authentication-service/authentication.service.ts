@@ -60,14 +60,14 @@ export class AuthenticationService implements OnDestroy {
 
   getToken(): string | null {
     if (this.isBrowser) {
-      return sessionStorage.getItem('token');
+      return this.storageService.getItem('token');
     }
     return null;
   }
 
   setToken(token: string): void {
     if (this.isBrowser) {
-      sessionStorage.setItem('token', token);
+      this.storageService.setItem('token', token);
       this.isAuthenticatedSubject.next(true);
     }
   }
