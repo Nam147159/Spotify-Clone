@@ -44,14 +44,11 @@ export class TrackCardComponent {
 
   async onClick(): Promise<void> {
     console.log("Track ID: ", this.track.id);
-    // this.playerService.togglePlay();
     try {
       console.log("Device ID: ", this.deviceID);
       const tokenResponse = await firstValueFrom(this.tokenService.getAccessToken());
       const token = tokenResponse.token;
-      console.log(token);
-      // You'll need to implement this method in your PlayerService
-      // This assumes you're using the Spotify Web API alongside the Playback SDK
+
       const response = await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${this.deviceID}`, {
         method: 'PUT',
         headers: {
