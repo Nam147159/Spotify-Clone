@@ -1,12 +1,16 @@
 <div class="home-page">
-    <div class="container">
-        <div class="app-library-panel">
-            <app-library-panel (updatePlaylistId)="updatePlaylistId($event)"></app-library-panel>
-        </div>
-        <div class="app-main-panel">
-            <app-main-panel [id]="playlistId"></app-main-panel>
-
-        </div> 
-    </div>
+  <div class="nav-bar">
+    <app-nav-bar></app-nav-bar>
+  </div>
+  <div class="library-panel">
+    <app-library-panel></app-library-panel>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+  @if (!isLoggedIn) {
+    <app-sign-up-bar class="signup-bar"></app-sign-up-bar>
+  } @else {
+    <app-sign-up-bar class="signup-bar"></app-sign-up-bar>
+  }
 </div>
-<script src="https://sdk.scdn.co/spotify-player.js"></script>

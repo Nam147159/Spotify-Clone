@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { NavigationEnd, RouterOutlet } from '@angular/router';
 import { NavBarComponent } from "./nav-bar/nav-bar.component";
 import { SignUpBarComponent } from "./sign-up-bar/sign-up-bar.component";
@@ -6,6 +7,11 @@ import { AuthenticationService } from '../services/authentication-service/authen
 import { PlayerComponent } from "./player/player.component";
 import { Router } from '@angular/router';
 import { filter } from 'rxjs';
+=======
+import { RouterOutlet } from '@angular/router';
+import { NavBarComponent } from "./nav-bar/nav-bar.component";
+import { SignUpBarComponent } from "./sign-up-bar/sign-up-bar.component";
+>>>>>>> profile-settings
 
 @Component({
   selector: 'app-root',
@@ -15,6 +21,7 @@ import { filter } from 'rxjs';
   styleUrl: './app.component.scss'
 })
 
+<<<<<<< HEAD
 export class AppComponent implements OnInit {
   notSignupOrLogin: boolean = true;
   isLoggedIn: boolean = false;
@@ -30,4 +37,7 @@ export class AppComponent implements OnInit {
       this.notSignupOrLogin = !(currentRoute === '/sign-up' || currentRoute === '/login');
     });
   }
+=======
+export class AppComponent {
+>>>>>>> profile-settings
 }
