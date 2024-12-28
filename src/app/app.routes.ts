@@ -10,6 +10,11 @@ import { BrowsePanelComponent } from './browse-panel/browse-panel.component';
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: HomeComponent,
     title: 'Spotify - Web Player: Music for everyone',
     children: [
