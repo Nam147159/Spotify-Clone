@@ -1,16 +1,1 @@
-<div class="layout">
-  @if (notSignupOrLogin) {
-  <app-nav-bar class="navbar"></app-nav-bar>
-  }
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
-  
-  @if (isLoggedIn) {
-  <app-player class="player-bar"></app-player>
-  }
-  @else if (notSignupOrLogin && !isLoggedIn) {
-  <app-sign-up-bar class="sign-up-bar"></app-sign-up-bar>
-  }
-</div>
-<script src="https://sdk.scdn.co/spotify-player.js"></script>
+<router-outlet></router-outlet>

@@ -1,36 +1,37 @@
+$content-padding: 0.5rem;
+
 .home-page {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "nav-bar nav-bar"
+    "library-panel content"
+    "signup-bar signup-bar";
+  background-color: #000000;
+  padding: $content-padding;
+  gap: $content-padding;
+
 }
 
-.container {
-  display: flex;
-  padding: 0;
-  justify-content: space-between;
-  gap: 10px;
-  flex-grow: 1;
+.signup-bar {
+  grid-area: signup-bar;
 }
 
-.app-library-panel {
-  width: 23%;
-  margin-left: 10px;
+.nav-bar {
+  grid-area: nav-bar;
+}
+
+.library-panel {
+  grid-area: library-panel;
+  overflow: auto;
+}
+
+.content {
+  grid-area: content;
   border-radius: 8px;
-  margin-top: 65px;
-  height: calc(100vh - 150px);
+  background-color: #121212;
+  overflow: auto;
 }
-
-.app-main-panel {
-  background-color: #1c1c1c;
-  width: 77%;
-  padding: 10px;
-  margin-top: 65px;
-  border-radius: 8px;
-
-  overflow-y: auto;
-  max-height: calc(100vh - 150px);
-}
-
-.app-main-panel::-webkit-scrollbar {
-  display: none;
-} // hide scroll bar

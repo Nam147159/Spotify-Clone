@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, AlbumCardComponent, ArtistCardComponent, PlaylistCardComponent, ScrollerModule, ScrollPanelModule],
   templateUrl: './main-panel.component.html',
-  styleUrl: './main-panel.component.scss'
+  styleUrl: './main-panel.component.scss',
 })
 export class MainPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('mainDiv') mainDiv!: ElementRef;
@@ -276,6 +276,7 @@ export class MainPanelComponent implements OnInit, AfterViewInit {
     this.fetchPopularAlbums();
     this.fetchRecommendedPlaylists();
     this.fetchTop100Playlists();
+    
   }
 
   ngAfterViewInit(): void {
@@ -324,7 +325,11 @@ export class MainPanelComponent implements OnInit, AfterViewInit {
 
   fetchPopularArtists(): void {
     this.mainPanelService.getPopularArtists().subscribe({
-      next: (response: { success: boolean; message: string; data: Artist[] }) => {
+      next: (response: {
+        success: boolean;
+        message: string;
+        data: Artist[];
+      }) => {
         if (response.success && Array.isArray(response.data)) {
           this.popularArtists = response.data;
 
@@ -338,13 +343,17 @@ export class MainPanelComponent implements OnInit, AfterViewInit {
       },
       complete: () => {
         console.log('Popular artists fetch complete');
-      }
+      },
     });
   }
 
   fetchPopularAlbums(): void {
     this.mainPanelService.getPopularAlbums().subscribe({
-      next: (response: { success: boolean; message: string; data: Album[] }) => {
+      next: (response: {
+        success: boolean;
+        message: string;
+        data: Album[];
+      }) => {
         if (response.success && Array.isArray(response.data)) {
           this.popularAlbums = response.data;
 
