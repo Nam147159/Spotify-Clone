@@ -25,6 +25,9 @@ export class PlayerComponent implements OnInit {
   isPlaying: boolean = false;
   currentTime: number = 0;
   duration: number = 0;
+  volume: number = 50;
+  volumeValue: number = 50;
+  isMuted: boolean = false;
 
   constructor(private readonly playerService: PlayerService, private ngZone: NgZone) {}
 
@@ -52,5 +55,19 @@ export class PlayerComponent implements OnInit {
   async previous() {
     console.log('previous track');
     await this.playerService.previousTrack();
+  }
+
+  async setVolume(volume: number) {
+    console.log('Set volume');
+    this.volume = volume;
+    this.volumeValue = volume;
+    await this.playerService.setVolume(volume/100);
+  }
+
+  async toggleMute() {
+    console.log('Toggled mute');
+    this.isMuted = !this.isMuted;
+    this.volumeValue = this.isMuted ? 0 : this.volume;
+    await this.playerService.setVolume(this.isMuted ? 0 : this.volume / 100);
   }
 }
