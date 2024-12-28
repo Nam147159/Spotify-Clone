@@ -1,9 +1,7 @@
-import { Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TokenService } from '../token-service/token.service';
-
 
 interface PlayerState {
   isConnected: boolean;
@@ -15,97 +13,102 @@ interface PlayerState {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlayerService {
   player!: Spotify.Player;
-  public deviceID: string | null = null;
-  private playerStateSubject = new BehaviorSubject<PlayerState>({
+  private deviceID: string | null = null;
+  private token: string | null = null;
+
+  public playerState$ = new BehaviorSubject<PlayerState>({
     isConnected: false,
     isPlaying: false,
     currentTrack: null,
     position: 0,
     duration: 0,
-    error: null
+    error: null,
   });
-  private deviceIdSubject = new BehaviorSubject<string | null>(null);
+
+  private deviceId$ = new BehaviorSubject<string | null>(null);
   private interval: any;
 
-  public playerState$ = this.playerStateSubject.asObservable();
+  constructor(
+    private tokenService: TokenService,
+    private ngZone: NgZone,
+  ) {}
 
-  constructor(private ngZone: NgZone, private tokenService: TokenService, @Inject(PLATFORM_ID) private platformId: Object) {
-    if (isPlatformBrowser(this.platformId)) {
-      window.onSpotifyWebPlaybackSDKReady = () => { };
-    }
-  }
-
-  initializePlayer(token: string) {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-
-    if (!document.getElementById('spotify-player')) {
-      const script = document.createElement('script');
-      script.id = 'spotify-player';
-      script.src = 'https://sdk.scdn.co/spotify-player.js';
-      script.async = true;
-
-      document.body.appendChild(script);
-    }
-
+  setupPlayer(token: string): void {
     window.onSpotifyWebPlaybackSDKReady = () => {
       this.player = new window.Spotify.Player({
         name: 'Web Playback SDK Player',
         getOAuthToken: (cb: (token: string) => void) => {
           cb(token);
         },
-        volume: 0.5
+        volume: 0.5,
       });
-
 
       // Ready
-      this.player.addListener('ready', ({ device_id }: { device_id: string }) => {
-        console.log('Ready with Device ID', device_id);
-        this.deviceID = device_id; // Lưu deviceId vào PlayerService
-        this.deviceIdSubject.next(device_id);
-        this.updatePlayerState({
-          isConnected: true,
-          error: null
-        });
-      });
+      this.player.addListener(
+        'ready',
+        ({ device_id }: { device_id: string }) => {
+          console.log('Ready with Device ID', device_id);
+          this.deviceID = device_id; // Lưu deviceId vào PlayerService
+          this.deviceId$.next(device_id);
+          this.updatePlayerState({
+            isConnected: true,
+            error: null,
+          });
+        },
+      );
 
       // Not Ready
-      this.player.addListener('not_ready', ({ device_id }: { device_id: string }) => {
-        console.log('Device ID has gone offline', device_id);
-        this.deviceID = null;  // Xóa deviceId nếu device đi offline
-        this.deviceIdSubject.next(null);
-        this.updatePlayerState({
-          isConnected: false,
-          error: 'Device went offline'
-        });
-      });
+      this.player.addListener(
+        'not_ready',
+        ({ device_id }: { device_id: string }) => {
+          console.log('Device ID has gone offline', device_id);
+          this.deviceID = null; // Xóa deviceId nếu device đi offline
+          this.deviceId$.next(null);
+          this.updatePlayerState({
+            isConnected: false,
+            error: 'Device went offline',
+          });
+        },
+      );
 
       // Error handling
-      this.player.addListener('initialization_error', ({ message }: { message: string }) => {
-        console.error('Initialization Error:', message);
-      });
-      this.player.addListener('authentication_error', ({ message }: { message: string }) => {
-        console.error('Authentication Error:', message);
-      });
-      this.player.addListener('account_error', ({ message }: { message: string }) => {
-        console.error('Account Error:', message);
-      });
+      this.player.addListener(
+        'initialization_error',
+        ({ message }: { message: string }) => {
+          console.error('Initialization Error:', message);
+        },
+      );
+      this.player.addListener(
+        'authentication_error',
+        ({ message }: { message: string }) => {
+          console.error('Authentication Error:', message);
+        },
+      );
 
-      this.player.addListener('player_state_changed', (state: Spotify.PlaybackState | null) => {
-        if (state) {
-          this.ngZone.run(() => {
-            this.updatePlayerState({
-              isPlaying: !state.paused,
-              currentTrack: state.track_window.current_track,
-              position: state.position,
-              duration: state.duration,
-              error: null
-            });
+      this.player.addListener(
+        'account_error',
+        ({ message }: { message: string }) => {
+          console.error('Account Error:', message);
+        },
+      );
+
+      this.player.addListener(
+        'player_state_changed',
+        (state: Spotify.PlaybackState | null) => {
+          if (!state) {
+            return;
+          }
+          console.log('Player state changed', state);
+          this.updatePlayerState({
+            isPlaying: !state.paused,
+            currentTrack: state.track_window.current_track,
+            position: state.position,
+            duration: state.duration,
+            error: null,
           });
 
           if (!state.paused) {
@@ -113,32 +116,38 @@ export class PlayerService {
           } else {
             this.stopUpdatingPosition();
           }
-        }
-      });
-
+        },
+      );
 
       // Connect to the player
-      this.player.connect().then(success => {
+      this.player.connect().then((success) => {
         if (success) {
-          console.log('The Web Playback SDK successfully connected to Spotify!');
+          console.log(
+            'The Web Playback SDK successfully connected to Spotify!',
+          );
         }
       });
-
     };
+  }
+
+  init() {
+    this.tokenService.getAccessToken().subscribe((token) => {
+      this.token = token.token;
+      const script = document.createElement('script');
+      script.id = 'spotify-player';
+      script.src = 'https://sdk.scdn.co/spotify-player.js';
+      script.async = false;
+      script.onload = () => {
+        this.setupPlayer(token.token);
+      };
+      document.body.appendChild(script);
+    });
   }
 
   private startUpdatingPosition() {
     this.stopUpdatingPosition(); // Clear any existing interval
     this.interval = setInterval(() => {
-      this.player.getCurrentState().then(state => {
-        if (state) {
-          this.ngZone.run(() => {
-            this.updatePlayerState({
-              position: state.position
-            });
-          });
-        }
-      });
+      this.forceUpdateState();
     }, 1000); // Update every second
   }
 
@@ -149,9 +158,107 @@ export class PlayerService {
     }
   }
 
+  public async setTracks(
+    trackIds: string[],
+    offset: { position: number } | { uri: string } | undefined = undefined,
+    position_ms: number = 0,
+  ): Promise<void> {
+    if (!this.deviceID) {
+      return;
+    }
+    const tracks = trackIds.map((id) => `spotify:track:${id}`);
+
+    const response = await fetch(
+      `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceID}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uris: tracks,
+          offset: offset,
+          position_ms: position_ms,
+        }),
+      },
+    );
+
+    if (response.status === 204) {
+      console.log('Track is playing (No content response)');
+      return;
+    }
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('Error response:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorData,
+      });
+      throw new Error(`Failed to play track: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      console.error('Error playing track:', data);
+    } else {
+      console.log('Track is playing:', data);
+    }
+    this.forceUpdateState();
+  }
+
+  public async setAlbum(
+    albumId: string,
+    offset: { position: number } | { uri: string } | undefined = undefined,
+    position_ms: number = 0,
+  ) {
+    if (!this.deviceID) {
+      return;
+    }
+    const album = `spotify:album:${albumId}`;
+    const response = await fetch(
+      `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceID}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          context_uri: album,
+          offset: offset,
+          position_ms: position_ms,
+        }),
+      },
+    );
+
+    if (response.status === 204) {
+      console.log('Album is playing (No content response)');
+      return;
+    }
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('Error response:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorData,
+      });
+      throw new Error(`Failed to play album: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    if (!response.ok) {
+      console.error('Error playing album:', data);
+    } else {
+      console.log('Album is playing:', data);
+    }
+    this.forceUpdateState();
+  }
 
   public getDeviceId(): Observable<string | null> {
-    return this.deviceIdSubject.asObservable();
+    return this.deviceId$.asObservable();
   }
 
   public isPlayerReady(): boolean {
@@ -160,30 +267,12 @@ export class PlayerService {
 
   // Additional methods to control playback
   public async togglePlay(): Promise<void> {
-    try {
-      if (this.player) {
-        const state = await this.player.getCurrentState();
-        if (!state) {
-          console.error('User is not playing music through the Web Playback SDK');
-          return;
-        }
-
-        if (state.paused) {
-          await this.player.resume();
-        } else {
-          await this.player.pause();
-        }
-      }
-    } catch (error) {
-      console.error('Error toggling play:', error);
-    }
+    await this.player.togglePlay();
   }
 
   public async seek(position_ms: number): Promise<void> {
     try {
-      if (this.player) {
-        await this.player.seek(position_ms);
-      }
+      await this.player.seek(position_ms);
     } catch (error) {
       console.error('Error seeking:', error);
     }
@@ -191,9 +280,7 @@ export class PlayerService {
 
   public async previousTrack(): Promise<void> {
     try {
-      if (this.player) {
-        await this.player.previousTrack();
-      }
+      await this.player.previousTrack();
     } catch (error) {
       console.error('Error playing previous track:', error);
     }
@@ -201,9 +288,7 @@ export class PlayerService {
 
   public async nextTrack(): Promise<void> {
     try {
-      if (this.player) {
-        await this.player.nextTrack();
-      }
+      await this.player.nextTrack();
     } catch (error) {
       console.error('Error playing next track:', error);
     }
@@ -211,24 +296,34 @@ export class PlayerService {
 
   public async setVolume(volume: number): Promise<void> {
     try {
-      if (this.player) {
-        await this.player.setVolume(volume);
-      }
+      await this.player.setVolume(volume);
     } catch (error) {
       console.error('Error setting volume:', error);
     }
   }
 
   public disconnect(): void {
-    if (this.player) {
-      this.player.disconnect();
+    this.player.disconnect();
+  }
+
+  private async forceUpdateState(): Promise<void> {
+    const state = await this.player.getCurrentState();
+    if (!state) {
+      return;
     }
+    this.updatePlayerState({
+      isPlaying: !state.paused,
+      currentTrack: state.track_window.current_track,
+      position: state.position,
+      duration: state.duration,
+      error: null,
+    });
   }
 
   private updatePlayerState(partialState: Partial<PlayerState>): void {
-    this.playerStateSubject.next({
-      ...this.playerStateSubject.getValue(),
-      ...partialState
+    this.playerState$.next({
+      ...this.playerState$.getValue(),
+      ...partialState,
     });
   }
 }

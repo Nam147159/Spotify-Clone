@@ -25,17 +25,19 @@
 .player-progress-container {
   display: flex;
   align-items: center; /* Căn giữa theo chiều dọc */
-  gap: 15px; /* Khoảng cách giữa thời gian và progress bar */
   width: 70%;
-} 
+}
 
 .player-controls {
   display: flex;
   gap: 20px; /* Khoảng cách giữa các nút */
+  justify-content: center;
   align-items: center;
 }
 
 .control-button, .play-pause-button {
+  display: flex;
+  align-items: center;
   background: none;
   border: none;
   color: #fff;
@@ -55,16 +57,23 @@
   border-radius: 50%;
   width: 40px;
   height: 40px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.play-button {
+  padding-left: 0.27rem;
+}
+
+.pause-button {
 }
 
 .player-progress {
   flex-grow: 1;
   width: 100%;
   background-color: #fff;
-  margin-top: 10px;
   align-items: center;
   flex: 1;
 }
