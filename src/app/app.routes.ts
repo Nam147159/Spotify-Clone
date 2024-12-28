@@ -8,6 +8,7 @@ import { MainPanelComponent } from "./main-panel/main-panel.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { AlbumnInfoComponent } from './albumn-info/albumn-info.component';
 import { PlaylistDetailComponent } from './playlist/playlist-detail/playlist-detail.component';
+import { BrowsePanelComponent } from "./browse-panel/browse-panel.component";
 
 export const routes: Routes = [
   {
@@ -39,6 +40,11 @@ export const routes: Routes = [
         path: "settings",
         component: SettingsComponent,
         title: "Spotify - Web Player: Music for everyone",
+      },
+      {
+        path: 'search',
+        component: BrowsePanelComponent,
+        title: 'Spotify - Playlist Details'
       }
     ],
   },
