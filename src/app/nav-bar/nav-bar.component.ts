@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from './../../services/authentication-service/authentication.service';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,7 +15,7 @@ export class NavBarComponent implements OnInit, OnDestroy{
   isLoggedIn: boolean = false;
   private authSubscription?: Subscription;
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit(): void {
     // Subscribe to authentication state changes
@@ -35,6 +36,14 @@ export class NavBarComponent implements OnInit, OnDestroy{
   logout(): void {
     this.authService.logout();
     // Additional logout logic if needed (e.g., navigation)
+  }
+
+  navigateHome() {
+    this.router.navigate(['/']);
+  }
+
+  showSearchPanel() {
+    this.router.navigate(['/search']);
   }
   
 }

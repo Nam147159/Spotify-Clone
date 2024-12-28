@@ -10,7 +10,6 @@ import { StorageService } from '../storage-service/storage.service';
   providedIn: 'root'
 })
 export class AuthenticationService implements OnDestroy {
-
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
   private isBrowser: boolean;
@@ -70,5 +69,9 @@ export class AuthenticationService implements OnDestroy {
       sessionStorage.setItem('token', token);
       this.isAuthenticatedSubject.next(true);
     }
+  }
+
+  public isAuthenticated(): Observable<boolean> {
+    return this.isAuthenticated$;
   }
 }

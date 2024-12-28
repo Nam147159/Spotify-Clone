@@ -32,8 +32,9 @@
       <button class="btn-primary">Log in</button>
     </div>
   </div>
-  } @if (isPlaylistVisible) {
-  <app-playlist (playlistVisibilityChange)="changePlaylistVisibility($event)"></app-playlist>
+  }
+  @if (isPlaylistVisible) {
+  <app-playlist [playlistName]="newPlaylistName"></app-playlist>
   } @if (!isPlaylistVisible) {
   <div class="panel-body">
     <div class="section">
