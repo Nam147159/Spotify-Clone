@@ -95,3 +95,10 @@ export interface Track {
   uri: string;
   is_local: boolean;
 }
+
+export interface Category {
+  href: string;
+  icons: Image[];
+  id: string;
+  name: string;
+}

@@ -1,0 +1,12 @@
+<div>
+    <div>
+        <h2>Browse all</h2>
+        <div class="grid">
+            @for (category of categories; track $index) {
+            <div class="category-card">
+                <category-card [category]="category"></category-card>
+            </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,4 +1,11 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { DataViewModule } from 'primeng/dataview';
 import { ListboxModule } from 'primeng/listbox';
@@ -17,6 +24,9 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PlaylistService } from '../../services/playlist-service/playlist.service';
+import { Route, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-playlist',
@@ -41,30 +51,26 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     DialogModule,
     InputTextareaModule,
   ],
-  providers: [],
+  providers: [PlaylistService],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss',
 })
-export class PlaylistComponent {
+export class PlaylistComponent implements OnInit {
   @ViewChild('cmItem') cmItem!: ContextMenu;
   @ViewChild('cm') cm!: ContextMenu;
   @Output() playlistVisibilityChange = new EventEmitter<boolean>();
   playlists: any[] = [];
+  filteredPlaylists: any[] = [];
+  selectedPlaylist: any = {};
+  selectedSortOption: any;
+  selectedViewOption: any;
+  dv!: { layout: any };
   isInputVisible = false;
   dialogVisible = false;
-  selectedPlaylist: any = {
-    id: 0,
-    title: '',
-    cover: '',
-    description: '',
-    creator: '',
-    addedDate: new Date(Date.now()),
-    lastModifiedDate: new Date(Date.now()),
-  };
-
   searchTerm = '';
-  filteredPlaylists = [...this.playlists];
   height = '600px';
+  id: number = 0;
+  currentPlaylistId: number = 0;
 
   sortOptions = [
     { label: 'Recents', value: 'recents' },
@@ -72,7 +78,6 @@ export class PlaylistComponent {
     { label: 'Alphabetical', value: 'alphabetical' },
     { label: 'Creator', value: 'creator' },
   ];
-  selectedSortOption = this.sortOptions[1];
 
   viewOptions: Array<{
     label: string;
@@ -83,9 +88,6 @@ export class PlaylistComponent {
     { label: 'List', value: 'list', icon: 'pi pi-list' },
     { label: 'Grid', value: 'grid', icon: 'pi pi-th-large' },
   ];
-
-  selectedViewOption = this.viewOptions[1];
-  dv = { layout: this.selectedViewOption.value };
 
   contextMenu = [
     {
@@ -172,12 +174,66 @@ export class PlaylistComponent {
     },
   ];
 
-  constructor() {}
+  constructor(
+    private playlistService: PlaylistService,
+    private route: Router,
+  ) {}
 
   ngOnInit() {
+    this.selectedSortOption = this.sortOptions[1];
+    this.selectedViewOption = this.viewOptions[1];
+    this.dv = { layout: this.selectedViewOption.value };
+    this.loadPlaylists();
     if (this.playlists.length === 0) {
       this.createPlaylist();
     }
+  }
+
+  public loadPlaylists() {
+    this.playlistService.getPlaylists().subscribe((playlists) => {
+      this.playlists = playlists;
+      this.filteredPlaylists = [...this.playlists];
+    });
+  }
+
+  public createPlaylist() {
+    const newPlaylist = this.playlistService.createPlaylist({
+      title: `My Playlist #${this.playlists.length + 1}`,
+      cover: 'https://via.placeholder.com/150',
+      description: 'Playlist',
+      creator: 'NTT'
+    });
+
+    this.loadPlaylists();
+    console.log('Created playlist:', newPlaylist);
+  }
+
+  public deletePlaylist(playlist: any) {
+    this.playlistService.deletePlaylist(playlist.id);
+    this.loadPlaylists();
+    if (this.currentPlaylistId === playlist.id) {
+      this.route.navigate(['/']);
+    }
+    console.log('Deleted playlist:', playlist);
+    if (this.playlists.length === 0) {
+      this.playlistVisibilityChange.emit(false);
+    }
+  }
+
+  public editPlaylist(playlist: any) {
+    this.selectedPlaylist = { ...playlist };
+    this.dialogVisible = true;
+  }
+
+  public savePlaylist() {
+    this.playlistService.updatePlaylist(this.selectedPlaylist.id, {
+      title: this.selectedPlaylist.title,
+      description: this.selectedPlaylist.description,
+      creator: this.selectedPlaylist.creator,
+      cover: this.selectedPlaylist.cover,
+    });
+    this.dialogVisible = false;
+    this.loadPlaylists();
   }
 
   public changeView(event: any) {
@@ -237,35 +293,8 @@ export class PlaylistComponent {
     this.filteredPlaylists = [...this.playlists];
   }
 
-  public createPlaylist() {
-    if (this.playlists.length === 0) {
-      this.playlists.push({
-        id: 1,
-        title: 'My Playlist #1',
-        cover: 'https://via.placeholder.com/150',
-        description: 'Playlist',
-        creator: 'NTT',
-        addedDate: new Date(Date.now()),
-        lastModifiedDate: new Date(Date.now()),
-      });
-    } else {
-      this.playlists.push({
-        id: this.playlists[this.playlists.length - 1].id + 1,
-        title: `My Playlist #${
-          this.playlists[this.playlists.length - 1].id + 1
-        }`,
-        cover: 'https://via.placeholder.com/150',
-        description: 'Playlist',
-        creator: 'NTT',
-        addedDate: new Date(Date.now()),
-        lastModifiedDate: new Date(Date.now()),
-      });
-    }
-    this.filteredPlaylists = [...this.playlists];
-    console.log(this.playlists[this.playlists.length - 1]);
-  }
   public showMenuItem(event: MouseEvent, playlist: any) {
-    event.preventDefault();  
+    event.preventDefault();
     this.selectedPlaylist = playlist;
     this.cmItem.show(event);
     this.cm.visible.set(false);
@@ -278,26 +307,12 @@ export class PlaylistComponent {
     this.cmItem.visible.set(false);
   }
 
-  public deletePlaylist(playlist: any) {
-    this.playlists = this.playlists.filter((p) => p.id !== playlist.id);
-    this.filteredPlaylists = [...this.playlists];
-    console.log('Deleted playlist:', playlist);
-    if (this.playlists.length === 0) {
-      this.playlistVisibilityChange.emit(false);
-    }
-  }
-
-  public editPlaylist(playlist: any) {
-    this.selectedPlaylist = { ...playlist };
-    this.dialogVisible = true;
-  }
-
-  public savePlaylist(playlist: any) {
-    const index = this.playlists.findIndex(p => p.id === this.selectedPlaylist.id);
-    if (index !== -1) {
-      this.playlists[index] = { ...this.selectedPlaylist };
-    }
-    this.dialogVisible = false;
-    this.filteredPlaylists = [...this.playlists];
+  public getDetail(index: any) {
+    console.log('Selected playlist:', index.id);
+    this.currentPlaylistId = index.id
+    // this.id = index.id;
+    // this.updatePlaylistId.emit(index.id);
+    // this.playlistService.updatePlaylistId(index.id);
+    this.route.navigate(['/playlist', index.id]);
   }
 }

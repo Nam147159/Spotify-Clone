@@ -1,0 +1,59 @@
+@import 'primeflex/primeflex.scss';
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.header-container {
+  height: 20rem;
+  background-image: url('https://picsum.photos/1000/400');
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  padding: 0.5rem;
+
+  &>img {
+    height: 12rem;
+    width: 12rem;
+    clip-path: circle();
+  }
+}
+
+.brief-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  &>* {
+    margin: 0;
+  }
+
+  &>h2 {
+    font-size: 5rem;
+  }
+}
+
+.details {
+  padding: 1rem;
+  background-color: #121212;
+}
+
+.albums {
+  & > h2 {
+    margin: 0;
+  }
+  album-list {
+    display: inline-block;
+  }
+}
