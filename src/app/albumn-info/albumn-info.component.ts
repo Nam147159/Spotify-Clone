@@ -1,8 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 import { TrackService } from '../../services/track-service/track.service';
-import { MainPanelComponent } from '../main-panel/main-panel.component';
-import { Track } from '../models/spotify.model';
+import {Album, Track} from '../models/spotify.model';
 import { TrackCardComponent } from "../shared/track/track.component";
 import {NgForOf} from "@angular/common";
 import {LibraryPanelComponent} from "../library-panel/library-panel.component";
@@ -15,24 +14,28 @@ import {LibraryPanelComponent} from "../library-panel/library-panel.component";
   styleUrl: './albumn-info.component.scss'
 })
 export class AlbumnInfoComponent implements OnInit {
-  album: any;
-
+  popularAlbums: Album[] = [];
   tracks: Track[] = [];
   errorMessage: string = '';
+  albumID: string = '';
+  albumImageUrl: string = '';
+  artistName: string = '';
+  albumName: string = '';
+  trackTotalDuration: string = '00 min 00 sec';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private trackService: TrackService
+    private trackService: TrackService,
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const albumID = params.get('id') ?? '';
+    this.route.paramMap.subscribe(async params => {
+      this.albumID = params.get('id') ?? '';
 
-      console.log("ALBUM ID: ", albumID);
-
-      this.fetchAlbumDetails(albumID);
+      console.log("ALBUM ID: ", this.albumID);
+      this.fetchAlbumDetails(this.albumID);
+      this.fetchPopularAlbums();
 
       // // Nếu album từ navigation state trùng với ID trong URL
       // if (navigationAlbum && navigationAlbum.id === albumId) {
@@ -52,6 +55,7 @@ export class AlbumnInfoComponent implements OnInit {
     this.trackService.getTracksFromAlbum(albumID).subscribe({
       next: (response) => {
         this.tracks = response.data; // Gán dữ liệu vào biến `tracks`
+        this.getTrackTotalDuration(this.tracks);
       },
       error: (error) => {
         console.error('Error fetching tracks:', error);
@@ -61,6 +65,46 @@ export class AlbumnInfoComponent implements OnInit {
         console.log("Fetch album detail complete");
       },
     });
+  }
+
+  fetchPopularAlbums(): void {
+    this.trackService.getPopularAlbums().subscribe({
+      next: (response: { success: boolean; message: string; data: Album[] }) => {
+        if (response.success && Array.isArray(response.data)) {
+          this.popularAlbums = response.data;
+          this.popularAlbums = this.popularAlbums.filter(album => album && album.name && album.artists && album.images && album.images.length > 0);
+          this.getAlbumData();
+        } else {
+          console.error('Invalid data structure:', response);
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching popular albums:', error);
+      },
+      complete: () => {
+        console.log('Popular albums fetch complete');
+      }
+    });
+  }
+
+  getAlbumData(): void {
+    for (let album of this.popularAlbums) {
+      if (this.albumID === album.id) {
+        this.albumImageUrl = album.images[0].url;
+        this.artistName = album.artists.map(artist => artist.name).join(', ');
+        this.albumName = album.name;
+      }
+    }
+  }
+
+  getTrackTotalDuration(tracks: Track[]): void {
+    let totalDuration: number = 0;
+    for (let track of tracks) {
+      totalDuration += track.duration_ms;
+    }
+    let minutes = Math.floor(totalDuration / 60000);
+    let seconds = ((totalDuration % 60000) / 1000).toFixed(0);
+    this.trackTotalDuration = minutes + " min " + (+seconds < 10 ? '0' : '') + seconds + " sec";
   }
 
   onClick() {

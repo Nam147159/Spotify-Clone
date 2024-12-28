@@ -18,7 +18,7 @@ export class AlbumCardComponent implements OnInit {
   @Output() albumClick = new EventEmitter<string>();
 
   constructor(private router: Router, private trackService: TrackService) {}
-  
+
   ngOnInit() {
     // this.fetchTracks(this.album.id);
   }
@@ -47,8 +47,8 @@ export class AlbumCardComponent implements OnInit {
   }
 
   getImageUrl(): string | null {
-    return this.album.images && this.album.images.length > 0 
-      ? this.album.images[0].url 
+    return this.album.images && this.album.images.length > 0
+      ? this.album.images[0].url
       : null;
   }
 
