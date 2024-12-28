@@ -8,11 +8,12 @@ import { RouterOutlet } from '@angular/router';
 import { Router } from 'express';
 import { RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication-service/authentication.service';
+import { PlayerComponent } from "../player/player.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavBarComponent, LibraryPanelComponent, SignUpBarComponent, RouterModule],
+  imports: [NavBarComponent, LibraryPanelComponent, SignUpBarComponent, RouterModule, PlayerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

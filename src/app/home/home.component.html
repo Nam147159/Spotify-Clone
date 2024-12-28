@@ -2,15 +2,17 @@
   <div class="nav-bar">
     <app-nav-bar></app-nav-bar>
   </div>
-  <div class="library-panel">
-    <app-library-panel></app-library-panel>
-  </div>
-  <div class="content">
-    <router-outlet></router-outlet>
+  <div class="main-content">
+    <div class="library-panel">
+      <app-library-panel></app-library-panel>
+    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
   @if (!isLoggedIn) {
     <app-sign-up-bar class="signup-bar"></app-sign-up-bar>
   } @else {
-    <app-sign-up-bar class="signup-bar"></app-sign-up-bar>
+    <app-player class="player-bar"></app-player>
   }
 </div>

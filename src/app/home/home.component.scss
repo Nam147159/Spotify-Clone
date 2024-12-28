@@ -1,37 +1,67 @@
 $content-padding: 0.5rem;
+$nav-bar-height: 50px;
+$footer-bar-height: 90px;
 
 .home-page {
   height: 100vh;
   min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: auto 1fr;
-  grid-template-areas:
-    "nav-bar nav-bar"
-    "library-panel content"
-    "signup-bar signup-bar";
+  display: flex;
+  flex-direction: column;
   background-color: #000000;
   padding: $content-padding;
   gap: $content-padding;
-
-}
-
-.signup-bar {
-  grid-area: signup-bar;
 }
 
 .nav-bar {
-  grid-area: nav-bar;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; 
+  background-color: inherit;
+  height: $nav-bar-height;
+  padding: $content-padding;
+}
+
+.main-content {
+  display: flex;
+  flex: 1 1 auto;
+  gap: $content-padding;
+  flex-direction: row;
+  margin-top: $nav-bar-height;
+  margin-bottom: $footer-bar-height;
 }
 
 .library-panel {
-  grid-area: library-panel;
+  width: 23%;
+  min-width: 200px;
+  max-width: 350px;
+  height: 100%;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: $content-padding;
 }
 
 .content {
-  grid-area: content;
+  flex: 1;
+  height: 555px;
   border-radius: 8px;
   background-color: #121212;
   overflow: auto;
+  padding-left: $content-padding;
+}
+
+.signup-bar, .player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: $footer-bar-height;
+  z-index: 1000;
+  padding: $content-padding;
+}
+
+.signup-bar {
+  margin-top: $content-padding;
 }

@@ -45,6 +45,11 @@ export const routes: Routes = [
         path: 'search',
         component: BrowsePanelComponent,
         title: 'Spotify - Playlist Details'
+      },
+      {
+        path: 'album/:id',
+        component: AlbumnInfoComponent,
+        title: 'Spotify - Album Details'
       }
     ],
   },

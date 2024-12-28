@@ -169,8 +169,8 @@ a {
   @include wrapper-border-onclick;
 
   &:hover {
-    margin: 3px;
     transform: scale(1.05);
+    cursor: pointer;
   }
 }
 
