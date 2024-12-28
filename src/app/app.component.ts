@@ -12,7 +12,7 @@ import { TokenService } from '../services/token-service/token.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavBarComponent, PlayerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
