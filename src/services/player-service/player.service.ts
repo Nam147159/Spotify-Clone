@@ -133,14 +133,18 @@ export class PlayerService {
   init() {
     this.tokenService.getAccessToken().subscribe((token) => {
       this.token = token.token;
-      const script = document.createElement('script');
-      script.id = 'spotify-player';
-      script.src = 'https://sdk.scdn.co/spotify-player.js';
-      script.async = false;
-      script.onload = () => {
-        this.setupPlayer(token.token);
-      };
-      document.body.appendChild(script);
+      if (typeof document !== 'undefined') {
+        const script = document.createElement('script');
+        script.id = 'spotify-player';
+        script.src = 'https://sdk.scdn.co/spotify-player.js';
+        script.async = false;
+        script.onload = () => {
+          this.setupPlayer(token.token);
+        };
+        document.body.appendChild(script);
+      } else {
+        console.error('Document is not defined.');
+      }
     });
   }
 
