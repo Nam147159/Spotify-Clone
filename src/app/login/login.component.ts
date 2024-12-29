@@ -1,3 +1,4 @@
+import { DatabaseService } from './../../services/database-service/database.service';
 import { Component, OnInit } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication-service/authentication.service';
 import { error } from 'console';
 import { Router } from '@angular/router';
+import { StorageService } from '../../services/storage-service/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +37,11 @@ export class LoginComponent implements OnInit {
   // identifier: string = '';
   // password: string = '';
 
-  constructor(private router: Router, private fb: FormBuilder, private authService: AuthenticationService) { 
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthenticationService,
+    private storageService: StorageService) {
     this.loginForm = this.fb.group({
       identifier: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -57,10 +63,12 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(identifier, password).subscribe({
         next: (response) => {
-          sessionStorage.setItem('token', response.token);
+          this.storageService.setItem('token', response.token);
+          // sessionStorage.setItem('token', response.token);
+          this.storageService.setItem('identifier', identifier);
+          // sessionStorage.setItem('identifier', identifier);
           this.authService['isAuthenticatedSubject'].next(true);
           console.log(response);
-          console.log(localStorage.getItem('token'));
           this.router.navigate(['']);
         },
         error: (error) => {
@@ -70,7 +78,7 @@ export class LoginComponent implements OnInit {
           console.log('Login complete');
         }
       });
-    }  
+    }
   }
 
 }

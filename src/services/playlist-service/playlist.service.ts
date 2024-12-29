@@ -190,6 +190,8 @@ export class PlaylistService {
     const body = { name, description, public: isPublic };
     return this.http.post(createPlaylistEndpoint, body, { headers });
   }
+
+  
   // updatePlaylist(
   //   id: number,
   //   data: Partial<Omit<Playlist, 'id'>>
