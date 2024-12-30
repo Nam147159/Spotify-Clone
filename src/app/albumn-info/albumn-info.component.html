@@ -1,18 +1,19 @@
 <div class="album-page">
-    <div class="album-detail">
-      <div class="topbar">
-        <div class="topbar-content">
-          <h2>Track List</h2>
-          <div class="topbar-columns">
-            <div>
-              <span class="column-header"># &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Title</span>
-            </div>
-            <span class="column-header">Duration</span>
+  <div class="album-detail">
+    <div class="topbar">
+      <div class="topbar-content">
+        <h2>Track List</h2>
+        <div class="topbar-columns">
+          <div>
+            <span class="column-header"># &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Title</span>
           </div>
+          <span class="column-header">Duration</span>
         </div>
       </div>
-      <div *ngFor="let track of tracks; let i = index">
-        <track-card [track]="track" [index]="i"></track-card>
-      </div>
     </div>
+    @for (track of tracks; track $index) {
+    <track-card [album]="album!" [track]="track" [index]="$index"></track-card>
+    }
+  </div>
 </div>

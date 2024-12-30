@@ -10,12 +10,12 @@ import {LibraryPanelComponent} from "../library-panel/library-panel.component";
 @Component({
   selector: 'app-albumn-info',
   standalone: true,
-  imports: [TrackCardComponent, NgForOf],
+  imports: [TrackCardComponent],
   templateUrl: './albumn-info.component.html',
   styleUrl: './albumn-info.component.scss'
 })
 export class AlbumnInfoComponent implements OnInit {
-  album: any;
+  album: string | undefined;
 
   tracks: Track[] = [];
   errorMessage: string = '';
@@ -29,9 +29,8 @@ export class AlbumnInfoComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const albumID = params.get('id') ?? '';
-
+      this.album = albumID;
       console.log("ALBUM ID: ", albumID);
-
       this.fetchAlbumDetails(albumID);
 
       // // Nếu album từ navigation state trùng với ID trong URL
