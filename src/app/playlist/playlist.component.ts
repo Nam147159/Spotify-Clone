@@ -22,6 +22,10 @@ import { Playlist } from '../models/spotify.model';
 })
 export class PlaylistComponent {
   @Input() playlist!: Playlist;
+  @Output() selectPlaylist = new EventEmitter<Playlist>();
 
-  
+  onClick() {
+    this.selectPlaylist.emit(this.playlist); // Emit the selected playlist when clicked
+  }
+
 }

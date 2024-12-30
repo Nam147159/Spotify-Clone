@@ -1,0 +1,37 @@
+<div class="playlist-detail">
+    <!-- Header Section -->
+    <div class="playlist-header">
+
+      <div class="playlist-info">
+        <div class="playlist-type">Playlist</div>
+        <h1 class="playlist-title">{{ playlist?.name || 'New Playlist' }}</h1>
+        <div class="playlist-description">{{ playlist?.description || 'Description' }}</div>
+        <div class="playlist-owner">{{ playlist?.owner || 'Unknown' }} •</div>
+      </div>
+    </div>
+
+    <!-- Action Section -->
+    <div class="playlist-actions">
+      <div class="left-actions">
+        <button class="icon-button more-options">•••</button>
+      </div>
+      <div class="right-actions">
+        <button class="view-mode">
+          List <i class="list-icon">≡</i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section">
+      <h2>Let's find something for your playlist</h2>
+      <div class="search-container">
+        <i class="search-icon">🔍</i>
+        <input 
+          type="text" 
+          placeholder="Search for songs or episodes"
+          class="search-input"
+        >
+      </div>
+    </div>
+  </div>

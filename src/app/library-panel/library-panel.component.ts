@@ -66,7 +66,7 @@ export class LibraryPanelComponent implements OnInit {
   }
 
   createNewPlaylist() {
-    this.playlistService.createNewPlaylist('New Playlist', 'Description', false).pipe(
+    this.playlistService.createNewPlaylist('Test Playlist', 'Description', false).pipe(
       switchMap(response => {
         console.log('New playlist created');
         console.log(response);

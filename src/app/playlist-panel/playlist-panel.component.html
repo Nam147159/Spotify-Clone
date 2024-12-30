@@ -12,7 +12,7 @@
 
   <div class="playlists-container">
     @for (playlist of receivedPlaylists; track $index) {
-      <app-playlist [playlist]="playlist"></app-playlist>
+      <app-playlist [playlist]="playlist" (selectPlaylist)="onSelectPlaylist($event)"></app-playlist>
     }
   </div>
 </div>

@@ -4,6 +4,7 @@ import { DatabaseService } from '../../services/database-service/database.servic
 import { Playlist } from '../models/spotify.model';
 import { StorageService } from '../../services/storage-service/storage.service';
 import { PlaylistComponent } from '../playlist/playlist.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-playlist-panel',
@@ -21,8 +22,9 @@ export class PlaylistPanelComponent implements OnInit {
   constructor(
     private databaseService: DatabaseService,
     private storageService: StorageService,
-    private el: ElementRef, 
-    private renderer: Renderer2) { }
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.adjustHeight();
@@ -49,6 +51,10 @@ export class PlaylistPanelComponent implements OnInit {
     const totalHeight = playlistCount * heightPerPlaylist;
 
     this.renderer.setStyle(this.el.nativeElement, 'height', `${totalHeight}px`);
+  }
+
+  onSelectPlaylist(playlist: Playlist) {
+    this.router.navigate(['/playlist', playlist.id]);
   }
 
 }
