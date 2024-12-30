@@ -8,11 +8,14 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication-service/authentication.service';
 import { DatabaseService } from '../../services/database-service/database.service';
 import { StorageService } from '../../services/storage-service/storage.service';
+import { PlaylistPanelComponent } from "../playlist-panel/playlist-panel.component";
+import { switchMap } from 'rxjs';
+import { Playlist } from '../models/spotify.model';
 
 @Component({
   selector: 'app-library-panel',
   standalone: true,
-  imports: [PlaylistComponent],
+  imports: [PlaylistPanelComponent],
   templateUrl: './library-panel.component.html',
   styleUrl: './library-panel.component.scss',
 })
@@ -27,6 +30,7 @@ export class LibraryPanelComponent implements OnInit {
   newPlaylistName: string = "";
   newPlaylistDescription: string = "";
   newPlaylistPublic: boolean = false;
+  playlists: Playlist[] = [];
 
   constructor(
     private router: Router,
@@ -38,7 +42,12 @@ export class LibraryPanelComponent implements OnInit {
   ngOnInit(): void {
     this.authService.isAuthenticated().subscribe(isAuth => {
       this.isAuthenticated = isAuth;
+      if (this.isAuthenticated) {
+        this.loadPlaylists();
+      }
     });
+
+
   }
 
   toggleTooltip() {
@@ -50,9 +59,15 @@ export class LibraryPanelComponent implements OnInit {
     }
   }
 
+  createPlaylistWithAddBtn() {
+    if (this.isAuthenticated) {
+      this.createNewPlaylist();
+    }
+  }
+
   createNewPlaylist() {
-    this.playlistService.createNewPlaylist('New Playlist', 'Description', false).subscribe({
-      next: (response) => {
+    this.playlistService.createNewPlaylist('New Playlist', 'Description', false).pipe(
+      switchMap(response => {
         console.log('New playlist created');
         console.log(response);
         this.newPlaylistID = response.data.id;
@@ -60,19 +75,38 @@ export class LibraryPanelComponent implements OnInit {
         this.newPlaylistDescription = response.data.description;
         this.newPlaylistPublic = response.data.public;
 
-        this.onPlaylistCreated();
+        this.ownerIdentifier = this.storageService.getItem('identifier') ?? '';
+        if (!this.ownerIdentifier) {
+          console.error('Identifier is not available in session storage.');
+          throw new Error('Identifier is not available in session storage.');
+        }
 
+        return this.databaseService.getUserID(this.ownerIdentifier);
+      }),
+      switchMap(response => {
+        if (response.success) {
+          console.log('User ID retrieved: ', response.userID.id);
+          this.ownerID = response.userID.id;
+          return this.databaseService.saveNewPlaylist(this.newPlaylistID, this.ownerID, this.newPlaylistName, this.newPlaylistDescription, this.newPlaylistPublic);
+        } else {
+          console.error('Failed to fetch user ID: ', response.message);
+          throw new Error('Failed to fetch user ID');
+        }
+      })
+    ).subscribe({
+      next: (response) => {
+        console.log('Playlist saved into database');
+        console.log(response);
         this.isPlaylistVisible = true;
         this.router.navigate(['/playlist', this.newPlaylistID]);
       },
       error: (error) => {
-        console.error('Error creating playlist: ', error);
+        console.error('Error: ', error);
       },
       complete: () => {
         console.log('Create playlist request completed');
       }
-    })
-    console.log('New playlist created');
+    });
   }
 
   public changePlaylistVisibility(value: boolean) {
@@ -105,18 +139,50 @@ export class LibraryPanelComponent implements OnInit {
   }
 
   savePlaylistIntoDatabase() {
-    console.log("name: ", this.newPlaylistName);
-    console.log("public: ", this.newPlaylistPublic);
     this.databaseService.saveNewPlaylist(this.newPlaylistID, this.ownerID, this.newPlaylistName, this.newPlaylistDescription, this.newPlaylistPublic).subscribe({  
       next: (response) => {
         console.log('Playlist saved into database');
         console.log(response);
+        this.isPlaylistVisible = true;
+        this.router.navigate(['/playlist', this.newPlaylistID]);
       },
       error: (error) => {
         console.error('Error saving playlist into database: ', error);
       },
       complete: () => {
         console.log('Save playlist request completed');
+      }
+    });
+  }
+
+  loadPlaylists() {
+    this.ownerIdentifier = this.storageService.getItem('identifier') ?? '';
+    if (!this.ownerIdentifier) {
+      console.error('Identifier is not available in session storage.');
+      return;
+    }
+    this.databaseService.getUserID(this.ownerIdentifier).subscribe({
+      next: (response) => {
+        if (response.success && response.userID && response.userID.id) {
+          this.ownerID = response.userID.id;
+          this.databaseService.loadPlaylists(this.ownerID).subscribe({
+            next: (response) => {
+              this.playlists = response.playlists;
+              this.isPlaylistVisible = true;
+            },
+            error: (error) => {
+              console.error("Error loading playlists: ", error);
+            }
+          });
+        } else {
+          console.error('Failed to fetch user ID or user ID is missing in the response');
+        }
+      },
+      error: (error) => {
+        console.error('Error retrieving user ID: ', error);
+      },
+      complete: () => {
+        console.log('User ID retrieval completed');
       }
     });
   }

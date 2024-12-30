@@ -1,0 +1,18 @@
+<div class="playlist-panel">
+  <div class="filter-tabs">
+    <button class="filter-tab active">Playlists</button>
+    <button class="filter-tab">Artists</button>
+  </div>
+
+  <div class="search-bar">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Search in Library">
+    <button class="icon-button">Recents ⋮</button>
+  </div>
+
+  <div class="playlists-container">
+    @for (playlist of receivedPlaylists; track $index) {
+      <app-playlist [playlist]="playlist"></app-playlist>
+    }
+  </div>
+</div>
