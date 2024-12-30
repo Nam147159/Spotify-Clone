@@ -92,11 +92,15 @@ export class LibraryPanelComponent implements OnInit {
           console.error('Failed to fetch user ID: ', response.message);
           throw new Error('Failed to fetch user ID');
         }
+      }),
+      switchMap(() => {
+        return this.databaseService.loadPlaylists(this.ownerID);
       })
     ).subscribe({
       next: (response) => {
         console.log('Playlist saved into database');
         console.log(response);
+        this.playlists = response.playlists;
         this.isPlaylistVisible = true;
         this.router.navigate(['/playlist', this.newPlaylistID]);
       },
@@ -113,47 +117,47 @@ export class LibraryPanelComponent implements OnInit {
     this.isPlaylistVisible = value;
   }
 
-  public onPlaylistCreated() {
-    this.ownerIdentifier = this.storageService.getItem('identifier') ?? '';
-    if (!this.ownerIdentifier) {
-      console.error('Identifier is not available in session storage.');
-      return;
-    }
-    this.databaseService.getUserID(this.ownerIdentifier).subscribe({
-      next: (response) => {
-        if (response.success) {
-          console.log('User ID retrieved: ', response.userID.id);
-          this.ownerID = response.userID.id;
-          this.savePlaylistIntoDatabase();
-        } else {
-          console.error('Failed to fetch user ID: ', response.message);
-        }
-      },
-      error: (error) => {
-        console.error('Error retrieving user ID: ', error);
-      },
-      complete: () => {
-        console.log('User ID retrieval completed');
-      }
-    });
-  }
+  // public onPlaylistCreated() {
+  //   this.ownerIdentifier = this.storageService.getItem('identifier') ?? '';
+  //   if (!this.ownerIdentifier) {
+  //     console.error('Identifier is not available in session storage.');
+  //     return;
+  //   }
+  //   this.databaseService.getUserID(this.ownerIdentifier).subscribe({
+  //     next: (response) => {
+  //       if (response.success) {
+  //         console.log('User ID retrieved: ', response.userID.id);
+  //         this.ownerID = response.userID.id;
+  //         this.savePlaylistIntoDatabase();
+  //       } else {
+  //         console.error('Failed to fetch user ID: ', response.message);
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error('Error retrieving user ID: ', error);
+  //     },
+  //     complete: () => {
+  //       console.log('User ID retrieval completed');
+  //     }
+  //   });
+  // }
 
-  savePlaylistIntoDatabase() {
-    this.databaseService.saveNewPlaylist(this.newPlaylistID, this.ownerID, this.newPlaylistName, this.newPlaylistDescription, this.newPlaylistPublic).subscribe({  
-      next: (response) => {
-        console.log('Playlist saved into database');
-        console.log(response);
-        this.isPlaylistVisible = true;
-        this.router.navigate(['/playlist', this.newPlaylistID]);
-      },
-      error: (error) => {
-        console.error('Error saving playlist into database: ', error);
-      },
-      complete: () => {
-        console.log('Save playlist request completed');
-      }
-    });
-  }
+  // savePlaylistIntoDatabase() {
+  //   this.databaseService.saveNewPlaylist(this.newPlaylistID, this.ownerID, this.newPlaylistName, this.newPlaylistDescription, this.newPlaylistPublic).subscribe({
+  //     next: (response) => {
+  //       console.log('Playlist saved into database');
+  //       console.log(response);
+  //       this.isPlaylistVisible = true;
+  //       this.router.navigate(['/playlist', this.newPlaylistID]);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error saving playlist into database: ', error);
+  //     },
+  //     complete: () => {
+  //       console.log('Save playlist request completed');
+  //     }
+  //   });
+  // }
 
   loadPlaylists() {
     this.ownerIdentifier = this.storageService.getItem('identifier') ?? '';
@@ -168,7 +172,9 @@ export class LibraryPanelComponent implements OnInit {
           this.databaseService.loadPlaylists(this.ownerID).subscribe({
             next: (response) => {
               this.playlists = response.playlists;
-              this.isPlaylistVisible = true;
+              if (this.playlists.length > 0) {
+                this.isPlaylistVisible = true;
+              }
             },
             error: (error) => {
               console.error("Error loading playlists: ", error);
