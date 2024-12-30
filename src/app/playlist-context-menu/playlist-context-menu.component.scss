@@ -1,0 +1,43 @@
+.context-menu {
+  position: absolute;
+  background-color: #121212;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 200px;
+  padding: 8px 0;
+}
+
+.context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu li {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  gap: 10px;
+}
+
+.context-menu li:hover {
+  background-color: #333;
+}
+
+.context-menu li i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.context-menu .separator {
+  height: 1px;
+  background-color: #444;
+  margin: 1px 0;
+  padding: 0;
+}

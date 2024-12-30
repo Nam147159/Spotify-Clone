@@ -1,4 +1,4 @@
-<div class="playlist-item" (click)="onClick()">
+<div class="playlist-item" (click)="onClick()" (contextmenu)="openContextMenu($event)">
   <div class="playlist-icon">
     <!-- <img *ngIf="imageUrl" [src]="imageUrl" alt="playlist cover">
     <i *ngIf="!imageUrl" class="fas fa-music"></i> -->
@@ -10,3 +10,4 @@
     </div>
   </div>
 </div>
+<app-playlist-context-menu></app-playlist-context-menu>
