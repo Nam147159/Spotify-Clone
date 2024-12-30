@@ -10,7 +10,7 @@ import {LibraryPanelComponent} from "../library-panel/library-panel.component";
 @Component({
   selector: 'app-albumn-info',
   standalone: true,
-  imports: [TrackCardComponent, NgForOf, LibraryPanelComponent],
+  imports: [TrackCardComponent],
   templateUrl: './albumn-info.component.html',
   styleUrl: './albumn-info.component.scss'
 })
