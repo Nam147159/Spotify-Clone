@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Track } from '../../models/spotify.model';
+import { Album, Track } from '../../models/spotify.model';
 import { PlayerService } from '../../../services/player-service/player.service';
 import { TokenService } from '../../../services/token-service/token.service';
 import { firstValueFrom } from 'rxjs';
@@ -9,19 +9,25 @@ import { firstValueFrom } from 'rxjs';
   standalone: true,
   imports: [],
   templateUrl: './track.component.html',
-  styleUrl: './track.component.scss'
+  styleUrl: './track.component.scss',
 })
 export class TrackCardComponent {
-  @Input() track!: Track;
-  @Input() index!: number;
+  @Input({ required: true }) track!: Track;
+  @Input({ required: true }) index!: number;
+  @Input({ required: true }) album!: string;
+
   isCurrentlyPlaying = false;
   deviceID: string | null = null;
 
-  constructor(private playerService: PlayerService, private tokenService: TokenService) {
+  constructor(
+    private playerService: PlayerService,
+    private tokenService: TokenService,
+  ) {
     // Subscribe to player state to know if this track is currently playing
-    this.playerService.playerState$.subscribe(state => {
+    this.playerService.playerState$.subscribe((state) => {
       if (state.currentTrack) {
-        this.isCurrentlyPlaying = state.currentTrack.id === this.track.id && state.isPlaying;
+        this.isCurrentlyPlaying =
+          state.currentTrack.id === this.track.id && state.isPlaying;
       } else {
         this.isCurrentlyPlaying = false;
       }
@@ -37,7 +43,7 @@ export class TrackCardComponent {
       },
       complete: () => {
         console.log('Device ID subscription completed');
-      }
+      },
     });
   }
 
@@ -45,11 +51,16 @@ export class TrackCardComponent {
     if (!this.playerService) {
       return;
     }
-    this.playerService.setTracks([this.track.id]);
+    if (!this.album) {
+      console.error('No album provided');
+    }
+    this.playerService.setAlbum(this.album, {
+      uri: this.track.uri,
+    });
   }
 
   getArtistsString(): string {
-    return this.track.artists.map(artist => artist.name).join(', ');
+    return this.track.artists.map((artist) => artist.name).join(', ');
   }
 
   formatDuration(ms: number): string {
