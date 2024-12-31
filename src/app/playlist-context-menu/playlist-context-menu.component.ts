@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { PlaylistContextMenuService } from '../../services/playlist-context-menu-service/playlist-context-menu.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class PlaylistContextMenuComponent {
   isVisible = false;
   x = 0;
   y = 0;
+  @Output() openEditModal = new EventEmitter<void>();
 
   constructor(
     private playlistContextMenuService: PlaylistContextMenuService) { }
@@ -34,6 +35,12 @@ export class PlaylistContextMenuComponent {
 
   onAction(action: string): void {
     console.log(`${action} selected`);
-    this.isVisible = false; // Close menu after selection
+    this.isVisible = false;
+  }
+
+  onEditDetails() {
+    console.log('Edit details clicked - before emit');
+    this.openEditModal.emit();
+    console.log('Edit details clicked - after emit');
   }
 }

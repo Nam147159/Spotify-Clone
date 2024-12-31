@@ -8,3 +8,13 @@
     <div class="track-duration">{{ formatDuration(track.duration_ms) }}</div>
   </div>
 </div>
+<div>
+  <div class="Add-btn" (click)="ShowList()">Add</div>
+  @if (playlists.length > 0) {
+  <ul>
+    @for (playlist of playlists; track $index) {
+    <li (click)="AddIntoPlaylist(playlist.id)">{{ playlist.name }}</li>
+    }
+  </ul>
+  }
+</div>

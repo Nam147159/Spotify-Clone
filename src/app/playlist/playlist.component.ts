@@ -7,28 +7,36 @@ import {
   OnDestroy,
   Input,
   HostListener,
+  SimpleChanges,
 } from '@angular/core';
 import { PlaylistService } from '../../services/playlist-service/playlist.service';
 import { Route, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Playlist } from '../models/spotify.model';
+import { DBPlaylist, Playlist } from '../models/spotify.model';
 import { PlaylistContextMenuComponent } from '../playlist-context-menu/playlist-context-menu.component';
 import { PlaylistContextMenuService } from '../../services/playlist-context-menu-service/playlist-context-menu.service';
+import { EditPlaylistDetailModalComponent } from "../edit-playlist-detail-modal/edit-playlist-detail-modal.component";
 
 @Component({
   selector: 'app-playlist',
   standalone: true,
-  imports: [PlaylistContextMenuComponent],
+  imports: [PlaylistContextMenuComponent, EditPlaylistDetailModalComponent],
   providers: [PlaylistService],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss',
 })
-export class PlaylistComponent {
+export class PlaylistComponent implements OnInit {
   @Input() playlist!: Playlist;
   @Output() selectPlaylist = new EventEmitter<Playlist>();
 
+
   constructor(
     private playlistContextMenuService: PlaylistContextMenuService) { }
+
+  ngOnInit(): void {
+
+  }
+
 
   openContextMenu(event: MouseEvent): void {
     event.preventDefault();
@@ -38,6 +46,7 @@ export class PlaylistComponent {
     const screenHeight = window.innerHeight - 100;
     const playerBarHeight = 100;
     const margin = 10;
+
 
     // Calculate X position
     const menuX = event.clientX + menuWidth > screenWidth
@@ -52,8 +61,10 @@ export class PlaylistComponent {
     this.playlistContextMenuService.showContextMenu(menuX, menuY);
   }
 
+
   onClick() {
-    this.selectPlaylist.emit(this.playlist); // Emit the selected playlist when clicked
+    this.selectPlaylist.emit(this.playlist); 
+    console.log("Selected Playlist emit: ", this.playlist.id);
   }
 
 }

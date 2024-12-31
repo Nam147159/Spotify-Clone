@@ -1,34 +1,34 @@
 @if (isVisible) {
 <div class="context-menu" [style.left.px]="x" [style.top.px]="y">
   <ul>
-    <li (click)="onAction('Add to queue')">
+    <li>
       <i class="pi-plus"></i> Add to queue
     </li>
-    <li (click)="onAction('Add to profile')">
+    <li>
       <i class="pi-user"></i> Add to profile
     </li>
     <li class="separator"></li>
-    <li (click)="onAction('Edit details')">
+    <li (click)="onEditDetails()">
       <i class="pi-pencil"></i> Edit details
     </li>
-    <li (click)="onAction('Delete')">
+    <li>
       <i class="pi-trash"></i> Delete
     </li>
     <li class="separator"></li>
-    <li (click)="onAction('Create playlist')">
+    <li>
       <i class="pi-plus-circle"></i> Create playlist
     </li>
-    <li (click)="onAction('Create folder')">
+    <li>
       <i class="pi-folder-plus"></i> Create folder
     </li>
-    <li (click)="onAction('Exclude from your taste profile')">
+    <li>
       <i class="pi-times"></i> Exclude from your taste profile
     </li>
     <li class="separator"></li>
     <li (click)="onAction('Move to folder')">
       <i class="pi-folder"></i> Move to folder
     </li>
-    <li (click)="onAction('Pin playlist')">
+    <li>
       <i class="pi-thumbtack"></i> Pin playlist
     </li>
     <li class="separator"></li>
