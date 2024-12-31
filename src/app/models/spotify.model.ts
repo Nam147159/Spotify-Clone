@@ -102,3 +102,12 @@ export interface Category {
   id: string;
   name: string;
 }
+
+export interface DBPlaylist {
+  id: string;
+  name: string;
+  description: string;
+  public: boolean;
+  owner: string;
+  tracks: Track[];
+}

@@ -5,11 +5,12 @@ import {Album, Track} from '../models/spotify.model';
 import { TrackCardComponent } from "../shared/track/track.component";
 import {NgForOf} from "@angular/common";
 import {LibraryPanelComponent} from "../library-panel/library-panel.component";
+import {TrackAlbumComponent} from "../shared/track-album/track-album.component";
 
 @Component({
   selector: 'app-albumn-info',
   standalone: true,
-  imports: [TrackCardComponent, NgForOf, LibraryPanelComponent],
+  imports: [TrackCardComponent, TrackAlbumComponent, NgForOf],
   templateUrl: './albumn-info.component.html',
   styleUrl: './albumn-info.component.scss'
 })

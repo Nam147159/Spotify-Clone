@@ -1,29 +1,30 @@
 <div class="album-page">
-    <div class="album-detail">
-      <div class="album-info">
-        <div class="album-cover">
-          <img [src]="albumImageUrl">
-        </div>
-        <div class="album-description">
-          <h2>{{ albumName }}</h2>
-          <div class="album-title">
-            <div class="artist-avatar">
-              <img [src]="albumImageUrl">
-            </div>
-            <p>{{ artistName }} • {{ tracks.length }} songs, {{ trackTotalDuration }}</p>
-          </div>
-        </div>
+  <div class="album-detail">
+    <div class="album-info">
+      <div class="album-cover">
+        <img [src]="albumImageUrl">
       </div>
-      <div class="topbar">
-        <div class="topbar-columns">
-          <div class="header-group">
-            <span class="column-header"># &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Title</span>
+      <div class="album-description">
+        <h2>{{ albumName }}</h2>
+        <div class="album-title">
+          <div class="artist-avatar">
+            <img [src]="albumImageUrl">
           </div>
-          <span class="column-header">Duration</span>
+          <p>{{ artistName }} • {{ tracks.length }} songs, {{ trackTotalDuration }}</p>
         </div>
-      </div>
-      <div *ngFor="let track of tracks; let i = index">
-        <track-card [track]="track" [index]="i"></track-card>
+        <span class="column-header">Duration</span>
       </div>
     </div>
+    <div class="topbar">
+      <div class="topbar-columns">
+        <div class="header-group">
+          <span class="column-header"># &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Title</span>
+        </div>
+        <span class="column-header">Duration</span>
+      </div>
+    </div>
+    <div *ngFor="let track of tracks; let i = index">
+      <track-album [track]="track" [index]="i"></track-album>
+    </div>
+  </div>
 </div>
