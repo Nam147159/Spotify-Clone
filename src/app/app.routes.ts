@@ -11,6 +11,7 @@ import { PlaylistDetailComponent } from './playlist/playlist-detail/playlist-det
 import { BrowsePanelComponent } from "./browse-panel/browse-panel.component";
 import { CategoryCardComponent } from "./shared/category-card/category-card.component";
 import { PlaylistCardComponent } from "./shared/playlist-card/playlist-card.component";
+import { SearchComponent } from "./search/search.component";
 
 export const routes: Routes = [
   {
@@ -42,6 +43,11 @@ export const routes: Routes = [
         path: 'search',
         component: BrowsePanelComponent,
         title: 'Spotify - Playlist Details'
+      },
+      {
+        path: 'search/:query',
+        component: SearchComponent,
+        title: 'Spotify - Search'
       },
       {
         path: 'album/:id',

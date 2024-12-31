@@ -10,8 +10,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './browse-panel.component.html',
   styleUrl: './browse-panel.component.scss'
 })
-export class BrowsePanelComponent implements OnInit, AfterViewInit {
-  
+export class BrowsePanelComponent implements OnInit {
+
 categories: Category[] =  [
     {
       "href": "https://api.spotify.com/v1/browse/categories/0JQ5DAqbMKFC7do0jUgBzi",
@@ -257,9 +257,7 @@ categories: Category[] =  [
 
   constructor() {
   }
-  ngAfterViewInit(): void {
-   
-  }
+
   ngOnInit(): void {
   }
 }
