@@ -9,6 +9,7 @@ import { SettingsComponent } from "./settings/settings.component";
 import { AlbumnInfoComponent } from './albumn-info/albumn-info.component';
 import { PlaylistDetailComponent } from './playlist/playlist-detail/playlist-detail.component';
 import { BrowsePanelComponent } from "./browse-panel/browse-panel.component";
+import { SearchComponent } from "./search/search.component";
 
 export const routes: Routes = [
   {
@@ -45,6 +46,11 @@ export const routes: Routes = [
         path: 'search',
         component: BrowsePanelComponent,
         title: 'Spotify - Playlist Details'
+      },
+      {
+        path: 'search/:query',
+        component: SearchComponent,
+        title: 'Spotify - Search'
       },
       {
         path: 'album/:id',

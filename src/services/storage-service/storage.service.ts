@@ -14,26 +14,26 @@ export class StorageService {
 
   getItem(key: string): string | null {
     if (this.isBrowser && window.sessionStorage) {
-      return sessionStorage.getItem(key);
+      return localStorage.getItem(key);
     }
     return null;
   }
 
   setItem(key: string, value: string): void {
     if (this.isBrowser && window.sessionStorage) {
-      sessionStorage.setItem(key, value);
+      localStorage.setItem(key, value);
     }
   }
 
   removeItem(key: string): void {
     if (this.isBrowser && window.sessionStorage) {
-      sessionStorage.removeItem(key);
+      localStorage.removeItem(key);
     }
   }
 
   clear(): void {
     if (this.isBrowser && window.sessionStorage) {
-      sessionStorage.clear();
+      localStorage.clear();
     }
   }
 }
