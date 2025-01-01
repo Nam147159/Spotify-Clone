@@ -1,16 +1,14 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, provideRouter, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TrackService } from '../../services/track-service/track.service';
 import {Album, Track} from '../models/spotify.model';
 import { TrackCardComponent } from "../shared/track/track.component";
 import {NgForOf} from "@angular/common";
-import {LibraryPanelComponent} from "../library-panel/library-panel.component";
-import {TrackAlbumComponent} from "../shared/track-album/track-album.component";
 
 @Component({
   selector: 'app-albumn-info',
   standalone: true,
-  imports: [TrackCardComponent, TrackAlbumComponent, NgForOf],
+  imports: [TrackCardComponent, NgForOf],
   templateUrl: './albumn-info.component.html',
   styleUrl: './albumn-info.component.scss'
 })
