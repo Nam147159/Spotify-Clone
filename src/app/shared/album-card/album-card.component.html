@@ -1,21 +1,28 @@
 <div
+  [ngStyle]="{
+    'background-color': isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+  }"
+  [style]="{
+    backgroundColor: 'transparent',
+    color: 'white',
+    borderRadius: '10px',
+    padding: '10px',
+  }"
+  class="w-full card-container max-w-15rem"
+  (mouseenter)="onHover(true)"
+  (mouseleave)="onHover(false)"
+  (click)="onAlbumClick()"
+>
+  <img
+    alt="{{ album.name }}"
+    [src]="getImageUrl()"
+    style="width: 100%; height: auto; border-radius: 10px"
+  />
 
-    [ngStyle]="{'background-color': isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent'}"
-    [style]="{backgroundColor: 'transparent', color: 'white', borderRadius: '10px', padding: '10px'}"
-    class="card-container w-full max-w-15rem"
-    (mouseenter)="onHover(true)" 
-    (mouseleave)="onHover(false)"
-    (click)="onAlbumClick()">
+  <div class="overlay-container">
+    <button class="overlay-button"><i class="pi pi-play"></i></button>
+  </div>
 
-    <img alt="{{ album.name }}" [src]="getImageUrl()" style="width: 100%; height: auto; border-radius: 10px;" />
-
-    <div class="overlay-container">
-        <button class="overlay-button"><i class="pi pi-play"></i>
-        </button>
-    </div>
-   
-
-    <h3 class="font-light m-0">{{ album.name }}</h3>
-    <h4 class="font-light text-gray-400 m-0">{{ getArtistNames() }}</h4>
-
+  <h3 class="m-0 font-light">{{ album.name }}</h3>
+  <h4 class="m-0 font-light text-gray-400">{{ getArtistNames() }}</h4>
 </div>
