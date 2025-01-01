@@ -24,7 +24,7 @@
       </div>
     </div>
     <div *ngFor="let track of tracks; let i = index">
-      <track-album [track]="track" [index]="i"></track-album>
+      <track-card [track]="track" [index]="i" [album]="albumID"></track-card>
     </div>
   </div>
 </div>
