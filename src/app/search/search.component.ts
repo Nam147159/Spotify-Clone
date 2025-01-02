@@ -7,7 +7,8 @@ import {
   HostListener,
 } from '@angular/core';
 import { AlbumCardComponent } from '../shared/album-card/album-card.component';
-import { Album, Artist, Playlist } from '../models/spotify.model';
+import { Album, Artist, Playlist, Track } from '../models/spotify.model';
+import { ArtistCardComponent } from '../shared/artist-card/artist-card.component';
 
 @Component({
   selector: 'app-search',
@@ -18,15 +19,29 @@ import { Album, Artist, Playlist } from '../models/spotify.model';
 })
 export class SearchComponent implements OnInit {
   albums: Album[] = [];
+  tracks: Track[] = [];
+  artists: Artist[] = [];
+  playlists: Playlist[] = [];
+
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly searchService: SearchService,
   ) {}
+
   @ViewChild('mainDiv') mainDiv!: ElementRef;
-  popularArtists: Artist[] = [];
-  popularAlbums: Album[] = [];
-  recommendedPlaylists: Playlist[] = [];
-  top100Playlists: Playlist[] = [];
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      const query = params['query'];
+      this.searchService.search(query).subscribe((result: any) => {
+        this.albums = result.data.albums.items;
+        this.tracks = result.data.albums.tracks;
+        this.artists = result.data.artists.items;
+        this.playlists = result.data.playlists.items;
+      });
+    });
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
@@ -65,15 +80,5 @@ export class SearchComponent implements OnInit {
     const itemsToShow = this.calculateDisplayedItems();
     const width = divWidth / itemsToShow;
     return width + 'px';
-  }
-
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      const query = params['query'];
-      this.searchService.search(query).subscribe((result: any) => {
-        this.albums = result.data;
-        console.log(result);
-      });
-    });
   }
 }

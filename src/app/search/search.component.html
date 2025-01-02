@@ -1,5 +1,22 @@
 <div class="container">
-  @for (album of albums; track album.id) {
-    <album-card [album]="album"></album-card>
-  }
+  <div>
+    <h2>Albums</h2>
+    <div class="flex overflow-x-auto overflow-y-hidden flex-row w-full">
+      @for (album of albums; track album.id) {
+        <div>
+          <album-card [album]="album" [width]="widthPerCard()"></album-card>
+        </div>
+      }
+    </div>
+  </div>
+  <div>
+    <h2>Artists</h2>
+    <div class="flex overflow-x-auto flex-row w-full">
+      <!--@for (artist of artists; track $index) {-->
+      <!--  <div>-->
+      <!--    <artist-card [artist]="artist" [width]="widthPerCard()"></artist-card>-->
+      <!--  </div>-->
+      <!--}-->
+    </div>
+  </div>
 </div>
