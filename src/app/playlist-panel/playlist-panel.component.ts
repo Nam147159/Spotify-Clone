@@ -5,6 +5,7 @@ import { Playlist } from '../models/spotify.model';
 import { StorageService } from '../../services/storage-service/storage.service';
 import { PlaylistComponent } from '../playlist/playlist.component';
 import { Router } from '@angular/router';
+import { PlaylistService } from '../../services/playlist-service/playlist.service';
 
 @Component({
   selector: 'app-playlist-panel',
@@ -23,9 +24,15 @@ export class PlaylistPanelComponent implements OnInit {
     private storageService: StorageService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private router: Router) { }
+    private router: Router,
+    private playlistService: PlaylistService) { }
 
   ngOnInit(): void {
+    this.playlistService.playlist$.subscribe(playlists => {
+      if (playlists) {
+        this.receivedPlaylists = playlists;
+      }
+    });
     this.adjustHeight();
   }
 

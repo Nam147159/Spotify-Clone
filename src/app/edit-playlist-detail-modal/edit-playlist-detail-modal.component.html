@@ -1,8 +1,9 @@
+@if (isOpen) {
 <div class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Edit details</h2>
-            <!-- <button (click)="close()" class="close-button">×</button> -->
+            <button (click)="close()" class="close-button">×</button>
         </div>
 
         <div class="modal-body">
@@ -11,10 +12,10 @@
                 </div>
             </div>
 
-            <!-- <div class="form-fields" [formGroup]="editForm">
-                <input type="text" formControlName="title" placeholder="Test Playlist">
+            <div class="form-fields" [formGroup]="editForm">
+                <input type="text" formControlName="title" placeholder="Playlist Name">
                 <textarea formControlName="description" placeholder="Description"></textarea>
-            </div> -->
+            </div>
         </div>
 
         <div class="disclaimer">
@@ -23,7 +24,8 @@
         </div>
 
         <div class="modal-footer">
-            <!-- <button (click)="save()" class="save-button">Save</button> -->
+            <button (click)="save()" class="save-button">Save</button>
         </div>
     </div>
 </div>
+}

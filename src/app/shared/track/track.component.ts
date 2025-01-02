@@ -73,7 +73,8 @@ export class TrackCardComponent {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
 
-  ShowList() {
+  ShowList(event: MouseEvent) {
+    event.stopPropagation();
     const identifier = this.storageService.getItem('identifier');
     if (identifier) {
       this.databaseService.getUserID(identifier).subscribe({
@@ -103,7 +104,8 @@ export class TrackCardComponent {
     });
   }
 
-  AddIntoPlaylist(playlistID: string) {
+  AddIntoPlaylist(playlistID: string, event: MouseEvent) {
+    event.stopPropagation();
     console.log('Add into playlist track: ', this.track);
     this.databaseService.addTrackToPlaylist(playlistID, this.track.id).subscribe({
       next: (response) => {

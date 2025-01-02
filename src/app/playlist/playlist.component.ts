@@ -1,3 +1,4 @@
+import { PlaylistService } from './../../services/playlist-service/playlist.service';
 import {
   Component,
   Output,
@@ -8,8 +9,8 @@ import {
   Input,
   HostListener,
   SimpleChanges,
+  effect,
 } from '@angular/core';
-import { PlaylistService } from '../../services/playlist-service/playlist.service';
 import { Route, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DBPlaylist, Playlist } from '../models/spotify.model';
@@ -20,7 +21,7 @@ import { EditPlaylistDetailModalComponent } from "../edit-playlist-detail-modal/
 @Component({
   selector: 'app-playlist',
   standalone: true,
-  imports: [PlaylistContextMenuComponent, EditPlaylistDetailModalComponent],
+  imports: [PlaylistContextMenuComponent],
   providers: [PlaylistService],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss',
@@ -31,12 +32,31 @@ export class PlaylistComponent implements OnInit {
 
 
   constructor(
-    private playlistContextMenuService: PlaylistContextMenuService) { }
-
-  ngOnInit(): void {
-
+    private playlistContextMenuService: PlaylistContextMenuService,
+    private playlistService: PlaylistService) {
+    effect(() => {
+      const updatedPlaylist = this.playlistService.getPlaylistSignal()();
+      if (updatedPlaylist && updatedPlaylist.id === this.playlist.id) {
+        this.playlist.name = updatedPlaylist.name;
+        this.playlist.description = updatedPlaylist.description;
+        console.log('Playlist updated via signal:', this.playlist);
+      }
+    });
   }
 
+  ngOnInit(): void {
+    // console.log('PlaylistComponent initialized with playlist:', this.playlist);
+    // this.playlistService.playlist$.subscribe(updatedPlaylist => {
+    //   console.log("Updated Playlist: ", updatedPlaylist);
+    //   if (updatedPlaylist && updatedPlaylist.id === this.playlist.id) {
+    //     if (this.playlist) {
+    //       console.log('Updating playlist:', updatedPlaylist);
+    //       this.playlist.name = updatedPlaylist.name;
+    //       this.playlist.description = updatedPlaylist.description;
+    //     }
+    //   }
+    // });
+  }
 
   openContextMenu(event: MouseEvent): void {
     event.preventDefault();
@@ -63,8 +83,7 @@ export class PlaylistComponent implements OnInit {
 
 
   onClick() {
-    this.selectPlaylist.emit(this.playlist); 
-    console.log("Selected Playlist emit: ", this.playlist.id);
+    this.selectPlaylist.emit(this.playlist);
   }
 
 }
