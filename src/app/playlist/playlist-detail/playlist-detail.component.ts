@@ -23,10 +23,11 @@ import { DBPlaylist, Playlist } from '../../models/spotify.model';
 import { DatabaseService } from '../../../services/database-service/database.service';
 import { EditPlaylistDetailModalComponent } from '../../edit-playlist-detail-modal/edit-playlist-detail-modal.component';
 import { PlaylistService } from '../../../services/playlist-service/playlist.service';
+import { TrackCardComponent } from "../../shared/track/track.component";
 @Component({
   selector: 'app-playlist-detail',
   standalone: true,
-  imports: [EditPlaylistDetailModalComponent],
+  imports: [EditPlaylistDetailModalComponent, TrackCardComponent],
   providers: [MessageService, ConfirmationService, DialogService],
   templateUrl: './playlist-detail.component.html',
   styleUrl: './playlist-detail.component.scss',
@@ -34,6 +35,7 @@ import { PlaylistService } from '../../../services/playlist-service/playlist.ser
 export class PlaylistDetailComponent implements OnInit {
   playlist?: DBPlaylist;
   playlistID: string | null = null;
+  tracksID!: string[];
 
   @ViewChild(EditPlaylistDetailModalComponent) modal!: EditPlaylistDetailModalComponent;
 
@@ -68,6 +70,22 @@ export class PlaylistDetailComponent implements OnInit {
           },
           error: (error) => {
             console.error('Error fetching playlist details:', error);
+          }
+        });
+
+        this.databaseService.getTracksInPlaylist(playlistId).subscribe({
+          next: (response) => {
+            if (response.success) {
+              this.tracksID = response.tracks;
+            } else {
+              console.error('Failed to fetch playlist tracks:', response.message);
+            }
+          },
+          error: (error) => {
+            console.error('Error fetching playlist tracks:', error);
+          },
+          complete: () => {
+            console.log('Completed fetching playlist tracks');
           }
         });
       }

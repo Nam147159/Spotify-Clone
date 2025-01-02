@@ -32,4 +32,12 @@
       <input type="text" placeholder="Search for songs or episodes" class="search-input">
     </div>
   </div>
+
+  <div class="playlist-content">
+    <div class="playlist-tracks">
+      @for (track of tracksID; track $index) {
+        <track-card [trackID]="track" [playlistTracks]="tracksID" [index]="$index"></track-card>
+      }
+    </div>
+  </div>
 </div>

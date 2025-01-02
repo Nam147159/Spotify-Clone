@@ -35,7 +35,7 @@ export class PlayerService {
   constructor(
     private tokenService: TokenService,
     private ngZone: NgZone,
-  ) {}
+  ) { }
 
   setupPlayer(token: string): void {
     window.onSpotifyWebPlaybackSDKReady = () => {
@@ -329,5 +329,16 @@ export class PlayerService {
       ...this.playerState$.getValue(),
       ...partialState,
     });
+  }
+
+  public async playPlaylistTracks(trackIds: string[],
+    startTrackId?: string) {
+    if (!this.deviceID) return;
+
+    const offset = startTrackId
+      ? { uri: `spotify:track:${startTrackId}` }
+      : { position: 0 };
+
+    await this.setTracks(trackIds, offset);
   }
 }

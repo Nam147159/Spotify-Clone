@@ -35,14 +35,6 @@ export class AlbumnInfoComponent implements OnInit {
       console.log("ALBUM ID: ", this.albumID);
       this.fetchAlbumDetails(this.albumID);
       this.fetchPopularAlbums();
-
-      // // Nếu album từ navigation state trùng với ID trong URL
-      // if (navigationAlbum && navigationAlbum.id === albumId) {
-      //   this.album = navigationAlbum;
-      // } else {
-      //   // Nếu không, có thể gọi service để lấy album
-      //   this.fetchAlbumDetails();
-      // }
     });
   }
 
