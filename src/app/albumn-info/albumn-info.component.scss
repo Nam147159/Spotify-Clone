@@ -2,52 +2,77 @@
   height: 555px;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .album-detail {
-  background-color: #1c1c1c;
-  flex: 1;
-  width: 77%;
+  width: 100%;
   padding: 10px;
   border-radius: 8px;
   overflow-y: auto;
   max-height: calc(100vh - 150px);
-  width: 100%;
+  background: linear-gradient(180deg, #6700a6 0%, #1c1c1c 60%);
+  height: 100%;
+}
+
+.album-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Space between album info and track list */
+}
+
+.album-cover img {
+  width: 170px; /* Adjust depending on your design */
+  height: auto;
+  border-radius: 5px; /* Optional: For rounded corners */
+  margin-right: 20px; /* Space between cover and text */
+}
+
+.album-title {
+  display: flex;
+  align-items: center;
+}
+
+.artist-avatar img {
+  width: 24px; /* Adjust size */
+  height: 24px; /* Adjust size */
+  border-radius: 50%; /* Make it round */
+  margin-right: 10px; /* Space between avatar and text */
+}
+
+.album-description h2 {
+  color: white; /* Album title color */
+  font-size: 80px; /* Adjust size */
+  margin: 0; /* Remove default margin */
+}
+
+.album-description p {
+  color: white; /* Artist and album info color */
+  font-size: 14px; /* Adjust size */
+  font-weight: 600; /* Adjust weight */
 }
 
 .topbar {
-  background-color: #1e1e1e; /* Dark background similar to image */
   padding: 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Light border for separation */
-}
-
-.topbar-content {
-  display: flex;
-  flex-direction: column;
-}
-
-h2 {
-  color: white; /* Title color */
-  margin: 0; /* Remove default margin */
 }
 
 .topbar-columns {
   display: flex;
   justify-content: space-between; /* Space between groups */
-  margin-top: 10px; /* Space above column headers */
 }
 
 .header-group {
-  display: flex; /* Keep # and Title in the same line */
-  flex-grow: 1; /* Allow to take as much space as needed */
+  display: flex;
+  flex-grow: 1;
 }
 
 .column-header {
-  color: white; /* Header text color */
-  font-weight: bold; /* Bold font for headers */
-  margin-right: 0px; /* Space between header items */
+  color: white;
+  font-weight: bold;
+  margin-right: 16px; /* Space between items */
 }
 
 .header-group .column-header:last-child {
-  margin-right: 0; /* Remove margin for the last header in the group */
+  margin-right: 0; /* Remove margin for last header */
 }
