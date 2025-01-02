@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, Signal, signal } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, switchMap, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -8,6 +8,9 @@ import { StorageService } from '../storage-service/storage.service';
 
 
 const createPlaylistEndpoint = `${environment.apiUrl}/api/spotify/create-playlist`;
+const getTrackFromSpotifyEndPoint = `${environment.apiUrl}/api/spotify/playlist/get/track`;
+const getArtistTopTracksEndPoint = `${environment.apiUrl}/api/spotify/artist/get-top-tracks`;
+
 
 @Injectable({
   providedIn: 'root',
@@ -68,6 +71,16 @@ export class PlaylistService {
         console.error('Error reloading playlists:', error);
       }
     });
+  }
+
+  getTrackFromSpotify(playlistID: string): Observable<any> {
+    const params = new HttpParams().set('playlist_id', playlistID);
+    return this.http.get(getTrackFromSpotifyEndPoint, { params });
+  }
+
+  getTrackFromArtist(artistID: string): Observable<any> {
+    const params = new HttpParams().set('artistID', artistID);
+    return this.http.get(getArtistTopTracksEndPoint, { params });
   }
 
 }

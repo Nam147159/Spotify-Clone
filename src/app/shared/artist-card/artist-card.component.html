@@ -1,6 +1,7 @@
 <div [ngStyle]="{'background-color': isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent'}"
     [style]="{width: width, backgroundColor: 'transparent', color: 'white', borderRadius: '10px', padding: '10px'}"
-    class="card-container w-full max-w-15rem" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)">
+    class="card-container w-full max-w-15rem" (mouseenter)="onHover(true)" (mouseleave)="onHover(false)"
+    (click)="onArtistClick()">
 
     <img class="border-circle w-full" alt="{{ artist.name }}" [src]="getImageUrl()" style="height: auto;" />
 

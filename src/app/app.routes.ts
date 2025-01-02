@@ -9,6 +9,8 @@ import { SettingsComponent } from "./settings/settings.component";
 import { AlbumnInfoComponent } from './albumn-info/albumn-info.component';
 import { PlaylistDetailComponent } from './playlist/playlist-detail/playlist-detail.component';
 import { BrowsePanelComponent } from "./browse-panel/browse-panel.component";
+import { CategoryCardComponent } from "./shared/category-card/category-card.component";
+import { PlaylistCardComponent } from "./shared/playlist-card/playlist-card.component";
 
 export const routes: Routes = [
   {
@@ -45,6 +47,21 @@ export const routes: Routes = [
         path: 'album/:id',
         component: AlbumnInfoComponent,
         title: 'Spotify - Album Details'
+      },
+      {
+        path: 'top100/:id',
+        component: AlbumnInfoComponent,
+        title: 'Spotify - Category Details'
+      },
+      {
+        path: 'recommendplaylist/:id',
+        component: AlbumnInfoComponent,
+        title: 'Spotify - Recommend Playlist Details'
+      },
+      {
+        path: 'artist/:id',
+        component: AlbumnInfoComponent,
+        title: 'Spotify - Artist Details'
       }
     ],
   },

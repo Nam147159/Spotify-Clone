@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category } from '../../models/spotify.model';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';

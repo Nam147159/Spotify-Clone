@@ -18,6 +18,7 @@ import { response } from 'express';
 import { error } from 'console';
 import { Album, Artist, Category, Playlist } from '../models/spotify.model';
 import { Router } from '@angular/router';
+import { PlaylistCardTop100Component } from '../shared/playlist-card-top100/playlist-card-top100.component';
 
 
 @Component({
@@ -30,6 +31,7 @@ import { Router } from '@angular/router';
     PlaylistCardComponent,
     ScrollerModule,
     ScrollPanelModule,
+    PlaylistCardTop100Component
   ],
   templateUrl: './main-panel.component.html',
   styleUrl: './main-panel.component.scss',
@@ -119,7 +121,7 @@ export class MainPanelComponent implements OnInit {
       },
       complete: () => {
         console.log('Popular artists fetch complete');
-      },
+      }
     });
   }
 
@@ -189,11 +191,7 @@ export class MainPanelComponent implements OnInit {
 
   fetchTop100Playlists(): void {
     this.mainPanelService.getTop100Playlists().subscribe({
-      next: (response: {
-        success: boolean;
-        message: string;
-        data: Playlist[];
-      }) => {
+      next: (response) => {
         if (response.success && Array.isArray(response.data)) {
           this.top100Playlists = response.data;
 

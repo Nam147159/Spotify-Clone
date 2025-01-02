@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { Artist } from '../../models/spotify.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'artist-card',
@@ -16,6 +17,8 @@ export class ArtistCardComponent implements OnInit {
 
   isHovered: boolean = false
 
+  constructor(private router: Router) { }
+
   ngOnInit() {
   }
 
@@ -27,5 +30,10 @@ export class ArtistCardComponent implements OnInit {
     return this.artist.images && this.artist.images.length > 0
       ? this.artist.images[0].url
       : null;
+  }
+
+  onArtistClick(): void {
+    console.log('artist playlist clicked');
+    this.router.navigate(['/artist', this.artist.id]);
   }
 }
