@@ -79,15 +79,6 @@ export class PlaylistDetailComponent implements OnInit {
         });
       }
     });
-
-    // this.playlistService.playlist$.subscribe(updatedPlaylist => {
-    //   if (updatedPlaylist && updatedPlaylist.id === this.playlistID) {
-    //     if (this.playlist) {
-    //     this.playlist.name = updatedPlaylist.name;
-    //     this.playlist.description = updatedPlaylist.description;
-    //   }
-    // }
-    // });
   }
 
   onClickEdit() {

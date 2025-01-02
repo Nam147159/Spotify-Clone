@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PlayerService } from '../../../services/player-service/player.service';
 import { StorageService } from '../../../services/storage-service/storage.service';
 import { DatabaseService } from '../../../services/database-service/database.service';
+import { TrackService } from '../../../services/track-service/track.service';
+import { DBPlaylist, Track } from '../../models/spotify.model';
 
 @Component({
   selector: 'app-playlist-item',
@@ -14,14 +16,32 @@ export class PlaylistItemComponent implements OnInit {
   @Input({ required: true }) index!: number;
   @Input({ required: true }) currentTrackId!: string;
   @Input({ required: true }) trackItemIds!: string[];
+  playlists: DBPlaylist[] = [];
+  currentTrackObject!: Track;
 
   constructor(
     private readonly playerSerivice: PlayerService,
     private readonly storageService: StorageService,
     private readonly databaseService: DatabaseService,
-  ) {}
+    private trackService: TrackService
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('Playlist item initialized:', this.currentTrackId);
+
+    this.trackService.getTrack(this.currentTrackId).subscribe({
+      next: (response) => {
+        console.log('Track info:', response);
+        this.currentTrackObject = response.data;
+      },
+      error: (err) => {
+        console.error('Error getting track info:', err);
+      },
+      complete: () => {
+        console.log('Getting track info completed');
+      }
+    });
+  }
 
   async onClick() {
     if (!this.playerSerivice) {
@@ -48,7 +68,7 @@ export class PlaylistItemComponent implements OnInit {
       this.databaseService.getUserID(identifier).subscribe({
         next: (response) => {
           console.log('Response :', response);
-          const ownerID = response.userID.id; // Giả sử API trả về một đối tượng có thuộc tính ownerID
+          const ownerID = response.userID.id;
           this.loadPlaylists(ownerID);
         },
         error: (err) => {
@@ -61,15 +81,15 @@ export class PlaylistItemComponent implements OnInit {
   }
 
   loadPlaylists(ownerID: string) {
-    //this.databaseService.loadPlaylists(ownerID).subscribe({
-    //  next: (data) => {
-    //    this.playlists = data.playlists; // Giả sử API trả về một đối tượng có thuộc tính playlists
-    //    console.log('Playlists loaded:', this.playlists);
-    //  },
-    //  error: (err) => {
-    //    console.error('Error loading playlists:', err);
-    //  },
-    //});
+    this.databaseService.loadPlaylists(ownerID).subscribe({
+     next: (data) => {
+       this.playlists = data.playlists;
+       console.log('Playlists loaded:', this.playlists);
+     },
+     error: (err) => {
+       console.error('Error loading playlists:', err);
+     },
+    });
   }
 
   AddIntoPlaylist(playlistID: string, event: MouseEvent) {
