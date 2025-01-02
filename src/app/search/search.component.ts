@@ -9,11 +9,13 @@ import {
 import { AlbumCardComponent } from '../shared/album-card/album-card.component';
 import { Album, Artist, Playlist, Track } from '../models/spotify.model';
 import { ArtistCardComponent } from '../shared/artist-card/artist-card.component';
+import { PlaylistComponent } from '../playlist/playlist.component';
+import { PlaylistCardComponent } from '../shared/playlist-card/playlist-card.component';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [AlbumCardComponent],
+  imports: [AlbumCardComponent, ArtistCardComponent, PlaylistCardComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })
