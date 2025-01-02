@@ -10,7 +10,7 @@ import { PlaylistService } from '../../services/playlist-service/playlist.servic
 @Component({
   selector: 'app-albumn-info',
   standalone: true,
-  imports: [TrackCardComponent, NgForOf],
+  imports: [TrackCardComponent],
   templateUrl: './albumn-info.component.html',
   styleUrl: './albumn-info.component.scss'
 })
