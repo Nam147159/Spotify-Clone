@@ -7,6 +7,7 @@ import {Album} from "../../app/models/spotify.model";
 const getTracksInAlbumEndpoint = `${environment.apiUrl}/api/spotify/album/get/track`;
 const albumEndpoint = `${environment.apiUrl}/api/spotify/recommendation/album`;
 const top100Endpoint = `${environment.apiUrl}/api/spotify/recommendation/top100`;
+const getTrackInfoEndpoint = `${environment.apiUrl}/api/spotify/get-track`;
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,10 @@ export class TrackService {
   getTrackFromTop100(id: string): Observable<any> {
     const params = new HttpParams().set('album_id', id);
     return this.http.get(`${getTracksInAlbumEndpoint}`, { params });
+  }
+
+  getTrack(id: string): Observable<any> {
+    const params = new HttpParams().set('trackID', id);
+    return this.http.get(getTrackInfoEndpoint, { params });
   }
 }

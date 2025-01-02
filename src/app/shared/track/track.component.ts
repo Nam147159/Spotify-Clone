@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Album, DBPlaylist, Track } from '../../models/spotify.model';
 import { PlayerService } from '../../../services/player-service/player.service';
 import { TokenService } from '../../../services/token-service/token.service';
 import { firstValueFrom } from 'rxjs';
 import { DatabaseService } from '../../../services/database-service/database.service';
 import { StorageService } from '../../../services/storage-service/storage.service';
+import { TrackService } from '../../../services/track-service/track.service';
 
 @Component({
   selector: 'track-card',
@@ -13,11 +14,13 @@ import { StorageService } from '../../../services/storage-service/storage.servic
   templateUrl: './track.component.html',
   styleUrl: './track.component.scss',
 })
-export class TrackCardComponent {
-  @Input({ required: true }) track!: Track;
-  @Input({ required: true }) index!: number;
-  @Input({ required: true }) album!: string;
+export class TrackCardComponent implements OnInit {
+  @Input() track!: Track;
+  @Input() index!: number;
+  @Input() album!: string;
   playlists: DBPlaylist[] = [];
+  @Input() playlistTracks?: string[];
+  @Input() trackID?: any;
 
   isCurrentlyPlaying = false;
   deviceID: string | null = null;
@@ -25,7 +28,8 @@ export class TrackCardComponent {
   constructor(
     private playerService: PlayerService,
     private storageService: StorageService,
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private trackService: TrackService
   ) {
     // Subscribe to player state to know if this track is currently playing
     this.playerService.playerState$.subscribe((state) => {
@@ -50,17 +54,49 @@ export class TrackCardComponent {
       },
     });
   }
+  ngOnInit(): void {
+    if (this.trackID && !this.track) {
+      const trackID = this.trackID.track_id;
+      this.trackService.getTrack(trackID).subscribe({
+        next: (response) => {
+          this.track = response.data;
+        },
+        error: (err) => {
+          console.error('Error getting track:', err);
+        },
+        complete: () => {
+          console.log('Getting track completed');
+        }
+      });
+    }
+  }
 
   async onClick(): Promise<void> {
     if (!this.playerService) {
       return;
     }
-    if (!this.album) {
-      console.error('No album provided');
+
+    if (this.album) {
+      // Play from album
+      this.playerService.setAlbum(this.album, {
+        uri: this.track.uri,
+      });
+    } else if (this.playlistTracks?.length) {
+      // Play from playlist
+      this.playerService.playPlaylistTracks(
+        this.playlistTracks,
+        this.track.id
+      );
+    } else {
+      // Single track
+      this.playerService.setTracks([this.track.id]);
     }
-    this.playerService.setAlbum(this.album, {
-      uri: this.track.uri,
-    });
+    // if (!this.album) {
+    //   console.error('No album provided');
+    // }
+    // this.playerService.setAlbum(this.album, {
+    //   uri: this.track.uri,
+    // });
   }
 
   getArtistsString(): string {

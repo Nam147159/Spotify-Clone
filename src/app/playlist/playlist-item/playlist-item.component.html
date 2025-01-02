@@ -1,0 +1,22 @@
+<div class="container" (click)="onClick()">
+  <div class="track-row">
+    <div class="track-index">{{ index + 1 }}</div>
+    <div class="track-title">
+      <p class="track-name">{{ currentTrackObject.name }}</p>
+      <p class="track-artist">{{ currentTrackObject.artists[0].name }}</p>
+    </div>
+    <div class="track-duration">{{ formatDuration(currentTrackObject.duration_ms) }}</div>
+    <div class="function-btn">
+      <div class="more-options" (click)="ShowList($event)">
+        <img src="../../../../public/white dot.png" />
+      </div>
+      @if (playlists.length > 0) {
+        <ul>
+          @for (playlist of playlists; track $index) {
+          <li (click)="AddIntoPlaylist(playlist.id, $event)">{{ playlist.name }}</li>
+          }
+        </ul>
+        }
+    </div>
+  </div>
+</div>

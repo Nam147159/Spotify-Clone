@@ -10,7 +10,7 @@ const loadPlaylistsEndpoint = `${environment.apiUrl}/api/database/get-playlists`
 const getPlaylistByIdEndpoint = `${environment.apiUrl}/api/database/get-playlist-by-id`;
 const changePlaylistNameEndPoint = `${environment.apiUrl}/api/database/change-playlist-name`;
 const addTrackToPlaylistEndpoint = `${environment.apiUrl}/api/database/add-track-to-playlist`;
-
+const getTracksInPlaylistEndpoint = `${environment.apiUrl}/api/database/get-tracks-in-playlist`;
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +44,10 @@ export class DatabaseService {
 
   addTrackToPlaylist(playlistID: string, trackID: string): Observable<any> {
     return this.http.post(addTrackToPlaylistEndpoint, { playlistID, trackID });
+  }
+
+  getTracksInPlaylist(playlistID: string): Observable<any> {
+    const params = new HttpParams().set('playlistID', playlistID);
+    return this.http.get(getTracksInPlaylistEndpoint, { params });
   }
 }

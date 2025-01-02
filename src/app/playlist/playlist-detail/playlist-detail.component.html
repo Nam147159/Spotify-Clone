@@ -1,14 +1,19 @@
 <div class="playlist-detail">
   <!-- Header Section -->
   <div class="playlist-header">
-
     <div class="playlist-info">
       <div class="playlist-type">Playlist</div>
-      <h1 class="playlist-title" (click)="onClickEdit()">{{ playlist?.name || 'New Playlist' }}</h1>
-      <div class="playlist-description" (click)="onClickEdit()">{{ playlist?.description || 'Description' }}</div>
-      <div class="playlist-owner">{{ playlist?.owner || 'Unknown' }} •</div>
-      <app-edit-playlist-detail-modal (onSave)="onSave($event)"
-        (onClose)="modal.isOpen = false"></app-edit-playlist-detail-modal>
+      <h1 class="playlist-title" (click)="onClickEdit()">
+        {{ playlist?.name || "New Playlist" }}
+      </h1>
+      <div class="playlist-description" (click)="onClickEdit()">
+        {{ playlist?.description || "Description" }}
+      </div>
+      <div class="playlist-owner">{{ playlist?.owner || "Unknown" }} •</div>
+      <app-edit-playlist-detail-modal
+        (onSave)="onSave($event)"
+        (onClose)="modal.isOpen = false"
+      ></app-edit-playlist-detail-modal>
     </div>
   </div>
 
@@ -18,9 +23,7 @@
       <button class="icon-button more-options">•••</button>
     </div>
     <div class="right-actions">
-      <button class="view-mode">
-        List <i class="list-icon">≡</i>
-      </button>
+      <button class="view-mode">List <i class="list-icon">≡</i></button>
     </div>
   </div>
 
@@ -29,7 +32,24 @@
     <h2>Let's find something for your playlist</h2>
     <div class="search-container">
       <i class="search-icon">🔍</i>
-      <input type="text" placeholder="Search for songs or episodes" class="search-input">
+      <input
+        type="text"
+        placeholder="Search for songs or episodes"
+        class="search-input"
+      />
+    </div>
+  </div>
+
+  <div class="playlist-content">
+    <div class="playlist-tracks">
+      @for (track of tracksID; track $index) {
+        <app-playlist-item
+          [currentTrackId]="track"
+          [trackItemIds]="tracksID"
+          [index]="$index"
+        >
+        </app-playlist-item>
+      }
     </div>
   </div>
 </div>

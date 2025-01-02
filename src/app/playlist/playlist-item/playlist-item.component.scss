@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px; /* Add more padding for better spacing */
+  cursor: pointer; /* Indicate that the container is clickable */
+  transition: background-color 0.3s ease;
+}
+
+.container:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Highlight on hover */
+}
+
+.track-row {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  width: 100%;
+}
+
+.track-index {
+  width: 40px; /* Adjust width for index */
+  color: #ffffff; /* Text color */
+  font-size: 16px; /* Slightly increase font size */
+}
+
+.track-title {
+  flex-grow: 1; /* Takes the remaining space */
+  margin-left: 15px; /* Space between index and title */
+  color: #ffffff; /* Set text color */
+}
+
+.track-name {
+  margin: 0; /* Remove default margin */
+  color: #ffffff; /* Text color */
+  font-size: 16px; /* Font size for track name */
+}
+
+.track-artist {
+  margin: 0; /* Remove default margin */
+  color: rgba(255, 255, 255, 0.7); /* Lighter text for artist name */
+  font-size: 14px; /* Font size for artist name */
+}
+
+.track-duration {
+  width: 50px; /* Fixed width for duration */
+  color: #ffffff; /* Text color */
+  font-size: 16px; /* More visible font size */
+}
+
+.function-btn {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.more-options {
+  cursor: pointer;
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  z-index: 1;
+}
+
+.more-options:hover {
+  color: #cccccc;
+}
+
+ul {
+  position: absolute;
+  top: 30px; /* Adjust position as needed */
+  right: 0;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 4px;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  display: none; /* Hide by default */
+  z-index: 2;
+  width: 200px;
+}
+
+ul li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+ul li:hover {
+  background-color: #444;
+}
+
+.function-btn:hover ul {
+  display: block; /* Show on hover */
+}

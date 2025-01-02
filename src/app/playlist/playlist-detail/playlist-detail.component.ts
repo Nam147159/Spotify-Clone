@@ -1,32 +1,22 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   effect,
-  EventEmitter,
-  Input,
-  OnChanges,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DBPlaylist, Playlist } from '../../models/spotify.model';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, } from 'primeng/dynamicdialog';
+import { ActivatedRoute, } from '@angular/router';
+import { DBPlaylist, } from '../../models/spotify.model';
 import { DatabaseService } from '../../../services/database-service/database.service';
 import { EditPlaylistDetailModalComponent } from '../../edit-playlist-detail-modal/edit-playlist-detail-modal.component';
 import { PlaylistService } from '../../../services/playlist-service/playlist.service';
+import { PlaylistItemComponent } from '../playlist-item/playlist-item.component';
+
 @Component({
   selector: 'app-playlist-detail',
   standalone: true,
-  imports: [EditPlaylistDetailModalComponent],
+  imports: [EditPlaylistDetailModalComponent, PlaylistItemComponent],
   providers: [MessageService, ConfirmationService, DialogService],
   templateUrl: './playlist-detail.component.html',
   styleUrl: './playlist-detail.component.scss',
@@ -34,6 +24,7 @@ import { PlaylistService } from '../../../services/playlist-service/playlist.ser
 export class PlaylistDetailComponent implements OnInit {
   playlist?: DBPlaylist;
   playlistID: string | null = null;
+  tracksID!: string[];
 
   @ViewChild(EditPlaylistDetailModalComponent) modal!: EditPlaylistDetailModalComponent;
 
@@ -70,17 +61,24 @@ export class PlaylistDetailComponent implements OnInit {
             console.error('Error fetching playlist details:', error);
           }
         });
+
+        this.databaseService.getTracksInPlaylist(playlistId).subscribe({
+          next: (response) => {
+            if (response.success) {
+              this.tracksID = response.tracks.map((track: any) => track.track_id);
+            } else {
+              console.error('Failed to fetch playlist tracks:', response.message);
+            }
+          },
+          error: (error) => {
+            console.error('Error fetching playlist tracks:', error);
+          },
+          complete: () => {
+            console.log('Completed fetching playlist tracks');
+          }
+        });
       }
     });
-
-    // this.playlistService.playlist$.subscribe(updatedPlaylist => {
-    //   if (updatedPlaylist && updatedPlaylist.id === this.playlistID) {
-    //     if (this.playlist) {
-    //     this.playlist.name = updatedPlaylist.name;
-    //     this.playlist.description = updatedPlaylist.description;
-    //   }
-    // }
-    // });
   }
 
   onClickEdit() {
