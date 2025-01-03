@@ -19,6 +19,9 @@ export class PlaylistItemComponent implements OnInit {
   playlists: DBPlaylist[] = [];
   currentTrackObject!: Track;
 
+  showPlaylists: boolean = false;
+  successMessage: string = '';
+
   constructor(
     private readonly playerSerivice: PlayerService,
     private readonly storageService: StorageService,
@@ -78,6 +81,8 @@ export class PlaylistItemComponent implements OnInit {
     } else {
       console.error('Identifier not found in storage');
     }
+
+    this.showPlaylists = !this.showPlaylists;
   }
 
   loadPlaylists(ownerID: string) {
@@ -104,8 +109,14 @@ export class PlaylistItemComponent implements OnInit {
           console.error('Error adding track to playlist:', err);
         },
         complete: () => {
-          console.log('Adding track to playlist completed');
+          console.log('Adding track to playlist completed');  
         },
       });
+    this.successMessage = 'Track added successfully!';
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 2000);
+    this.showPlaylists = false;
+    console.log("Message: ", this.successMessage);
   }
 }

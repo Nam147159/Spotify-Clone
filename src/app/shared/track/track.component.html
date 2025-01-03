@@ -10,13 +10,16 @@
       <div class="more-options" (click)="ShowList($event)">
         <img src="../../../../public/white dot.png">
       </div>
-      @if (playlists.length > 0) {
-      <ul>
-        @for (playlist of playlists; track $index) {
-        <li (click)="AddIntoPlaylist(playlist.id, $event)">{{ playlist.name }}</li>
+      @if (playlists.length > 0 && showPlaylists) {
+        <ul>
+          @for (playlist of playlists; track $index) {
+          <li (click)="AddIntoPlaylist(playlist.id, $event)">{{ playlist.name }}</li>
+          }
+        </ul>
         }
-      </ul>
-      }
     </div>
   </div>
+  @if (successMessage) {
+    <div class="success-message">{{ successMessage }}</div>
+  }
 </div>

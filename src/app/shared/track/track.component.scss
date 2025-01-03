@@ -4,6 +4,7 @@
   padding: 10px 20px; /* Add more padding for better spacing */
   cursor: pointer; /* Indicate that the container is clickable */
   transition: background-color 0.3s ease;
+  position: relative;
 }
 
 .container:hover {
@@ -92,4 +93,16 @@ ul li:hover {
 
 .function-btn:hover ul {
   display: block; /* Show on hover */
+}
+
+.success-message {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  z-index: 1000;
 }

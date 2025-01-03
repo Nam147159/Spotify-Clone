@@ -22,6 +22,9 @@ export class TrackCardComponent implements OnInit {
   @Input() playlistTracks?: string[];
   @Input() trackID?: any;
 
+  showPlaylists: boolean = false;
+  successMessage: string = '';
+
   isCurrentlyPlaying = false;
   deviceID: string | null = null;
 
@@ -138,6 +141,7 @@ export class TrackCardComponent implements OnInit {
         console.error('Error loading playlists:', err);
       }
     });
+    this.showPlaylists = !this.showPlaylists;
   }
 
   AddIntoPlaylist(playlistID: string, event: MouseEvent) {
@@ -154,5 +158,12 @@ export class TrackCardComponent implements OnInit {
         console.log('Adding track to playlist completed');
       }
     });
+
+    this.successMessage = 'Track added successfully!';
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 2000);
+    this.showPlaylists = false;
+    console.log("Message: ", this.successMessage);
   }
 }
