@@ -21,6 +21,9 @@ export class PlaylistService {
 
   private playlistChangeSignal = signal<any>(null);
 
+  private playlistUpdatedSubject = new BehaviorSubject<any>(null);
+  playlistUpdated$ = this.playlistUpdatedSubject.asObservable();
+
   constructor(
     private http: HttpClient,
     private databaseService: DatabaseService,
@@ -45,6 +48,10 @@ export class PlaylistService {
     console.log('Updating playlist signal:', name);
     this.playlistChangeSignal.set({ id, name, description });
     this.reloadPlaylists();
+  }
+
+  notifyPlaylistUpdated() {
+    this.playlistUpdatedSubject.next(null);
   }
 
   private reloadPlaylists() {

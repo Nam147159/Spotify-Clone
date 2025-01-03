@@ -49,34 +49,48 @@ export class PlaylistDetailComponent implements OnInit {
       const playlistId = params.get('id');
       this.playlistID = playlistId;
       if (playlistId) {
-        this.databaseService.getPlaylistById(playlistId).subscribe({
-          next: (response) => {
-            if (response.success) {
-              this.playlist = response.playlist;
-            } else {
-              console.error('Failed to fetch playlist details:', response.message);
-            }
-          },
-          error: (error) => {
-            console.error('Error fetching playlist details:', error);
-          }
-        });
+        this.loadPlaylistDetails(playlistId);
+        this.loadPlaylistTracks(playlistId);
+      }
+    });
 
-        this.databaseService.getTracksInPlaylist(playlistId).subscribe({
-          next: (response) => {
-            if (response.success) {
-              this.tracksID = response.tracks.map((track: any) => track.track_id);
-            } else {
-              console.error('Failed to fetch playlist tracks:', response.message);
-            }
-          },
-          error: (error) => {
-            console.error('Error fetching playlist tracks:', error);
-          },
-          complete: () => {
-            console.log('Completed fetching playlist tracks');
-          }
-        });
+    this.playlistService.playlistUpdated$.subscribe(() => {
+      if (this.playlistID) {
+        this.loadPlaylistDetails(this.playlistID);
+        this.loadPlaylistTracks(this.playlistID);
+      }
+    });
+  }
+
+  private loadPlaylistDetails(playlistId: string) {
+    this.databaseService.getPlaylistById(playlistId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.playlist = response.playlist;
+        } else {
+          console.error('Failed to fetch playlist details:', response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching playlist details:', error);
+      }
+    });
+  }
+
+  private loadPlaylistTracks(playlistId: string) {
+    this.databaseService.getTracksInPlaylist(playlistId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.tracksID = response.tracks.map((track: any) => track.track_id);
+        } else {
+          console.error('Failed to fetch playlist tracks:', response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching playlist tracks:', error);
+      },
+      complete: () => {
+        console.log('Completed fetching playlist tracks');
       }
     });
   }

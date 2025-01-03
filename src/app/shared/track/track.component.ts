@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { DatabaseService } from '../../../services/database-service/database.service';
 import { StorageService } from '../../../services/storage-service/storage.service';
 import { TrackService } from '../../../services/track-service/track.service';
+import { PlaylistService } from '../../../services/playlist-service/playlist.service';
 
 @Component({
   selector: 'track-card',
@@ -32,7 +33,8 @@ export class TrackCardComponent implements OnInit {
     private playerService: PlayerService,
     private storageService: StorageService,
     private databaseService: DatabaseService,
-    private trackService: TrackService
+    private trackService: TrackService,
+    private playlistService: PlaylistService
   ) {
     // Subscribe to player state to know if this track is currently playing
     this.playerService.playerState$.subscribe((state) => {
@@ -150,6 +152,7 @@ export class TrackCardComponent implements OnInit {
     this.databaseService.addTrackToPlaylist(playlistID, this.track.id).subscribe({
       next: (response) => {
         console.log('Response :', response);
+        this.playlistService.notifyPlaylistUpdated();
       },
       error: (err) => {
         console.error('Error adding track to playlist:', err);
