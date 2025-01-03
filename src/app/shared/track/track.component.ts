@@ -76,27 +76,24 @@ export class TrackCardComponent implements OnInit {
       return;
     }
 
+    console.log('Playing track:', this.track);
+    console.log('Album:', this.album);
+    console.log('Playlist tracks:', this.playlistTracks);
     if (this.album) {
+      console.log('Album:', this.album);
       // Play from album
       this.playerService.setAlbum(this.album, {
         uri: this.track.uri,
       });
     } else if (this.playlistTracks?.length) {
+      console.log('Playlist tracks:', this.playlistTracks);
       // Play from playlist
-      this.playerService.playPlaylistTracks(
-        this.playlistTracks,
-        this.track.id
-      );
+      this.playerService.setTracks(this.playlistTracks, {position: this.index});
     } else {
+      console.log('Single track:', this.track);
       // Single track
       this.playerService.setTracks([this.track.id]);
     }
-    // if (!this.album) {
-    //   console.error('No album provided');
-    // }
-    // this.playerService.setAlbum(this.album, {
-    //   uri: this.track.uri,
-    // });
   }
 
   getArtistsString(): string {

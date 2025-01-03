@@ -23,10 +23,7 @@
       </div>
     </div>
     @for (track of tracks; track $index) {
-      <track-card [track]="track" [index]="$index" [album]="albumID"></track-card>
+      <track-card [track]="track" [index]="$index" [album]="albumID" [playlistTracks]="playingTrackIds"></track-card>
     }
-    <!-- <div *ngFor="let track of tracks; let i = index">
-      <track-card [track]="track" [index]="i" [album]="albumID"></track-card>
-    </div> -->
   </div>
 </div>
