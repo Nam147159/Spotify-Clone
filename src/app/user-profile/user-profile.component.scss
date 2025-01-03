@@ -3,12 +3,13 @@
 .container {
   height: 100%;
   width: 100%;
+  min-height: 100vh;
 }
 
 .header-container {
   height: 20rem;
-  background-image: url('https://picsum.photos/1000/400');
   background-size: cover;
+  background-color: #454545;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -22,6 +23,8 @@
 
 .avatar {
   padding: 0.5rem;
+  border-radius: 50%;
+  overflow: hidden;
 
   &>img {
     height: 12rem;
@@ -47,13 +50,152 @@
 .details {
   padding: 1rem;
   background-color: #121212;
+  padding-bottom: 2rem;
+
+  p {
+    font-size: 25px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+}
+
+.logout-btn {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-style: hidden;
+  border-radius: 5px;
+  background-color: #454545;
+
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
 }
 
 .albums {
-  & > h2 {
+  &>h2 {
     margin: 0;
   }
+
   album-list {
     display: inline-block;
+  }
+}
+
+.footer {
+  background-color: #121212;
+  color: #919496;
+  padding: 50px 0 20px;
+  font-family: Arial, sans-serif;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.footer-column h3 {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 15px;
+}
+
+.footer-column ul li a {
+  color: #919496;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-column ul li a:hover {
+  color: #fff;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #222;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon:hover {
+  background-color: #333;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid #282828;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #919496;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+.copyright {
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .footer-columns {
+      grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-columns {
+      grid-template-columns: 1fr;
+  }
+  
+  .footer-bottom {
+      flex-direction: column;
+      gap: 20px;
+  }
+  
+  .footer-links {
+      flex-wrap: wrap;
+      justify-content: center;
   }
 }

@@ -11,6 +11,7 @@ import { StorageService } from '../../services/storage-service/storage.service';
 import { PlaylistPanelComponent } from "../playlist-panel/playlist-panel.component";
 import { switchMap } from 'rxjs';
 import { Playlist } from '../models/spotify.model';
+import { LibraryPanelService } from '../../services/library-panel-service/library-panel.service';
 
 @Component({
   selector: 'app-library-panel',
@@ -37,7 +38,8 @@ export class LibraryPanelComponent implements OnInit {
     private authService: AuthenticationService,
     private playlistService: PlaylistService,
     private databaseService: DatabaseService,
-    private storageService: StorageService) { }
+    private storageService: StorageService,
+    private libraryPanelService: LibraryPanelService) { }
 
   ngOnInit(): void {
     this.authService.isAuthenticated().subscribe(isAuth => {
@@ -47,7 +49,9 @@ export class LibraryPanelComponent implements OnInit {
       }
     });
 
-
+    this.libraryPanelService.isPlaylistVisible$.subscribe(isVisible => {
+      this.isPlaylistVisible = isVisible;
+    });
   }
 
   toggleTooltip() {

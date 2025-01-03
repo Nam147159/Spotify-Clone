@@ -16,16 +16,19 @@
 
 .nav-right {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   flex-direction: row;
+  align-items: center;
 }
 
 .nav-btn {
   text-decoration: none;
-  color: white;
-  font-size: 14px;
-  border-radius: 20px; // Làm tròn các góc
+  border-radius: 20px;
   background-color: transparent;
+  border-style: none;
+  display: flex; 
+  align-items: center; 
+  padding: 0 10px;
 }
 
 #spotify-icon {
@@ -127,4 +130,24 @@
 #login-btn:hover {
   background-color: rgb(199, 195, 195);
   transform: scale(1.05);
+}
+
+#profile-btn, #download-btn, #notification-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    object-fit: cover; // Ensure the image covers the entire button
+  }
 }

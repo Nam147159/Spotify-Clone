@@ -52,7 +52,7 @@ export class AuthenticationService implements OnDestroy {
 
   logout() {
     if (this.isBrowser) {
-      sessionStorage.removeItem('token'); // điều hướng về trang đăng nhập
+      sessionStorage.removeItem('token');
       this.isAuthenticatedSubject.next(false);
     }
   }

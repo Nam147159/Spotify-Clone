@@ -21,10 +21,15 @@
     </div>
   } @else {
     <div class="nav-right">
-      <a href="" class="nav-btn" id="explore-premium-btn">Explore Premium</a>
-      <a href="" class="nav-btn" id="install-app-btn">Install App</a>
-      <a href="" class="nav-btn" id="notification-btn">Notification</a>
-      <a href="" class="nav-btn" id="profile-btn">Profile</a>
+      <button class="nav-btn" id="download-btn">
+        <img src="/public/white-download-icon.png" alt="">
+      </button>
+      <button class="nav-btn" id="notification-btn">
+        <img src="/public/white-notification-icon.png" alt="">
+      </button>
+      <button class="nav-btn" id="profile-btn" (click)="showProfile()">
+        <img src="/public/white-profile-icon.png" alt="">
+      </button>
     </div>
   }
 </nav>

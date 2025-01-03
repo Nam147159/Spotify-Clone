@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-bar',
@@ -9,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class SignUpBarComponent {
 
+  constructor(private router: Router) { }
+
+  onClick() {
+    this.router.navigate(['/sign-up']);
+  }
 }

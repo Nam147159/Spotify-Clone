@@ -45,5 +45,9 @@ export class NavBarComponent implements OnInit, OnDestroy{
   showSearchPanel() {
     this.router.navigate(['/search']);
   }
+
+  showProfile() {
+    this.router.navigate(['/me']);
+  }
   
 }
