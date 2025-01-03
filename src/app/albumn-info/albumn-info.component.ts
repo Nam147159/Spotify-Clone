@@ -71,6 +71,7 @@ export class AlbumnInfoComponent implements OnInit {
     this.trackService.getTracksFromAlbum(albumID).subscribe({
       next: (response) => {
         this.tracks = response.data; // Gán dữ liệu vào biến `tracks`
+        this.playingTrackIds = this.tracks.map(track => track.id);
         this.getTrackTotalDuration(this.tracks);
       },
       error: (error) => {
@@ -180,7 +181,7 @@ export class AlbumnInfoComponent implements OnInit {
     this.playlistService.getTrackFromSpotify(playlistID).subscribe({
       next: (response) => {
         this.tracks = response.data.map((item: any) => this.mapToTrack(item.track));
-        this.playingTrackIds = this.tracks.map(track => track.id);
+        this.playingTrackIds = this.tracks.map(t => t.id);
         this.getTrackTotalDuration(this.tracks);
       },
       error: (error) => {
@@ -270,6 +271,7 @@ export class AlbumnInfoComponent implements OnInit {
     this.playlistService.getTrackFromSpotify(playlistID).subscribe({
       next: (response) => {
         this.tracks = response.data.map((item: any) => this.mapToTrack(item.track));
+        this.playingTrackIds = this.tracks.map(t => t.id);
         this.getTrackTotalDuration(this.tracks);
       },
       error: (error) => {
