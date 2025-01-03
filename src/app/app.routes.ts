@@ -2,15 +2,13 @@ import { Routes } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { LoginComponent } from "./login/login.component";
 import { SignUpMainComponent } from "./sign-up/sign-up-main/sign-up-main.component";
-import { PlaylistComponent } from "./playlist/playlist.component";
 import { UserProfileComponent } from "./user-profile/user-profile.component";
 import { MainPanelComponent } from "./main-panel/main-panel.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { AlbumnInfoComponent } from './albumn-info/albumn-info.component';
 import { PlaylistDetailComponent } from './playlist/playlist-detail/playlist-detail.component';
 import { BrowsePanelComponent } from "./browse-panel/browse-panel.component";
-import { CategoryCardComponent } from "./shared/category-card/category-card.component";
-import { PlaylistCardComponent } from "./shared/playlist-card/playlist-card.component";
+import { SearchComponent } from "./search/search.component";
 
 export const routes: Routes = [
   {
@@ -42,6 +40,11 @@ export const routes: Routes = [
         path: 'search',
         component: BrowsePanelComponent,
         title: 'Spotify - Playlist Details'
+      },
+      {
+        path: 'search/:query',
+        component: SearchComponent,
+        title: 'Spotify - Search'
       },
       {
         path: 'album/:id',

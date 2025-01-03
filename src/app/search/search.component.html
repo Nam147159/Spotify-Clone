@@ -1,0 +1,48 @@
+<div #mainDiv>
+  <div>
+    <div>
+      <h2>Playlists</h2>
+      <div class="flex overflow-x-auto flex-row w-full">
+        @for (
+          playlist of playlists.slice(0, calculateDisplayedItems());
+          track $index
+        ) {
+          @if (playlist) {
+            <div>
+              <playlist-card
+                [playlist]="playlist"
+                [width]="widthPerCard()"
+              ></playlist-card>
+            </div>
+          }
+        }
+      </div>
+    </div>
+    <div>
+      <h2>Albums</h2>
+      <div class="flex overflow-x-auto overflow-y-hidden flex-row w-full">
+        @for (
+          album of albums.slice(0, calculateDisplayedItems());
+          track album.id
+        ) {
+          <div>
+            <album-card [album]="album" [width]="widthPerCard()"></album-card>
+          </div>
+        }
+      </div>
+    </div>
+    <div>
+      <h2>Artists</h2>
+      <div class="flex overflow-x-auto flex-row w-full">
+        @for (artist of artists.slice(0, 7); track $index) {
+          <div>
+            <artist-card
+              [artist]="artist"
+              [width]="widthPerCard()"
+            ></artist-card>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

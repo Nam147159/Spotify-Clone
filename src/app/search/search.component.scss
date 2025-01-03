@@ -1,0 +1,78 @@
+@import 'primeflex/primeflex.scss';
+.overflow-y-auto::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+
+.overflow-y-auto {
+    scrollbar-width: none;
+}
+
+.overflow-y-auto {
+    -ms-overflow-style: none;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 10px);
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+    display: none;
+}
+
+.overflow-x-auto {
+    scrollbar-width: none;
+}
+
+.overflow-x-auto {
+    -ms-overflow-style: none;
+}
+
+.section-flex-container {
+    grid-template-rows:  repeat(var(--row-count), minmax(0, 1fr));
+    display: flex;
+    grid-gap: var(--grid-gap);
+    grid-auto-rows: min-content;
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-column-width), 1fr));
+}
+
+.section-flex-container div {
+    flex: 0 0 auto;
+    width: calc(100% / 6);
+}
+
+@media (max-width: 1200px) {
+    .section-flex-container div {
+        width: calc(100% / 5);
+    }
+}
+
+@media (max-width: 900px) {
+    .section-flex-container div {
+        width: calc(100% / 4);
+    }
+}
+
+@media (max-width: 600px) {
+    .section-flex-container div {
+        width: calc(100% / 3);
+    }
+}
+
+@media (max-width: 400px) {
+    .section-flex-container div {
+        width: calc(100% / 2);
+    }
+}
+
+.card-hover:hover {
+    background-color: rgba(248, 246, 245, 0.3);
+    border-radius: 10px;
+}

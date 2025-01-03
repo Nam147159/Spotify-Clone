@@ -7,10 +7,11 @@
         <i class="pi pi-search" id="search-btn-icon"></i>
       </button>
       <input
-        (click)="showSearchPanel()"
+        (keyup)="handleSearchInput($event)"
         type="text"
         placeholder="What do you want to play?"
         class="search-input"
+        #searchInput
       />
     </div>
   </div>
