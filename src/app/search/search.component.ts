@@ -35,11 +35,13 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
+      console.log("fuck");
       const query = params['query'];
       this.searchService.search(query).subscribe((result: any) => {
-        this.albums = result.data.albums.items;
-        this.tracks = result.data.albums.tracks;
-        this.artists = result.data.artists.items;
+        console.log(result);
+        this.albums = result.data?.albums?.items;
+        this.tracks = result.data?.albums?.tracks;
+        this.artists = result.data?.artists?.items;
         this.playlists = result.data.playlists.items;
       });
     });
