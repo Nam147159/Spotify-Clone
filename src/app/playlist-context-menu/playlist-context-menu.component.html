@@ -1,0 +1,40 @@
+@if (isVisible) {
+<div class="context-menu" [style.left.px]="x" [style.top.px]="y">
+  <ul>
+    <li>
+      <i class="pi-plus"></i> Add to queue
+    </li>
+    <li>
+      <i class="pi-user"></i> Add to profile
+    </li>
+    <li class="separator"></li>
+    <li (click)="onEditDetails()">
+      <i class="pi-pencil"></i> Edit details
+    </li>
+    <li>
+      <i class="pi-trash"></i> Delete
+    </li>
+    <li class="separator"></li>
+    <li>
+      <i class="pi-plus-circle"></i> Create playlist
+    </li>
+    <li>
+      <i class="pi-folder-plus"></i> Create folder
+    </li>
+    <li>
+      <i class="pi-times"></i> Exclude from your taste profile
+    </li>
+    <li class="separator"></li>
+    <li (click)="onAction('Move to folder')">
+      <i class="pi-folder"></i> Move to folder
+    </li>
+    <li>
+      <i class="pi-thumbtack"></i> Pin playlist
+    </li>
+    <li class="separator"></li>
+    <li (click)="onAction('Share')">
+      <i class="pi-share-alt"></i> Share
+    </li>
+  </ul>
+</div>
+}

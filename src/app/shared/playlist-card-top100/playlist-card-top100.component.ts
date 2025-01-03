@@ -5,16 +5,16 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'playlist-card',
+  selector: 'playlist-card-top100',
   standalone: true,
   imports: [CardModule, CommonModule],
-  templateUrl: './playlist-card.component.html',
-  styleUrls: ['./playlist-card.component.scss']
+  templateUrl: './playlist-card-top100.component.html',
+  styleUrls: ['./playlist-card-top100.component.scss']
 })
-export class PlaylistCardComponent implements OnInit {
+export class PlaylistCardTop100Component implements OnInit {
   @Input() playlist!: Playlist;
   @Input() width: string = '200px';
-  @Output() clickEvent = new EventEmitter<string>();
+  @Output() clickEvent = new EventEmitter<Playlist>();
 
   constructor(private router: Router) { }
 
@@ -33,9 +33,9 @@ export class PlaylistCardComponent implements OnInit {
       : null;
   }
 
-  onRecommendPlaylistClick(): void {
-    this.clickEvent.emit(this.playlist.id);
-    console.log('recommend playlist clicked');
-    this.router.navigate(['/recommendplaylist', this.playlist.id]);
+  onTop100Click(): void {
+    this.clickEvent.emit(this.playlist);
+    console.log('top100 playlist clicked');
+    this.router.navigate(['/top100', this.playlist.id]);
   }
 }

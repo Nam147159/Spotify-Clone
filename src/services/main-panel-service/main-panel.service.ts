@@ -26,8 +26,8 @@ export class MainPanelService {
   getRecommendedPlaylists(): Observable<any> {
     return this.http.get<Playlist[]>(playlistEndpoint);
   }
-  getTop100Playlists(): Observable<{ success: boolean; message: string; data: Playlist[] }> {
-    return this.http.get<{ success: boolean; message: string; data: Playlist[] }>(`${top100PlaylistsEndPoint}`)
+  getTop100Playlists(): Observable<any> {
+    return this.http.get(`${top100PlaylistsEndPoint}`)
       .pipe(
         timeout(30000), // Increase timeout to 30 seconds
         catchError(this.handleError)

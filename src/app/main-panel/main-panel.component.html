@@ -15,7 +15,7 @@
             <div class="flex flex-row overflow-x-auto w-full">
                 @for (playlist of top100Playlists.slice(0, calculateDisplayedItems()); track $index) {
                 <div>
-                    <playlist-card [playlist]="playlist" [width]="widthPerCard()"></playlist-card>
+                    <playlist-card-top100 [playlist]="playlist" [width]="widthPerCard()"></playlist-card-top100>
                 </div>
                 }
             </div>

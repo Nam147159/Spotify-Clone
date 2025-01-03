@@ -4,6 +4,8 @@ import { DatabaseService } from '../../services/database-service/database.servic
 import { Playlist } from '../models/spotify.model';
 import { StorageService } from '../../services/storage-service/storage.service';
 import { PlaylistComponent } from '../playlist/playlist.component';
+import { Router } from '@angular/router';
+import { PlaylistService } from '../../services/playlist-service/playlist.service';
 
 @Component({
   selector: 'app-playlist-panel',
@@ -15,40 +17,35 @@ import { PlaylistComponent } from '../playlist/playlist.component';
 export class PlaylistPanelComponent implements OnInit {
   ownerIdentifier: string = "";
   ownerID: string = "";
-  playlists: Playlist[] = [];
   @Input() receivedPlaylists: Playlist[] = [];
 
   constructor(
     private databaseService: DatabaseService,
     private storageService: StorageService,
-    private el: ElementRef, 
-    private renderer: Renderer2) { }
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private router: Router,
+    private playlistService: PlaylistService) { }
 
   ngOnInit(): void {
+    this.playlistService.playlist$.subscribe(playlists => {
+      if (playlists) {
+        this.receivedPlaylists = playlists;
+      }
+    });
     this.adjustHeight();
   }
 
-  loadPlaylists() {
-    this.databaseService.loadPlaylists(this.ownerID).subscribe({
-      next: (response) => {
-        this.playlists = response.playlists;
-        console.log(this.playlists);
-      },
-      error: (error) => {
-        console.error("Error loading playlists: ", error);
-      },
-      complete: () => {
-        console.log("Load Playlists Complete");
-      }
-    });
-  }
-
   adjustHeight(): void {
-    const playlistCount = this.playlists.length;
+    const playlistCount = this.receivedPlaylists.length;
     const heightPerPlaylist = 50; // Adjust this value based on your design
     const totalHeight = playlistCount * heightPerPlaylist;
 
     this.renderer.setStyle(this.el.nativeElement, 'height', `${totalHeight}px`);
+  }
+
+  onSelectPlaylist(playlist: Playlist) {
+    this.router.navigate(['/playlist', playlist.id]);
   }
 
 }

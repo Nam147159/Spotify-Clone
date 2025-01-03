@@ -1,0 +1,31 @@
+@if (isOpen) {
+<div class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Edit details</h2>
+            <button (click)="close()" class="close-button">×</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="image-container">
+                <div class="music-icon">
+                </div>
+            </div>
+
+            <div class="form-fields" [formGroup]="editForm">
+                <input type="text" formControlName="title" placeholder="Playlist Name">
+                <textarea formControlName="description" placeholder="Description"></textarea>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            By proceeding, you agree to give Spotify access to the image you choose to upload.
+            Please make sure you have the right to upload the image.
+        </div>
+
+        <div class="modal-footer">
+            <button (click)="save()" class="save-button">Save</button>
+        </div>
+    </div>
+</div>
+}
