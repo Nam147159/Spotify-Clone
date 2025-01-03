@@ -11,21 +11,33 @@ const getPlaylistByIdEndpoint = `${environment.apiUrl}/api/database/get-playlist
 const changePlaylistNameEndPoint = `${environment.apiUrl}/api/database/change-playlist-name`;
 const addTrackToPlaylistEndpoint = `${environment.apiUrl}/api/database/add-track-to-playlist`;
 const getTracksInPlaylistEndpoint = `${environment.apiUrl}/api/database/get-tracks-in-playlist`;
+const deleteTrackInPlaylistEndpoint = `${environment.apiUrl}/api/database/delete-track-in-playlist`;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DatabaseService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getUserID(identifier: string): Observable<any> {
     const params = new HttpParams().set('username', identifier);
     return this.http.get(getUserIDEndpoint, { params });
   }
 
-  saveNewPlaylist(playlistID: string, ownerID: string, playlistName: string, description: string, isPublic: boolean): Observable<any> {
-    return this.http.post(saveNewPlaylistEndpoint, { playlistID, ownerID, playlistName, description, isPublic });
+  saveNewPlaylist(
+    playlistID: string,
+    ownerID: string,
+    playlistName: string,
+    description: string,
+    isPublic: boolean,
+  ): Observable<any> {
+    return this.http.post(saveNewPlaylistEndpoint, {
+      playlistID,
+      ownerID,
+      playlistName,
+      description,
+      isPublic,
+    });
   }
 
   loadPlaylists(ownerID: string): Observable<any> {
@@ -49,5 +61,10 @@ export class DatabaseService {
   getTracksInPlaylist(playlistID: string): Observable<any> {
     const params = new HttpParams().set('playlistID', playlistID);
     return this.http.get(getTracksInPlaylistEndpoint, { params });
+  }
+
+  deletePlaylist(playlistID: string, trackID: string): Observable<any> {
+    const body = { playlistID, trackID };
+    return this.http.delete(deleteTrackInPlaylistEndpoint, { body });
   }
 }

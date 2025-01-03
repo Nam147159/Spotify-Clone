@@ -8,18 +8,21 @@
     <div class="track-duration">{{ formatDuration(track.duration_ms) }}</div>
     <div class="function-btn">
       <div class="more-options" (click)="ShowList($event)">
-        <img src="../../../../public/white dot.png">
+        <img src="../../../../public/white dot.png" />
       </div>
       @if (playlists.length > 0 && showPlaylists) {
         <ul>
           @for (playlist of playlists; track $index) {
-          <li (click)="AddIntoPlaylist(playlist.id, $event)">{{ playlist.name }}</li>
+            <li (click)="AddIntoPlaylist(playlist.id, $event)">
+          Add to playlist
+            </li>
           }
         </ul>
-        }
+      }
     </div>
   </div>
   @if (successMessage) {
     <div class="success-message">{{ successMessage }}</div>
   }
 </div>
+

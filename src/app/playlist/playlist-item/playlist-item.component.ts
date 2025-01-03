@@ -4,6 +4,7 @@ import { StorageService } from '../../../services/storage-service/storage.servic
 import { DatabaseService } from '../../../services/database-service/database.service';
 import { TrackService } from '../../../services/track-service/track.service';
 import { DBPlaylist, Track } from '../../models/spotify.model';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-playlist-item',
@@ -26,8 +27,8 @@ export class PlaylistItemComponent implements OnInit {
     private readonly playerSerivice: PlayerService,
     private readonly storageService: StorageService,
     private readonly databaseService: DatabaseService,
-    private trackService: TrackService
-  ) { }
+    private trackService: TrackService,
+  ) {}
 
   ngOnInit(): void {
     console.log('Playlist item initialized:', this.currentTrackId);
@@ -42,7 +43,7 @@ export class PlaylistItemComponent implements OnInit {
       },
       complete: () => {
         console.log('Getting track info completed');
-      }
+      },
     });
   }
 
@@ -51,7 +52,7 @@ export class PlaylistItemComponent implements OnInit {
       return;
     }
     console.log('Playing track:', this.currentTrackId);
-    console.log("track ids:", this.trackItemIds);
+    console.log('track ids:', this.trackItemIds);
     this.playerSerivice.setTracks(this.trackItemIds, { position: this.index });
   }
 
@@ -87,14 +88,40 @@ export class PlaylistItemComponent implements OnInit {
 
   loadPlaylists(ownerID: string) {
     this.databaseService.loadPlaylists(ownerID).subscribe({
-     next: (data) => {
-       this.playlists = data.playlists;
-       console.log('Playlists loaded:', this.playlists);
-     },
-     error: (err) => {
-       console.error('Error loading playlists:', err);
-     },
+      next: (data) => {
+        this.playlists = data.playlists;
+        console.log('Playlists loaded:', this.playlists);
+      },
+      error: (err) => {
+        console.error('Error loading playlists:', err);
+      },
     });
+  }
+
+  deletePlaylist(playlistID: string, event: MouseEvent) {
+    event.stopPropagation();
+    this.databaseService
+      .deletePlaylist(playlistID, this.currentTrackId)
+      .pipe(
+        finalize(() => {
+          console.log('Deleted track successfuly');
+          this.successMessage = 'Track deleted successfully!';
+          setTimeout(() => {
+            this.successMessage = '';
+          }, 2000);
+          this.showPlaylists = false;
+          console.log('Message: ', this.successMessage);
+          window.location.reload();
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          console.log('Response :', response);
+        },
+        error: (err) => {
+          console.error('Error deleting track in playlist:', err);
+        },
+      });
   }
 
   AddIntoPlaylist(playlistID: string, event: MouseEvent) {
@@ -109,7 +136,7 @@ export class PlaylistItemComponent implements OnInit {
           console.error('Error adding track to playlist:', err);
         },
         complete: () => {
-          console.log('Adding track to playlist completed');  
+          console.log('Adding track to playlist completed');
         },
       });
     this.successMessage = 'Track added successfully!';
@@ -117,6 +144,6 @@ export class PlaylistItemComponent implements OnInit {
       this.successMessage = '';
     }, 2000);
     this.showPlaylists = false;
-    console.log("Message: ", this.successMessage);
+    console.log('Message: ', this.successMessage);
   }
 }
