@@ -70,6 +70,11 @@ export class PlayerComponent implements OnInit {
     await this.playerService.setVolume(volume / 100);
   }
 
+  async seek(time: number) {
+    console.log('Seek');
+    await this.playerService.seek(time);
+  }
+
   async toggleMute() {
     console.log('Toggled mute');
     this.isMuted = !this.isMuted;

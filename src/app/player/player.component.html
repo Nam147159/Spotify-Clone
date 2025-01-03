@@ -49,21 +49,20 @@
       <div class="time-left">{{ currentTime | date: "mm:ss" }}</div>
       <!-- Thanh progress -->
       <div class="player-progress">
-        <p-progressBar
-          class="progress-bar"
+        <p-slider
+          [(ngModel)]="currentTime"
+          [min]="0"
+          [animate]="true"
+          [max]="duration"
           [style]="{ height: '4px' }"
-          [value]="(currentTime / duration) * 100"
-          [showValue]="false"
-        ></p-progressBar>
+          (onChange)="seek($event.value ?? 0)"
+        ></p-slider>
       </div>
       <div class="time-right">{{ duration | date: "mm:ss" }}</div>
     </div>
   </div>
 
   <div class="additional-controls">
-    <p-button icon="pi pi-play-circle" [text]="true"></p-button>
-    <p-button icon="pi pi-microphone" [text]="true"></p-button>
-    <p-button icon="pi pi-list" [text]="true"></p-button>
     <p-button icon="pi pi-desktop" [text]="true"></p-button>
     <p-button
       [icon]="isMuted ? 'pi pi-volume-off' : 'pi pi-volume-up'"
