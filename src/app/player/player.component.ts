@@ -29,15 +29,21 @@ export class PlayerComponent implements OnInit {
   volumeValue: number = 50;
   isMuted: boolean = false;
 
-  constructor(private readonly playerService: PlayerService, private ngZone: NgZone) {}
+  interval: any;
+  latestChange: number = 1;
+
+  constructor(
+    private readonly playerService: PlayerService,
+    private ngZone: NgZone,
+  ) {}
 
   ngOnInit() {
     this.playerService.playerState$.subscribe((state) => {
       this.ngZone.run(() => {
         this.currentTrack = state.currentTrack;
-        this.isPlaying = state.isPlaying;
         this.currentTime = state.position;
         this.duration = state.duration;
+        this.isPlaying = state.isPlaying;
       });
     });
   }
@@ -61,7 +67,12 @@ export class PlayerComponent implements OnInit {
     console.log('Set volume');
     this.volume = volume;
     this.volumeValue = volume;
-    await this.playerService.setVolume(volume/100);
+    await this.playerService.setVolume(volume / 100);
+  }
+
+  async seek(time: number) {
+    console.log('Seek');
+    await this.playerService.seek(time);
   }
 
   async toggleMute() {

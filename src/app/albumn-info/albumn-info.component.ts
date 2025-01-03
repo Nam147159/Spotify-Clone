@@ -28,6 +28,7 @@ export class AlbumnInfoComponent implements OnInit {
   artistName: string = '';
   albumName: string = '';
   trackTotalDuration: string = '00 min 00 sec';
+  playingTrackIds: string[] | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -179,6 +180,7 @@ export class AlbumnInfoComponent implements OnInit {
     this.playlistService.getTrackFromSpotify(playlistID).subscribe({
       next: (response) => {
         this.tracks = response.data.map((item: any) => this.mapToTrack(item.track));
+        this.playingTrackIds = this.tracks.map(track => track.id);
         this.getTrackTotalDuration(this.tracks);
       },
       error: (error) => {
@@ -195,6 +197,7 @@ export class AlbumnInfoComponent implements OnInit {
     this.playlistService.getTrackFromArtist(artistID).subscribe({
       next: (response) => {
         this.tracks = response.data.tracks;
+        this.playingTrackIds = this.tracks.map(track => track.id);
         console.log("Response: ", this.tracks);
         this.getTrackTotalDuration(this.tracks);
       },

@@ -23,7 +23,7 @@
       </div>
     </div>
     @for (track of tracks; track $index) {
-      <track-card [track]="track" [index]="$index" [album]="albumID"></track-card>
+      <track-card [track]="track" [index]="$index" [album]="albumID" [playlistTracks]="playingTrackIds"></track-card>
     }
 
 

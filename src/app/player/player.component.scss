@@ -4,38 +4,50 @@
   justify-content: space-between;
   width: 100%;
   padding: 13px;
-  background-color: #000; /* Màu nền */
-  color: #fff; /* Màu chữ */
+  background-color: #000;
+  /* Màu nền */
+  color: #fff;
+  /* Màu chữ */
 }
 
-.time-left, .time-right {
-  font-size: 12px; /* Điều chỉnh kích thước chữ */
+.time-left,
+.time-right {
+  font-size: 12px;
+  /* Điều chỉnh kích thước chữ */
   white-space: nowrap;
   text-align: center;
   width: 50px;
 }
 
 .controls-progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 64%;
 }
 
 .player-progress-container {
   display: flex;
-  align-items: center; /* Căn giữa theo chiều dọc */
+  align-items: center;
+  /* Căn giữa theo chiều dọc */
   width: 70%;
+  gap: 0.3rem;
 }
 
 .player-controls {
   display: flex;
-  gap: 20px; /* Khoảng cách giữa các nút */
+  gap: 20px;
+  /* Khoảng cách giữa các nút */
   justify-content: center;
   align-items: center;
 }
 
-.control-button, .play-pause-button {
+.control-button,
+.play-pause-button {
   display: flex;
   align-items: center;
   background: none;
@@ -47,8 +59,10 @@
 }
 
 .control-button img {
-  width: 24px; /* Điều chỉnh kích thước hình ảnh */
-  height: 24px; /* Điều chỉnh kích thước hình ảnh */
+  width: 24px;
+  /* Điều chỉnh kích thước hình ảnh */
+  height: 24px;
+  /* Điều chỉnh kích thước hình ảnh */
 }
 
 .play-pause-button {
@@ -77,7 +91,8 @@
 
 p-slider {
   // width: 70%;
-  height: 4px; /* Điều chỉnh chiều cao thanh progress */
+  height: 4px;
+  /* Điều chỉnh chiều cao thanh progress */
 }
 
 .progress-bar {
@@ -88,7 +103,10 @@ p-slider {
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 30%; /* Chiếm 30% player bar */
+  width: 26%;
+  max-width: 26%;
+  min-width: 26%;
+  /* Chiếm 30% player bar */
 }
 
 .album-art {
@@ -101,12 +119,20 @@ p-slider {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .track-title {
   font-size: 14px;
   font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
 }
+
 
 .track-artist {
   font-size: 12px;
@@ -114,7 +140,8 @@ p-slider {
 }
 
 .track-status {
-  color: #00cc00; /* Màu xanh ✔ */
+  color: #00cc00;
+  /* Màu xanh ✔ */
   font-size: 18px;
 }
 
@@ -122,6 +149,7 @@ p-slider {
   display: flex;
   align-items: center;
   gap: 1px;
-  width: 20%; /* Chiếm 20% chiều rộng */
+  width: 20%;
+  /* Chiếm 20% chiều rộng */
   justify-content: flex-end;
 }

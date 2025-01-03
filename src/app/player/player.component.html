@@ -1,19 +1,23 @@
 <div class="player-bar">
   @if (currentTrack) {
-  <div class="track-info">
-    <img
-      [src]="currentTrack.album.images[0].url || 'https://placehold.co/150x100'"
-      alt="Album Art"
-      class="album-art"
-    />
-    <div class="track-details">
-      <span class="track-title">{{ currentTrack.name }}</span>
-      <span class="track-artist">{{ currentTrack.artists[0].name }}</span>
+    <div class="track-info">
+      <img
+        [src]="
+          currentTrack.album.images[0].url || 'https://placehold.co/150x100'
+        "
+        alt="Album Art"
+        class="album-art"
+      />
+      <div class="track-details">
+        <span class="track-title" title="{{ currentTrack.name }}">{{
+          currentTrack.name
+        }}</span>
+        <span class="track-artist">{{ currentTrack.artists[0].name }}</span>
+      </div>
+      <span class="track-status">✔</span>
     </div>
-    <span class="track-status">✔</span>
-  </div>
   } @else {
-  <div class="track-info"></div>
+    <div class="track-info"></div>
   }
 
   <!-- Thanh điều khiển và play -->
@@ -28,9 +32,9 @@
       </button>
       <button class="control-button play-pause-button" (click)="togglePlay()">
         @if (isPlaying) {
-        <img src="/public/pause.svg" alt="Pause" class="pause-button" />
+          <img src="/public/pause.svg" alt="Pause" class="pause-button" />
         } @else {
-        <img src="/public/play.svg" alt="Play" class="play-button" />
+          <img src="/public/play.svg" alt="Play" class="play-button" />
         }
       </button>
       <button class="control-button" (click)="next()">
@@ -42,26 +46,29 @@
     </div>
 
     <div class="player-progress-container">
-      <div class="time-left">{{ currentTime | date : "mm:ss" }}</div>
+      <div class="time-left">{{ currentTime | date: "mm:ss" }}</div>
       <!-- Thanh progress -->
       <div class="player-progress">
-        <p-progressBar
-          class="progress-bar"
+        <p-slider
+          [(ngModel)]="currentTime"
+          [min]="0"
+          [animate]="true"
+          [max]="duration"
           [style]="{ height: '4px' }"
-          [value]="(currentTime / duration) * 100"
-          [showValue]="false"
-        ></p-progressBar>
+          (onChange)="seek($event.value ?? 0)"
+        ></p-slider>
       </div>
-      <div class="time-right">{{ duration | date : "mm:ss" }}</div>
+      <div class="time-right">{{ duration | date: "mm:ss" }}</div>
     </div>
   </div>
 
   <div class="additional-controls">
-    <p-button icon="pi pi-play-circle" [text]="true"></p-button>
-    <p-button icon="pi pi-microphone" [text]="true"></p-button>
-    <p-button icon="pi pi-list" [text]="true"></p-button>
     <p-button icon="pi pi-desktop" [text]="true"></p-button>
-    <p-button [icon]="isMuted ? 'pi pi-volume-off' : 'pi pi-volume-up'" [text]="true" (onClick)="toggleMute()"></p-button>
+    <p-button
+      [icon]="isMuted ? 'pi pi-volume-off' : 'pi pi-volume-up'"
+      [text]="true"
+      (onClick)="toggleMute()"
+    ></p-button>
     <p-slider
       [(ngModel)]="volumeValue"
       [min]="0"
@@ -69,9 +76,10 @@
       [style]="{ width: '100px' }"
       (onChange)="setVolume($event.value ?? 0)"
     ></p-slider>
+    <p-button icon="pi pi-window-minimize" [text]="true"></p-button>
     <p-button
-      icon="pi pi-window-minimize" [text]="true"></p-button>
-    <p-button
-      icon="pi pi-arrow-up-right-and-arrow-down-left-from-center" [text]="true"></p-button>
+      icon="pi pi-arrow-up-right-and-arrow-down-left-from-center"
+      [text]="true"
+    ></p-button>
   </div>
 </div>
