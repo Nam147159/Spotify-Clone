@@ -12,16 +12,15 @@
       <div class="more-options" (click)="ShowList($event)">
         <img src="../../../../public/white dot.png" />
       </div>
-      @if (playlists.length > 0 && showPlaylists) {
+
+      @if (showPlaylists) {
         <ul>
-          @for (playlist of playlists; track $index) {
             <li
-              (click)="deletePlaylist(playlist.id, $event)"
+              (click)="deletePlaylist($event)"
               class="delete-button"
             >
               Delete
             </li>
-          }
         </ul>
       }
     </div>

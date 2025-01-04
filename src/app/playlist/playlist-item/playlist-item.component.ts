@@ -5,6 +5,7 @@ import { DatabaseService } from '../../../services/database-service/database.ser
 import { TrackService } from '../../../services/track-service/track.service';
 import { DBPlaylist, Track } from '../../models/spotify.model';
 import { finalize } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-playlist-item',
@@ -19,6 +20,7 @@ export class PlaylistItemComponent implements OnInit {
   @Input({ required: true }) trackItemIds!: string[];
   playlists: DBPlaylist[] = [];
   currentTrackObject!: Track;
+  deleteID!: string;
 
   showPlaylists: boolean = false;
   successMessage: string = '';
@@ -28,6 +30,7 @@ export class PlaylistItemComponent implements OnInit {
     private readonly storageService: StorageService,
     private readonly databaseService: DatabaseService,
     private trackService: TrackService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -98,10 +101,18 @@ export class PlaylistItemComponent implements OnInit {
     });
   }
 
-  deletePlaylist(playlistID: string, event: MouseEvent) {
+  deletePlaylist(event: MouseEvent) {
     event.stopPropagation();
+    this.route.paramMap.subscribe(params => {
+      const playlistID = params.get('id');
+      if (playlistID) {
+        this.deleteID = playlistID;
+      } else {
+        console.error('Playlist ID is null');
+      }
+    });
     this.databaseService
-      .deletePlaylist(playlistID, this.currentTrackId)
+      .deletePlaylist(this.deleteID, this.currentTrackId)
       .pipe(
         finalize(() => {
           console.log('Deleted track successfuly');
@@ -139,7 +150,7 @@ export class PlaylistItemComponent implements OnInit {
           console.log('Adding track to playlist completed');
         },
       });
-    this.successMessage = 'Track added successfully!';
+    this.successMessage = 'Delete successfully!';
     setTimeout(() => {
       this.successMessage = '';
     }, 2000);
