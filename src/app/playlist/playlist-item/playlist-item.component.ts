@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PlayerService } from '../../../services/player-service/player.service';
 import { StorageService } from '../../../services/storage-service/storage.service';
 import { DatabaseService } from '../../../services/database-service/database.service';
 import { TrackService } from '../../../services/track-service/track.service';
 import { DBPlaylist, Track } from '../../models/spotify.model';
 import { finalize } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PlaylistService } from '../../../services/playlist-service/playlist.service';
 
 @Component({
   selector: 'app-playlist-item',
@@ -22,6 +23,8 @@ export class PlaylistItemComponent implements OnInit {
   currentTrackObject!: Track;
   deleteID!: string;
 
+  @Output() trackDeleted = new EventEmitter<string>();
+
   showPlaylists: boolean = false;
   successMessage: string = '';
 
@@ -30,8 +33,10 @@ export class PlaylistItemComponent implements OnInit {
     private readonly storageService: StorageService,
     private readonly databaseService: DatabaseService,
     private trackService: TrackService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private playlistService: PlaylistService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     console.log('Playlist item initialized:', this.currentTrackId);
@@ -103,36 +108,48 @@ export class PlaylistItemComponent implements OnInit {
 
   deletePlaylist(event: MouseEvent) {
     event.stopPropagation();
+
     this.route.paramMap.subscribe(params => {
       const playlistID = params.get('id');
       if (playlistID) {
         this.deleteID = playlistID;
+
+        this.databaseService
+          .deletePlaylist(this.deleteID, this.currentTrackId)
+          .subscribe({
+            next: async (response) => {
+              console.log('Track deleted successfully:', response);
+
+              // Set success message
+              this.successMessage = 'Track deleted successfully!';
+              this.showPlaylists = false;
+
+              // Emit the deleted track ID
+              this.trackDeleted.emit(this.currentTrackId);
+
+              // Force reload the playlist detail component
+              try {
+                // Navigate to temporary route without updating URL
+                await this.router.navigateByUrl('/', { skipLocationChange: true });
+                // Navigate back to playlist detail
+                await this.router.navigate(['/playlist', this.deleteID]);
+              } catch (error) {
+                console.error('Navigation error after delete:', error);
+              }
+
+              // Clear success message after delay
+              setTimeout(() => {
+                this.successMessage = '';
+              }, 2000);
+            },
+            error: (err) => {
+              console.error('Error deleting track in playlist:', err);
+            }
+          });
       } else {
         console.error('Playlist ID is null');
       }
     });
-    this.databaseService
-      .deletePlaylist(this.deleteID, this.currentTrackId)
-      .pipe(
-        finalize(() => {
-          console.log('Deleted track successfuly');
-          this.successMessage = 'Track deleted successfully!';
-          setTimeout(() => {
-            this.successMessage = '';
-          }, 2000);
-          this.showPlaylists = false;
-          console.log('Message: ', this.successMessage);
-          window.location.reload();
-        }),
-      )
-      .subscribe({
-        next: (response) => {
-          console.log('Response :', response);
-        },
-        error: (err) => {
-          console.error('Error deleting track in playlist:', err);
-        },
-      });
   }
 
   AddIntoPlaylist(playlistID: string, event: MouseEvent) {
@@ -155,6 +172,5 @@ export class PlaylistItemComponent implements OnInit {
       this.successMessage = '';
     }, 2000);
     this.showPlaylists = false;
-    console.log('Message: ', this.successMessage);
   }
 }

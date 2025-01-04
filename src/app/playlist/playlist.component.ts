@@ -45,17 +45,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log('PlaylistComponent initialized with playlist:', this.playlist);
-    // this.playlistService.playlist$.subscribe(updatedPlaylist => {
-    //   console.log("Updated Playlist: ", updatedPlaylist);
-    //   if (updatedPlaylist && updatedPlaylist.id === this.playlist.id) {
-    //     if (this.playlist) {
-    //       console.log('Updating playlist:', updatedPlaylist);
-    //       this.playlist.name = updatedPlaylist.name;
-    //       this.playlist.description = updatedPlaylist.description;
-    //     }
-    //   }
-    // });
+
   }
 
   openContextMenu(event: MouseEvent): void {

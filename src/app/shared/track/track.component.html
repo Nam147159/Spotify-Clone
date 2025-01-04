@@ -14,7 +14,7 @@
         <ul>
           @for (playlist of playlists; track $index) {
             <li (click)="AddIntoPlaylist(playlist.id, $event)">
-          Add to playlist
+          Add to {{ playlist.name }}
             </li>
           }
         </ul>

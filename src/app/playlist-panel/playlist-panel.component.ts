@@ -44,8 +44,26 @@ export class PlaylistPanelComponent implements OnInit {
     this.renderer.setStyle(this.el.nativeElement, 'height', `${totalHeight}px`);
   }
 
-  onSelectPlaylist(playlist: Playlist) {
-    this.router.navigate(['/playlist', playlist.id]);
+  async onSelectPlaylist(playlist: Playlist) {
+    try {
+      // Get current URL
+      const currentUrl = this.router.url;
+      console.log('Current URL:', currentUrl);
+      // Create target URL
+      const targetUrl = `/playlist/${playlist.id}`;
+      
+      if (currentUrl === targetUrl) {
+        // If navigating to same URL, reload the route
+        await this.router.navigateByUrl('/', { skipLocationChange: true });
+        await this.router.navigate([targetUrl]);
+      } else {
+        // Navigate to new playlist
+        await this.router.navigateByUrl('/', { skipLocationChange: true });
+        await this.router.navigate([targetUrl]);
+      }
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
   }
 
 }

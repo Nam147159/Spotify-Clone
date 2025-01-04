@@ -24,6 +24,9 @@ export class PlaylistService {
   private playlistUpdatedSubject = new BehaviorSubject<any>(null);
   playlistUpdated$ = this.playlistUpdatedSubject.asObservable();
 
+  private playlistDeletedSubject = new BehaviorSubject<any>(null);
+  playlistDeleted$ = this.playlistDeletedSubject.asObservable();
+
   constructor(
     private http: HttpClient,
     private databaseService: DatabaseService,
@@ -34,11 +37,6 @@ export class PlaylistService {
     const body = { name, description, public: isPublic };
     return this.http.post(createPlaylistEndpoint, body, { headers });
   }
-
-  // updatePlaylist(id: string, name: string, description: string) {
-  //   console.log('Updating playlist in service:', name);
-  //   this.playlistSubject.next({ id, name, description });
-  // }
 
   getPlaylistSignal(): Signal<any> {
     return this.playlistChangeSignal.asReadonly();
@@ -52,6 +50,10 @@ export class PlaylistService {
 
   notifyPlaylistUpdated() {
     this.playlistUpdatedSubject.next(null);
+  }
+
+  notifyPlaylistDeleted() {
+    this.playlistDeletedSubject.next(null);
   }
 
   private reloadPlaylists() {

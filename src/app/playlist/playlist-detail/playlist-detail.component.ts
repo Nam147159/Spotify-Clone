@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   effect,
   OnInit,
@@ -31,7 +32,8 @@ export class PlaylistDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private databaseService: DatabaseService,
-    private playlistService: PlaylistService) {
+    private playlistService: PlaylistService,
+    private cdr: ChangeDetectorRef) {
     effect(() => {
       const updatedPlaylist = this.playlistService.getPlaylistSignal()();
       if (this.playlist) {
@@ -82,6 +84,7 @@ export class PlaylistDetailComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.tracksID = response.tracks.map((track: any) => track.track_id);
+          this.cdr.detectChanges();
         } else {
           console.error('Failed to fetch playlist tracks:', response.message);
         }
@@ -108,5 +111,4 @@ export class PlaylistDetailComponent implements OnInit {
       this.playlist.description = updatedDetails.description;
     }
   }
-
 }
