@@ -52,6 +52,8 @@ export class LibraryPanelComponent implements OnInit {
     this.libraryPanelService.isPlaylistVisible$.subscribe(isVisible => {
       this.isPlaylistVisible = isVisible;
     });
+
+    console.log("lib visibility: ", this.isPlaylistVisible);
   }
 
   toggleTooltip() {

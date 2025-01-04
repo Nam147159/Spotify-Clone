@@ -95,7 +95,7 @@ export class SignUpMainComponent {
         next: (response) => {
           console.log('User registered:', response);
           alert('Đăng ký thành công!');
-          this.router.navigate(['']);
+          this.router.navigate(['/login']);
           
         },
         error: (error) => {
